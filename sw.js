@@ -1,7 +1,7 @@
-const CACHE_NAME = 'allergycard-th-v2';
+const CACHE_NAME = 'allergycard-th-v3';
 const APP_SHELL = [
   '/',
-  '/index.html',
+  '/app.html',
   '/style.css',
   '/app.js',
   '/manifest.json',
