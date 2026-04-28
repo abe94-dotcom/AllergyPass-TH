@@ -1,0 +1,634 @@
+/* ===== RESET & BASE ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --red: #CC0000;
+  --red-dark: #AA0000;
+  --orange: #E06000;
+  --yellow: #B08000;
+  --black: #111111;
+  --gray-dark: #444444;
+  --gray-mid: #777777;
+  --gray-light: #AAAAAA;
+  --border: #DDDDDD;
+  --bg: #F5F5F5;
+  --white: #FFFFFF;
+  --max-w: 390px;
+  --font: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--black);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ===== SCREEN TRANSITIONS ===== */
+.screen {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  will-change: opacity;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ===== SCREEN 1: PROFILE BUILDER ===== */
+.profile-container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-header {
+  text-align: center;
+  padding-bottom: 8px;
+}
+
+.profile-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.profile-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--black);
+}
+
+.profile-title .red {
+  color: var(--red);
+}
+
+.profile-subtitle {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--gray-mid);
+}
+
+/* ===== FIELD GROUPS ===== */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-dark);
+}
+
+.optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--gray-light);
+}
+
+.field-input {
+  font-family: var(--font);
+  font-size: 15px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.field-input:focus {
+  border-color: var(--red);
+}
+
+select.field-input {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+/* ===== ALLERGENS SECTION ===== */
+.allergens-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.allergens-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.allergens-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-dark);
+}
+
+.btn-add {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red);
+  background: none;
+  border: 1.5px solid var(--red);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-add:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+.allergens-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.allergens-empty {
+  text-align: center;
+  padding: 24px;
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  color: var(--gray-light);
+  font-size: 14px;
+}
+
+.allergy-entry {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.allergy-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #F9F9F9;
+  border-bottom: 1px solid var(--border);
+}
+
+.allergy-entry-num {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-mid);
+}
+
+.btn-remove-allergy {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-mid);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.btn-remove-allergy:hover {
+  color: var(--red);
+  background: #FFF0F0;
+}
+
+.allergy-fields {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== GENERATE BUTTON ===== */
+.btn-generate {
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--white);
+  background: var(--red);
+  border: none;
+  border-radius: 10px;
+  padding: 16px;
+  cursor: pointer;
+  width: 100%;
+  letter-spacing: 0.3px;
+  transition: background 0.15s, opacity 0.15s;
+  margin-top: 4px;
+}
+
+.btn-generate:hover:not(:disabled) {
+  background: var(--red-dark);
+}
+
+.btn-generate:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ===== SCREEN 2: CARD ===== */
+#screen-card {
+  background: var(--bg);
+}
+
+.card-wrapper {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 4px;
+}
+
+.btn-back {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-dark);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 10px;
+  letter-spacing: 0.2px;
+}
+
+.btn-back:hover {
+  color: var(--red);
+}
+
+.btn-show-card {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--white);
+  background: var(--red);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: background 0.15s;
+}
+
+.btn-show-card:hover {
+  background: var(--red-dark);
+}
+
+/* ===== ALLERGY CARD ===== */
+.allergy-card {
+  background: var(--white);
+  margin: 0 12px 24px;
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top section */
+.card-top {
+  padding: 20px 20px 16px;
+  text-align: center;
+  border-bottom: 3px solid var(--red);
+}
+
+.card-icon {
+  font-size: 36px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.card-thai-primary {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--black);
+  line-height: 1.1;
+  display: block;
+}
+
+.card-en-subtitle {
+  font-size: 13px;
+  color: var(--gray-mid);
+  margin-top: 4px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  display: block;
+}
+
+/* Name strip */
+.card-name-strip {
+  background: #F5F5F5;
+  border-bottom: 1px solid var(--border);
+  padding: 6px 20px;
+  font-size: 12px;
+  color: var(--gray-dark);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-name-strip strong {
+  color: var(--black);
+}
+
+/* Allergen section */
+.card-allergens {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-allergens-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.card-allergens-header-thai {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--black);
+}
+
+.card-allergens-header-en {
+  font-size: 12px;
+  color: var(--gray-mid);
+  font-weight: 500;
+}
+
+/* Individual allergen block */
+.allergen-block {
+  border-left: 4px solid var(--red);
+  padding: 10px 0 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.allergen-block-name-thai {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--black);
+  line-height: 1.1;
+}
+
+.allergen-block-name-en {
+  font-size: 12px;
+  color: var(--gray-mid);
+  font-weight: 500;
+}
+
+/* Severity */
+.allergen-severity {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  width: fit-content;
+}
+
+.allergen-severity.anaphylactic {
+  background: #FFE5E5;
+  border: 1px solid #FFBBBB;
+}
+
+.allergen-severity.severe {
+  background: #FFF3E0;
+  border: 1px solid #FFCC99;
+}
+
+.allergen-severity.intolerance {
+  background: #FFFDE7;
+  border: 1px solid #FFE082;
+}
+
+.severity-thai {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.anaphylactic .severity-thai { color: var(--red); }
+.severe .severity-thai { color: var(--orange); }
+.intolerance .severity-thai { color: var(--yellow); }
+
+.severity-en {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.anaphylactic .severity-en { color: #AA0000; }
+.severe .severity-en { color: #995500; }
+.intolerance .severity-en { color: #776600; }
+
+/* Triggers */
+.allergen-triggers {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.trigger-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.trigger-bullet {
+  color: var(--red);
+  font-size: 12px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.trigger-thai {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1.2;
+}
+
+.trigger-en {
+  font-size: 12px;
+  color: var(--gray-mid);
+  font-weight: 400;
+}
+
+/* Hidden ingredients section */
+.card-hidden {
+  background: #FAFAFA;
+  border-top: 1px solid var(--border);
+  padding: 12px 20px;
+}
+
+.card-hidden-header {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.card-hidden-header-en {
+  font-size: 11px;
+  color: var(--gray-mid);
+  font-weight: 500;
+}
+
+.hidden-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hidden-item-thai {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-dark);
+}
+
+.hidden-item-en {
+  font-size: 11px;
+  color: var(--gray-light);
+}
+
+/* Bottom confirm */
+.card-bottom {
+  border-top: 2px solid var(--red);
+  padding: 14px 20px;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-confirm-thai {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--black);
+}
+
+.card-confirm-en {
+  font-size: 11px;
+  color: var(--gray-mid);
+  font-weight: 500;
+}
+
+.card-emergency {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-emergency-thai {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--red);
+}
+
+.card-emergency-en {
+  font-size: 11px;
+  color: var(--gray-mid);
+  font-weight: 500;
+}
+
+/* Global always-show section */
+.card-global {
+  background: #FFF8F8;
+  border-top: 1px solid #FFDDDD;
+  padding: 12px 20px;
+}
+
+.card-global-header {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.card-global-header-thai {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--black);
+}
+
+.card-global-header-en {
+  font-size: 11px;
+  color: var(--gray-mid);
+  font-weight: 500;
+}
+
+/* Quick Show overlay */
+.quick-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--white);
+  z-index: 9999;
+  overflow-y: auto;
+  display: none;
+  padding: 0;
+}
+
+.quick-overlay.active {
+  display: block;
+}
+
+/* Card inside overlay fills screen, no margin */
+.quick-overlay .allergy-card {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+  min-height: 100vh;
+}
