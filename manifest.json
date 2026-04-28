@@ -2,7 +2,7 @@
   "name": "AllergyCard TH",
   "short_name": "AllergyCard",
   "description": "Thailand food allergy card generator for travellers",
-  "start_url": "/",
+  "start_url": "/app.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#FFFFFF",
