@@ -362,110 +362,161 @@ function exitQuickShow() {
   } catch (_) {}
 }
 
-// ===== RENDER CARD =====
+// ===== ALLERGEN EMOJI MAP =====
+const ALLERGEN_EMOJI = {
+  'shellfish': '🦐',
+  'nuts':      '🌰',
+  'gluten':    '🌾',
+  'peanuts':   '🥜',
+  'dairy':     '🥛',
+  'eggs':      '🥚',
+  'soy':       '🫘',
+  'wheat':     '🌾',
+};
+
+function getAllergenEmoji(rawName) {
+  const key = resolveAllergenKey(rawName);
+  return ALLERGEN_EMOJI[key] || '⚠️';
+}
+
+// ===== RENDER CARD — WALLET PASS LAYOUT =====
 function renderCard(data) {
   cardEl.innerHTML = '';
 
-  // TOP
-  const top = el('div', 'card-top');
-  top.appendChild(el('div', 'card-icon', '🚫'));
-  top.appendChild(el('span', 'card-thai-primary', 'ฉันแพ้อาหาร'));
-  top.appendChild(el('span', 'card-en-subtitle', 'Food Allergy Alert'));
-  cardEl.appendChild(top);
+  // ── FRONT FACE ──────────────────────────────────────────────
+  const front = el('div', 'card-face card-front');
 
-  // NAME STRIP
+  // Red header bar
+  const header = el('div', 'wp-header');
+  const headerLeft = el('div', 'wp-header-left');
+  headerLeft.appendChild(el('span', 'wp-warning-icon', '⚠'));
+  const headerText = el('div', 'wp-header-text');
+  headerText.appendChild(el('div', 'wp-header-en', 'SEVERE FOOD ALLERGY'));
+  headerText.appendChild(el('div', 'wp-header-thai', 'ฉันแพ้อาหารรุนแรง'));
+  headerLeft.appendChild(headerText);
+  header.appendChild(headerLeft);
   if (data.name) {
-    const strip = el('div', 'card-name-strip');
-    strip.innerHTML = `Card for: <strong>${escHtml(data.name)}</strong>`;
-    cardEl.appendChild(strip);
+    header.appendChild(el('div', 'wp-name-tag', escHtml(data.name)));
   }
+  front.appendChild(header);
 
-  // ALLERGEN SECTION
-  const sec = el('div', 'card-allergens');
-  const hdr = el('div', 'card-allergens-header');
-  hdr.appendChild(el('span', 'card-allergens-header-thai', 'ห้ามมี:'));
-  hdr.appendChild(el('span', 'card-allergens-header-en', 'Do not include:'));
-  sec.appendChild(hdr);
-  data.allergens.forEach(a => sec.appendChild(renderAllergenBlock(a)));
-  cardEl.appendChild(sec);
+  // NO: allergen grid
+  const noSection = el('div', 'wp-no-section');
+  const noLabel = el('div', 'wp-no-label');
+  noLabel.appendChild(el('span', 'wp-no-badge', 'NO'));
+  noLabel.appendChild(el('span', 'wp-no-label-thai', 'ห้ามมี'));
+  noSection.appendChild(noLabel);
 
-  // ALLERGEN-SPECIFIC HIDDEN INGREDIENTS
-  const specific = [];
+  const grid = el('div', 'wp-allergen-grid');
   data.allergens.forEach(a => {
-    getHiddenByAllergen(a.name).forEach(h => {
-      if (!specific.some(x => x.thai === h.thai)) specific.push(h);
-    });
+    const row = el('div', 'wp-allergen-row');
+    const sevKey = severityClass(a.severity);
+    row.classList.add(`sev-${sevKey}`);
+    row.appendChild(el('span', 'wp-allergen-emoji', getAllergenEmoji(a.name)));
+    const names = el('div', 'wp-allergen-names');
+    names.appendChild(el('div', 'wp-allergen-thai', getThaiAllergen(a.name)));
+    names.appendChild(el('div', 'wp-allergen-en', a.name));
+    row.appendChild(names);
+    const badge = el('span', `wp-sev-dot sev-dot-${sevKey}`);
+    badge.title = a.severity;
+    row.appendChild(badge);
+    grid.appendChild(row);
+  });
+  noSection.appendChild(grid);
+  front.appendChild(noSection);
+
+  // Copy line: plain text list for chef
+  const copyLine = el('div', 'wp-copy-line');
+  const allergenNames = data.allergens.map(a => a.name).join(', ');
+  copyLine.innerHTML = `<span class="wp-copy-no">NO:</span> ${escHtml(allergenNames)}`;
+  front.appendChild(copyLine);
+
+  // Compressed hidden warning
+  const warningBar = el('div', 'wp-warning-bar');
+  warningBar.appendChild(el('span', 'wp-warning-icon-sm', '⚠'));
+  warningBar.appendChild(el('span', 'wp-warning-text', 'Also hidden in: sauces, oils, pastes, fish sauce (น้ำปลา), shrimp paste (กะปิ)'));
+  front.appendChild(warningBar);
+
+  // Instruction footer
+  const footer = el('div', 'wp-front-footer');
+  footer.appendChild(el('div', 'wp-instruct-thai', 'กรุณาแจ้งพ่อครัว'));
+  footer.appendChild(el('div', 'wp-instruct-en', 'Please inform the chef before preparing'));
+  front.appendChild(footer);
+
+  cardEl.appendChild(front);
+
+  // ── DIVIDER ──────────────────────────────────────────────────
+  const divider = el('div', 'wp-divider');
+  divider.appendChild(el('span', 'wp-divider-label', 'ADDITIONAL DETAILS'));
+  cardEl.appendChild(divider);
+
+  // ── BACK FACE ────────────────────────────────────────────────
+  const back = el('div', 'card-face card-back');
+
+  // Per-allergen detail rows
+  data.allergens.forEach(a => {
+    const detail = el('div', 'wp-detail-block');
+    const dtop = el('div', 'wp-detail-top');
+    dtop.appendChild(el('span', 'wp-detail-emoji', getAllergenEmoji(a.name)));
+    const dtitle = el('div', 'wp-detail-title');
+    dtitle.appendChild(el('span', 'wp-detail-thai', getThaiAllergen(a.name)));
+    dtitle.appendChild(el('span', 'wp-detail-en', a.name));
+    dtop.appendChild(dtitle);
+    const sevBadge = el('span', `wp-detail-sev sev-tag-${severityClass(a.severity)}`,
+      (SEVERITY_THAI[a.severity] || a.severity) + ' · ' + a.severity);
+    dtop.appendChild(sevBadge);
+    detail.appendChild(dtop);
+
+    if (a.triggers.length > 0) {
+      const tlist = el('div', 'wp-trigger-list');
+      a.triggers.forEach(t => {
+        const chip = el('div', 'wp-trigger-chip');
+        chip.appendChild(el('span', 'wp-trigger-thai', resolveThaiTrigger(t)));
+        chip.appendChild(el('span', 'wp-trigger-en', t.trim()));
+        tlist.appendChild(chip);
+      });
+      detail.appendChild(tlist);
+    }
+
+    // Hidden ingredients for this allergen
+    const hidden = getHiddenByAllergen(a.name);
+    if (hidden.length > 0) {
+      const hrow = el('div', 'wp-hidden-row');
+      hrow.appendChild(el('span', 'wp-hidden-label', 'Also in:'));
+      const hchips = el('span', 'wp-hidden-chips',
+        hidden.map(h => `${h.thai} (${h.en})`).join(' · '));
+      hrow.appendChild(hchips);
+      detail.appendChild(hrow);
+    }
+
+    back.appendChild(detail);
   });
 
-  if (specific.length > 0) {
-    const hsec = el('div', 'card-hidden');
-    const hhdr = el('div', 'card-hidden-header');
-    hhdr.appendChild(el('span', '', 'รวมถึง:'));
-    hhdr.appendChild(el('span', 'card-hidden-header-en', 'Also includes:'));
-    hsec.appendChild(hhdr);
-    const hlist = el('div', 'hidden-list');
-    specific.forEach(h => {
-      hlist.appendChild(el('div', 'hidden-item-thai', h.thai));
-      hlist.appendChild(el('div', 'hidden-item-en', h.en));
-    });
-    hsec.appendChild(hlist);
-    cardEl.appendChild(hsec);
-  }
+  // Polite Thai note
+  const polite = el('div', 'wp-polite');
+  polite.appendChild(el('div', 'wp-polite-thai', 'ขอบคุณมากที่ช่วยดูแล'));
+  polite.appendChild(el('div', 'wp-polite-en', 'Thank you for your care and attention'));
+  back.appendChild(polite);
 
-  // GLOBAL ALWAYS-SHOW
-  const gsec  = el('div', 'card-global');
-  const ghdr  = el('div', 'card-global-header');
-  ghdr.appendChild(el('span', 'card-global-header-thai', 'อาจมีในอาหาร:'));
-  ghdr.appendChild(el('span', 'card-global-header-en', 'May be present in:'));
-  gsec.appendChild(ghdr);
-  const glist = el('div', 'hidden-list');
-  GLOBAL_ALWAYS.forEach(h => {
-    glist.appendChild(el('div', 'hidden-item-thai', h.thai));
-    glist.appendChild(el('div', 'hidden-item-en', h.en));
-  });
-  gsec.appendChild(glist);
-  cardEl.appendChild(gsec);
-
-  // BOTTOM
-  const bottom = el('div', 'card-bottom');
-  bottom.appendChild(el('div', 'card-confirm-thai', 'กรุณายืนยัน'));
-  bottom.appendChild(el('div', 'card-confirm-en', 'Please confirm with kitchen before serving'));
-
+  // Emergency contact
   if (data.emergency) {
-    const emRow = el('div', 'card-emergency');
-    emRow.appendChild(el('div', 'card-emergency-thai', `ฉุกเฉิน: ${escHtml(data.emergency)}`));
-    emRow.appendChild(el('div', 'card-emergency-en', `Emergency: ${escHtml(data.emergency)}`));
-    bottom.appendChild(emRow);
+    const em = el('div', 'wp-emergency');
+    em.appendChild(el('span', 'wp-em-icon', '🆘'));
+    const emtext = el('div', '');
+    emtext.appendChild(el('div', 'wp-em-thai', `ฉุกเฉิน: ${escHtml(data.emergency)}`));
+    emtext.appendChild(el('div', 'wp-em-en', `Emergency: ${escHtml(data.emergency)}`));
+    em.appendChild(emtext);
+    back.appendChild(em);
   }
 
-  cardEl.appendChild(bottom);
+  cardEl.appendChild(back);
 }
 
 function renderAllergenBlock(allergen) {
+  // Legacy — kept for compatibility but not used in wallet layout
   const block = el('div', 'allergen-block');
   block.appendChild(el('div', 'allergen-block-name-thai', getThaiAllergen(allergen.name)));
   block.appendChild(el('div', 'allergen-block-name-en', allergen.name));
-
-  const sevBadge = el('div', `allergen-severity ${severityClass(allergen.severity)}`);
-  sevBadge.appendChild(el('span', '', '⚠️'));
-  sevBadge.appendChild(el('span', 'severity-thai', SEVERITY_THAI[allergen.severity] || allergen.severity));
-  sevBadge.appendChild(el('span', 'severity-en', allergen.severity));
-  block.appendChild(sevBadge);
-
-  if (allergen.triggers.length > 0) {
-    const tdiv = el('div', 'allergen-triggers');
-    allergen.triggers.forEach(t => {
-      const item    = el('div', 'trigger-item');
-      const textDiv = el('div', '');
-      textDiv.appendChild(el('div', 'trigger-thai', resolveThaiTrigger(t)));
-      textDiv.appendChild(el('div', 'trigger-en', t.trim()));
-      item.appendChild(el('span', 'trigger-bullet', '▸'));
-      item.appendChild(textDiv);
-      tdiv.appendChild(item);
-    });
-    block.appendChild(tdiv);
-  }
-
   return block;
 }
 

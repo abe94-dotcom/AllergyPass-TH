@@ -265,7 +265,7 @@ select.field-input {
 
 /* ===== SCREEN 2: CARD ===== */
 #screen-card {
-  background: var(--bg);
+  background: #EBEBEB;
 }
 
 .card-wrapper {
@@ -280,7 +280,7 @@ select.field-input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px 4px;
+  padding: 10px 14px 6px;
 }
 
 .btn-back {
@@ -295,9 +295,7 @@ select.field-input {
   letter-spacing: 0.2px;
 }
 
-.btn-back:hover {
-  color: var(--red);
-}
+.btn-back:hover { color: var(--red); }
 
 .btn-show-card {
   font-family: var(--font);
@@ -307,328 +305,440 @@ select.field-input {
   background: var(--red);
   border: none;
   border-radius: 8px;
-  padding: 10px 18px;
+  padding: 10px 20px;
   cursor: pointer;
   letter-spacing: 0.2px;
   transition: background 0.15s;
 }
 
-.btn-show-card:hover {
-  background: var(--red-dark);
-}
+.btn-show-card:hover { background: var(--red-dark); }
 
-/* ===== ALLERGY CARD ===== */
+/* ===== WALLET PASS CARD ===== */
 .allergy-card {
   background: var(--white);
-  margin: 0 12px 24px;
-  border-radius: 4px;
-  border: 1px solid #E0E0E0;
+  margin: 0 10px 28px;
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.14), 0 1px 3px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
 }
 
-/* Top section */
-.card-top {
-  padding: 20px 20px 16px;
-  text-align: center;
-  border-bottom: 3px solid var(--red);
+/* Card face wrapper */
+.card-face {
+  display: flex;
+  flex-direction: column;
 }
 
-.card-icon {
-  font-size: 36px;
+/* ── FRONT FACE ── */
+
+/* Red header bar */
+.wp-header {
+  background: #D32F2F;
+  padding: 16px 18px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wp-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wp-warning-icon {
+  font-size: 28px;
+  color: #FFD600;
+  font-style: normal;
   line-height: 1;
-  margin-bottom: 8px;
-}
-
-.card-thai-primary {
-  font-size: 30px;
-  font-weight: 900;
-  color: var(--black);
-  line-height: 1.1;
-  display: block;
-}
-
-.card-en-subtitle {
-  font-size: 13px;
-  color: var(--gray-mid);
-  margin-top: 4px;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  display: block;
-}
-
-/* Name strip */
-.card-name-strip {
-  background: #F5F5F5;
-  border-bottom: 1px solid var(--border);
-  padding: 6px 20px;
-  font-size: 12px;
-  color: var(--gray-dark);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.card-name-strip strong {
-  color: var(--black);
-}
-
-/* Allergen section */
-.card-allergens {
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.card-allergens-header {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-
-.card-allergens-header-thai {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--black);
-}
-
-.card-allergens-header-en {
-  font-size: 12px;
-  color: var(--gray-mid);
-  font-weight: 500;
-}
-
-/* Individual allergen block */
-.allergen-block {
-  border-left: 4px solid var(--red);
-  padding: 10px 0 10px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.allergen-block-name-thai {
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--black);
-  line-height: 1.1;
-}
-
-.allergen-block-name-en {
-  font-size: 12px;
-  color: var(--gray-mid);
-  font-weight: 500;
-}
-
-/* Severity */
-.allergen-severity {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 4px;
-  padding: 4px 10px;
-  border-radius: 3px;
-  width: fit-content;
-}
-
-.allergen-severity.anaphylactic {
-  background: #FFE5E5;
-  border: 1px solid #FFBBBB;
-}
-
-.allergen-severity.severe {
-  background: #FFF3E0;
-  border: 1px solid #FFCC99;
-}
-
-.allergen-severity.intolerance {
-  background: #FFFDE7;
-  border: 1px solid #FFE082;
-}
-
-.severity-thai {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.anaphylactic .severity-thai { color: var(--red); }
-.severe .severity-thai { color: var(--orange); }
-.intolerance .severity-thai { color: var(--yellow); }
-
-.severity-en {
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.anaphylactic .severity-en { color: #AA0000; }
-.severe .severity-en { color: #995500; }
-.intolerance .severity-en { color: #776600; }
-
-/* Triggers */
-.allergen-triggers {
-  margin-top: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.trigger-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-.trigger-bullet {
-  color: var(--red);
-  font-size: 12px;
-  margin-top: 3px;
   flex-shrink: 0;
 }
 
-.trigger-thai {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--black);
-  line-height: 1.2;
+.wp-header-text { display: flex; flex-direction: column; gap: 2px; }
+
+.wp-header-en {
+  font-size: 13px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
-.trigger-en {
+.wp-header-thai {
+  font-size: 20px;
+  font-weight: 900;
+  color: #FFFFFF;
+  line-height: 1.1;
+}
+
+.wp-name-tag {
+  background: rgba(0,0,0,0.22);
+  color: #fff;
   font-size: 12px;
-  color: var(--gray-mid);
-  font-weight: 400;
-}
-
-/* Hidden ingredients section */
-.card-hidden {
-  background: #FAFAFA;
-  border-top: 1px solid var(--border);
-  padding: 12px 20px;
-}
-
-.card-hidden-header {
-  font-size: 14px;
   font-weight: 700;
-  color: var(--black);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
 }
 
-.card-hidden-header-en {
-  font-size: 11px;
-  color: var(--gray-mid);
-  font-weight: 500;
-}
-
-.hidden-list {
+/* NO section */
+.wp-no-section {
+  padding: 16px 18px 4px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
 }
 
-.hidden-item-thai {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--gray-dark);
-}
-
-.hidden-item-en {
-  font-size: 11px;
-  color: var(--gray-light);
-}
-
-/* Bottom confirm */
-.card-bottom {
-  border-top: 2px solid var(--red);
-  padding: 14px 20px;
-  background: var(--white);
+.wp-no-label {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 10px;
 }
 
-.card-confirm-thai {
+.wp-no-badge {
+  background: #111111;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.wp-no-label-thai {
   font-size: 17px;
   font-weight: 800;
   color: var(--black);
 }
 
-.card-confirm-en {
-  font-size: 11px;
-  color: var(--gray-mid);
-  font-weight: 500;
+/* Allergen grid */
+.wp-allergen-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-.card-emergency {
-  margin-top: 8px;
+.wp-allergen-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.wp-allergen-row:last-child { border-bottom: none; }
+
+.wp-allergen-emoji {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+}
+
+.wp-allergen-names {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.wp-allergen-thai {
+  font-size: 22px;
+  font-weight: 900;
+  color: #111111;
+  line-height: 1.15;
+}
+
+.wp-allergen-en {
+  font-size: 13px;
+  font-weight: 500;
+  color: #777777;
+  text-transform: capitalize;
+}
+
+/* Severity dot */
+.wp-sev-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sev-dot-anaphylactic { background: #D32F2F; box-shadow: 0 0 0 3px rgba(211,47,47,0.2); }
+.sev-dot-severe       { background: #E06000; box-shadow: 0 0 0 3px rgba(224,96,0,0.2); }
+.sev-dot-intolerance  { background: #B08000; box-shadow: 0 0 0 3px rgba(176,128,0,0.2); }
+
+/* Copy line */
+.wp-copy-line {
+  margin: 4px 18px 0;
+  padding: 9px 14px;
+  background: #F5F5F5;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.wp-copy-no {
+  font-weight: 900;
+  color: #D32F2F;
+  margin-right: 4px;
+  letter-spacing: 1px;
+}
+
+/* Warning bar */
+.wp-warning-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 10px 18px 0;
+  padding: 9px 12px;
+  background: #FFF8E1;
+  border: 1px solid #F59E0B;
+  border-radius: 6px;
+}
+
+.wp-warning-icon-sm {
+  font-size: 14px;
+  color: #F59E0B;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.wp-warning-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #7A5500;
+  line-height: 1.4;
+}
+
+/* Front footer */
+.wp-front-footer {
+  padding: 14px 18px 16px;
+  border-top: 2px solid #D32F2F;
+  margin-top: 12px;
+  background: #FAFAFA;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.card-emergency-thai {
-  font-size: 15px;
+.wp-instruct-thai {
+  font-size: 18px;
   font-weight: 800;
-  color: var(--red);
+  color: #111111;
 }
 
-.card-emergency-en {
-  font-size: 11px;
-  color: var(--gray-mid);
+.wp-instruct-en {
+  font-size: 12px;
   font-weight: 500;
+  color: #777777;
 }
 
-/* Global always-show section */
-.card-global {
-  background: #FFF8F8;
-  border-top: 1px solid #FFDDDD;
-  padding: 12px 20px;
-}
-
-.card-global-header {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--black);
-  margin-bottom: 8px;
+/* ── DIVIDER ── */
+.wp-divider {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  padding: 0 18px;
+  background: #D32F2F;
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.wp-divider-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.75);
+  padding: 7px 0;
+  text-transform: uppercase;
+}
+
+/* ── BACK FACE ── */
+.card-back {
+  background: #FAFAFA;
+  padding: 14px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wp-detail-block {
+  background: var(--white);
+  border: 1px solid #E8E8E8;
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
-.card-global-header-thai {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--black);
+.wp-detail-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.card-global-header-en {
-  font-size: 11px;
-  color: var(--gray-mid);
+.wp-detail-emoji { font-size: 22px; flex-shrink: 0; }
+
+.wp-detail-title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.wp-detail-thai {
+  font-size: 17px;
+  font-weight: 800;
+  color: #111111;
+  line-height: 1.1;
+}
+
+.wp-detail-en {
+  font-size: 12px;
+  color: #888888;
   font-weight: 500;
 }
 
-/* Quick Show overlay */
+.wp-detail-sev {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sev-tag-anaphylactic { background: #FFE5E5; color: #AA0000; }
+.sev-tag-severe       { background: #FFF3E0; color: #995500; }
+.sev-tag-intolerance  { background: #FFFDE7; color: #776600; }
+
+/* Trigger chips */
+.wp-trigger-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.wp-trigger-chip {
+  background: #F3F3F3;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  padding: 4px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.wp-trigger-thai {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111111;
+  line-height: 1.2;
+}
+
+.wp-trigger-en {
+  font-size: 10px;
+  color: #888888;
+  font-weight: 400;
+}
+
+/* Hidden row */
+.wp-hidden-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.wp-hidden-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #999999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.wp-hidden-chips {
+  font-size: 12px;
+  color: #666666;
+  font-weight: 500;
+}
+
+/* Polite note */
+.wp-polite {
+  padding: 10px 14px;
+  background: #F0F4E8;
+  border: 1px solid #C5D49A;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wp-polite-thai {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4F5D2F;
+}
+
+.wp-polite-en {
+  font-size: 12px;
+  color: #6B7D3D;
+  font-weight: 500;
+}
+
+/* Emergency */
+.wp-emergency {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #FFE5E5;
+  border: 1.5px solid #FFBBBB;
+  border-radius: 8px;
+}
+
+.wp-em-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+.wp-em-thai {
+  font-size: 15px;
+  font-weight: 800;
+  color: #AA0000;
+}
+
+.wp-em-en {
+  font-size: 12px;
+  color: #AA0000;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* ===== QUICK SHOW OVERLAY ===== */
 .quick-overlay {
   position: fixed;
   inset: 0;
-  background: var(--white);
+  background: #EBEBEB;
   z-index: 9999;
   overflow-y: auto;
   display: none;
   padding: 0;
 }
 
-.quick-overlay.active {
-  display: block;
-}
+.quick-overlay.active { display: block; }
 
-/* Card inside overlay fills screen, no margin */
 .quick-overlay .allergy-card {
   margin: 0;
   border-radius: 0;
   border: none;
+  box-shadow: none;
   min-height: 100vh;
 }
