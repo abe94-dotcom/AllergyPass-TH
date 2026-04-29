@@ -6,7 +6,12 @@
   <title>AllergyCard TH — Food Allergy Card for Thailand</title>
   <meta name="description" content="Create a bilingual food allergy card for Thailand in seconds. Show restaurant staff exactly what you can't eat — in Thai. Free, offline-ready, no sign-up." />
   <meta name="theme-color" content="#4F5D2F" />
-  <link rel="canonical" href="https://allergycard.th/" />
+  <meta property="og:title" content="AllergyCard TH — Food Allergy Card for Thailand" />
+  <meta property="og:description" content="Create a bilingual food allergy card for Thailand in seconds. Show restaurant staff exactly what you can't eat — in Thai. Free, offline-ready, no sign-up." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ornate-chebakia-1b8d00.netlify.app/" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
+  <link rel="canonical" href="https://ornate-chebakia-1b8d00.netlify.app/" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -227,36 +232,44 @@
     }
     .mock-header {
       background: #D32F2F;
-      padding: 16px 18px;
+      padding: 14px 16px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
     }
-    .mock-icon { font-size: 24px; }
+    .mock-header-left { display: flex; align-items: center; gap: 10px; }
+    .mock-icon { font-size: 22px; }
     .mock-header-text { display: flex; flex-direction: column; gap: 1px; }
-    .mock-en { font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.85); letter-spacing: 1px; text-transform: uppercase; }
-    .mock-thai { font-size: 18px; font-weight: 900; color: #fff; }
-    .mock-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .mock-en { font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.85); letter-spacing: 1px; text-transform: uppercase; }
+    .mock-thai { font-size: 17px; font-weight: 900; color: #fff; }
+    .mock-name-badge { background: rgba(0,0,0,0.22); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+    .mock-no-label { display: flex; align-items: center; gap: 8px; padding: 10px 16px 4px; }
+    .mock-no-badge { background: #111; color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 2px; padding: 3px 8px; border-radius: 3px; }
+    .mock-no-thai { font-size: 15px; font-weight: 800; color: #111; }
+    .mock-body { padding: 4px 16px 8px; display: flex; flex-direction: column; gap: 0; }
     .mock-row {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 10px 0;
+      gap: 10px;
+      padding: 8px 0;
       border-bottom: 1px solid #F0F0F0;
     }
     .mock-row:last-child { border-bottom: none; }
-    .mock-emoji { font-size: 24px; width: 32px; text-align: center; }
+    .mock-emoji { font-size: 22px; width: 28px; text-align: center; }
     .mock-names { display: flex; flex-direction: column; gap: 1px; flex: 1; }
-    .mock-name-thai { font-size: 19px; font-weight: 900; color: #111; }
-    .mock-name-en { font-size: 12px; color: #777; }
-    .mock-dot { width: 10px; height: 10px; border-radius: 50%; background: #D32F2F; }
+    .mock-name-thai { font-size: 18px; font-weight: 900; color: #111; }
+    .mock-name-en { font-size: 11px; color: #777; }
+    .mock-dot { width: 10px; height: 10px; border-radius: 50%; background: #D32F2F; flex-shrink: 0; }
+    .mock-warning { display: flex; align-items: flex-start; gap: 6px; margin: 4px 16px 0; padding: 7px 10px; background: #FFF8E1; border: 1px solid #F59E0B; border-radius: 5px; font-size: 11px; font-weight: 600; color: #7A5500; line-height: 1.4; }
     .mock-footer {
-      padding: 12px 18px;
+      padding: 10px 16px 12px;
       border-top: 2px solid #D32F2F;
+      margin-top: 10px;
       background: #FAFAFA;
     }
-    .mock-footer-thai { font-size: 16px; font-weight: 800; color: #111; }
-    .mock-footer-en { font-size: 11px; color: #777; }
+    .mock-footer-thai { font-size: 15px; font-weight: 800; color: #111; }
+    .mock-footer-en { font-size: 10px; color: #777; }
 
     /* ── HOW IT WORKS ── */
     .how { background: var(--white); }
@@ -379,14 +392,21 @@
           </ul>
         </div>
 
-        <!-- Card mock -->
+        <!-- Card mock — matches real wallet-pass layout -->
         <div class="card-mock">
           <div class="mock-header">
-            <span class="mock-icon">⚠</span>
-            <div class="mock-header-text">
-              <span class="mock-en">Severe Food Allergy</span>
-              <span class="mock-thai">ฉันแพ้อาหารรุนแรง</span>
+            <div class="mock-header-left">
+              <span class="mock-icon">⚠</span>
+              <div class="mock-header-text">
+                <span class="mock-en">Severe Food Allergy</span>
+                <span class="mock-thai">ฉันแพ้อาหารรุนแรง</span>
+              </div>
             </div>
+            <span class="mock-name-badge">Sarah</span>
+          </div>
+          <div class="mock-no-label">
+            <span class="mock-no-badge">NO</span>
+            <span class="mock-no-thai">ห้ามมี</span>
           </div>
           <div class="mock-body">
             <div class="mock-row">
@@ -405,6 +425,10 @@
               </div>
               <span class="mock-dot" style="background:#E06000"></span>
             </div>
+          </div>
+          <div class="mock-warning">
+            <span>⚠</span>
+            <span>Also hidden in: fish sauce (น้ำปลา), shrimp paste (กะปิ), sauces, oils</span>
           </div>
           <div class="mock-footer">
             <div class="mock-footer-thai">กรุณาแจ้งพ่อครัว</div>

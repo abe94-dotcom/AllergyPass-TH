@@ -30,10 +30,8 @@ const TRIGGER_THAI = {
   'lobsters':      'ล็อบสเตอร์',
   'fish sauce':    'น้ำปลา',
   'fishsauce':     'น้ำปลา',
-  'fish  sauce':   'น้ำปลา',
   'shrimp paste':  'กะปิ',
   'shrimpaste':    'กะปิ',
-  'shrimp  paste': 'กะปิ',
   'peanut':        'ถั่วลิสง',
   'peanuts':       'ถั่วลิสง',
   'cashew':        'มะม่วงหิมพานต์',
@@ -95,13 +93,6 @@ const HIDDEN_BY_ALLERGEN = {
   ],
 };
 
-// Always-show global warnings regardless of allergen type
-const GLOBAL_ALWAYS = [
-  { thai: 'น้ำปลา', en: 'fish sauce' },
-  { thai: 'กะปิ', en: 'shrimp paste' },
-  { thai: 'ซอส', en: 'sauces' },
-];
-
 const LS_KEY = 'allergycard_th_v2';
 
 // ===== STATE =====
@@ -119,6 +110,7 @@ const btnAdd         = document.getElementById('btn-add-allergy');
 const btnGenerate    = document.getElementById('btn-generate');
 const btnBack        = document.getElementById('btn-back');
 const btnShowCard    = document.getElementById('btn-show-card');
+const btnShowLast    = document.getElementById('btn-show-last');
 const cardEl         = document.getElementById('allergy-card');
 const template       = document.getElementById('allergy-template');
 const quickOverlay   = document.getElementById('quick-overlay');
@@ -132,6 +124,7 @@ btnAdd.addEventListener('click', () => addAllergyEntry(null));
 btnGenerate.addEventListener('click', generateCard);
 btnBack.addEventListener('click', goBack);
 btnShowCard.addEventListener('click', enterQuickShow);
+btnShowLast.addEventListener('click', showLastCard);
 quickOverlay.addEventListener('click', exitQuickShow);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') exitQuickShow(); });
 
@@ -310,8 +303,19 @@ function loadProfile() {
     if (Array.isArray(data.allergens) && data.allergens.length > 0) {
       removeEmptyState();
       data.allergens.forEach(a => addAllergyEntry(a));
+      // Show the "Show Last Card" shortcut since we have a saved profile
+      if (btnShowLast) btnShowLast.style.display = 'block';
     }
   } catch (_) {}
+}
+
+// ===== SHOW LAST CARD (one-tap shortcut from Screen 1) =====
+function showLastCard() {
+  const data = collectData();
+  if (data.allergens.length === 0) return;
+  renderCard(data);
+  // Go straight to Quick Show without switching screens
+  enterQuickShow();
 }
 
 // ===== GENERATE CARD =====

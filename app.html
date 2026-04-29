@@ -3,16 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Build a bilingual Thai-English food allergy card for Thailand. Show restaurant staff exactly what you can't eat — works offline, no sign-up needed." />
   <meta name="theme-color" content="#CC0000" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="AllergyCard TH" />
-  <title>AllergyCard TH</title>
+  <meta property="og:title" content="AllergyCard TH — Food Allergy Card for Thailand" />
+  <meta property="og:description" content="Build a bilingual Thai-English food allergy card in seconds. Show it to any Thai restaurant or street vendor. Free, offline-ready." />
+  <meta property="og:type" content="website" />
+  <title>AllergyCard TH — Build Your Card</title>
   <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- Singleton datalist — shared by all allergen entries via list="allergen-suggestions" -->
+  <datalist id="allergen-suggestions">
+    <option value="Shellfish">
+    <option value="Nuts">
+    <option value="Gluten">
+    <option value="Peanuts">
+    <option value="Dairy">
+    <option value="Eggs">
+    <option value="Soy">
+    <option value="Wheat">
+  </datalist>
+
+  <!-- APP NAV -->
+  <nav class="app-nav" id="app-nav">
+    <div class="app-nav-inner">
+      <a href="/" class="app-nav-logo">AllergyCard <span>TH</span></a>
+      <a href="/thailand.html" class="app-nav-link">Thailand Guide</a>
+    </div>
+  </nav>
 
   <!-- SCREEN 1: Profile Builder -->
   <div id="screen-profile" class="screen active">
@@ -42,6 +67,7 @@
       </div>
 
       <button id="btn-generate" class="btn-generate" disabled>Generate My Card →</button>
+      <button id="btn-show-last" class="btn-show-last" style="display:none">Show Last Card 👁</button>
     </div>
   </div>
 
@@ -72,16 +98,6 @@
         <div class="field-group">
           <label class="field-label">Allergen</label>
           <input type="text" class="field-input allergen-name" placeholder="e.g. Shellfish, Peanuts, Dairy" list="allergen-suggestions" autocomplete="off" />
-          <datalist id="allergen-suggestions">
-            <option value="Shellfish">
-            <option value="Nuts">
-            <option value="Gluten">
-            <option value="Peanuts">
-            <option value="Dairy">
-            <option value="Eggs">
-            <option value="Soy">
-            <option value="Wheat">
-          </datalist>
         </div>
         <div class="field-group">
           <label class="field-label">Severity</label>
