@@ -1,4 +1,4 @@
-const CACHE_NAME = 'allergycard-th-v3';
+const CACHE = 'bookofabe-v1';
 const APP_SHELL = [
   '/',
   '/app.html',
