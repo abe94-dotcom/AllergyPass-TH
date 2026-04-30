@@ -1,301 +1,644 @@
-/* ===== RESET & BASE ===== */
+/* ============================================================
+   THE BOOK OF ABE — style.css
+   Palette: Midnight & Terracotta
+   Fonts: Playfair Display (headings) + DM Sans (body)
+   Last updated: v1.0
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   GOOGLE FONTS IMPORT
+   ------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500&display=swap');
+
+
+/* ------------------------------------------------------------
+   DESIGN TOKENS — Site-wide
+   ------------------------------------------------------------ */
+:root {
+  /* Brand palette */
+  --midnight:     #1C2340;   /* primary dark — nav, headings, buttons */
+  --midnight-mid: #2C3560;   /* hover state for midnight */
+  --terra:        #E8805A;   /* terracotta accent — eyebrows, highlights */
+  --terra-light:  #F5C4B0;   /* soft terracotta — hover tints */
+  --terra-dark:   #C4623E;   /* pressed / active terracotta */
+
+  /* Neutrals */
+  --bg:           #FAF8F5;   /* page background */
+  --bg-card:      #FFFFFF;   /* card / panel surface */
+  --bg-section:   #F2EEE9;   /* alternate section background */
+  --text:         #111111;   /* primary body text */
+  --text-mid:     #444444;   /* secondary text */
+  --text-muted:   #777777;   /* captions, labels */
+  --border:       #E0DBD4;   /* default borders */
+  --border-dark:  #C8C2BA;   /* stronger borders */
+
+  /* Tool — Allergy Card (never touches brand palette) */
+  --red:          #CC0000;
+  --red-dark:     #AA0000;
+  --orange:       #E06000;   /* Severe severity */
+  --yellow:       #B08000;   /* Intolerance severity */
+
+  /* Layout */
+  --max-site:     720px;     /* site content max-width */
+  --max-card:     390px;     /* allergy card max-width */
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:    'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Radius */
+  --radius-sm:    6px;
+  --radius-md:    10px;
+  --radius-lg:    16px;
+  --radius-pill:  999px;
+
+  /* Transitions */
+  --ease:         0.18s ease;
+}
+
+
+/* ------------------------------------------------------------
+   RESET & BASE
+   ------------------------------------------------------------ */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-:root {
-  --red: #CC0000;
-  --red-dark: #AA0000;
-  --orange: #E06000;
-  --yellow: #B08000;
-  --black: #111111;
-  --gray-dark: #444444;
-  --gray-mid: #777777;
-  --gray-light: #AAAAAA;
-  --border: #DDDDDD;
-  --bg: #F5F5F5;
-  --white: #FFFFFF;
-  --max-w: 390px;
-  --font: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-html, body {
-  height: 100%;
-  width: 100%;
-  font-family: var(--font);
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text);
   background: var(--bg);
-  color: var(--black);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== SCREEN TRANSITIONS ===== */
-.screen {
-  position: fixed;
-  inset: 0;
-  top: 45px; /* height of app-nav */
-  overflow-y: auto;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  will-change: opacity;
+img {
+  display: block;
+  max-width: 100%;
 }
 
-.screen.active {
-  opacity: 1;
-  pointer-events: all;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* ===== APP NAV ===== */
-.app-nav {
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea, select {
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+
+/* ------------------------------------------------------------
+   TYPOGRAPHY — Site
+   ------------------------------------------------------------ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--midnight);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 2.8rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1rem; font-weight: 500; font-family: var(--font-body); }
+
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--terra);
+}
+
+.lead {
+  font-size: 1.125rem;
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+
+strong { font-weight: 500; }
+
+
+/* ------------------------------------------------------------
+   LAYOUT — Site containers
+   ------------------------------------------------------------ */
+.container {
+  width: 100%;
+  max-width: var(--max-site);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.section--alt {
+  background: var(--bg-section);
+}
+
+
+/* ------------------------------------------------------------
+   NAVIGATION
+   ------------------------------------------------------------ */
+.site-nav {
   position: sticky;
   top: 0;
-  z-index: 200;
-  background: var(--white);
+  z-index: 100;
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
+  height: 60px;
+  display: flex;
+  align-items: center;
 }
 
-.app-nav-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 10px 16px;
+.site-nav .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 1rem;
 }
 
-.app-nav-logo {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--black);
-  text-decoration: none;
-  letter-spacing: -0.3px;
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--midnight);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
 }
 
-.app-nav-logo span {
-  color: var(--red);
+.nav-logo:hover {
+  color: var(--terra);
+  transition: color var(--ease);
 }
 
-.app-nav-link {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--gray-mid);
-  text-decoration: none;
-  padding: 5px 10px;
-  border-radius: 6px;
-  transition: color 0.15s;
-}
-
-.app-nav-link:hover { color: var(--black); }
-
-/* ===== SCREEN 1: PROFILE BUILDER ===== */
-.profile-container {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 32px 20px 48px;
-  min-height: 100vh;
+.nav-links {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.profile-header {
+.nav-links a {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-mid);
+  transition: color var(--ease);
+}
+
+.nav-links a:hover {
+  color: var(--midnight);
+}
+
+.nav-cta {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--bg);
+  background: var(--midnight);
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-pill);
+  transition: background var(--ease);
+  white-space: nowrap;
+}
+
+.nav-cta:hover {
+  background: var(--midnight-mid);
+}
+
+/* Mobile nav — hide links, keep logo + cta */
+@media (max-width: 540px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   HERO — Homepage
+   ------------------------------------------------------------ */
+.hero {
+  padding: 5rem 0 4rem;
   text-align: center;
-  padding-bottom: 8px;
 }
 
-.profile-icon {
-  font-size: 36px;
-  margin-bottom: 10px;
+.hero .eyebrow {
+  margin-bottom: 1rem;
 }
 
-.profile-title {
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: var(--black);
+.hero h1 {
+  margin-bottom: 1.25rem;
 }
 
-.profile-title .red {
+.hero h1 em {
+  font-style: italic;
+  color: var(--terra);
+}
+
+.hero .lead {
+  max-width: 480px;
+  margin: 0 auto 2rem;
+}
+
+.btn-row {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+/* ------------------------------------------------------------
+   BUTTONS — Site
+   ------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-pill);
+  transition: background var(--ease), color var(--ease), border-color var(--ease);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--midnight);
+  color: var(--bg);
+  border: 1.5px solid var(--midnight);
+}
+
+.btn--primary:hover {
+  background: var(--midnight-mid);
+  border-color: var(--midnight-mid);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--midnight);
+  border: 1.5px solid var(--border-dark);
+}
+
+.btn--secondary:hover {
+  border-color: var(--midnight);
+}
+
+.btn--terra {
+  background: var(--terra);
+  color: #fff;
+  border: 1.5px solid var(--terra);
+}
+
+.btn--terra:hover {
+  background: var(--terra-dark);
+  border-color: var(--terra-dark);
+}
+
+
+/* ------------------------------------------------------------
+   CONTENT PILLAR CARDS
+   ------------------------------------------------------------ */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pillar-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: border-color var(--ease), transform var(--ease);
+}
+
+.pillar-card:hover {
+  border-color: var(--border-dark);
+  transform: translateY(-2px);
+}
+
+.pillar-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1;
+}
+
+.pillar-card h3 {
+  font-size: 1rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--midnight);
+  margin-bottom: 0.4rem;
+}
+
+.pillar-card p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.55;
+}
+
+
+/* ------------------------------------------------------------
+   ALLERGY CARD TOOL BUBBLE
+   ------------------------------------------------------------ */
+.tool-bubble {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: 2rem 0;
+  background: var(--bg-card);
+}
+
+.tool-bubble__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tool-bubble__title {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--midnight);
+}
+
+.tool-bubble__badge {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: #CC000015;
   color: var(--red);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.profile-subtitle {
-  margin-top: 4px;
-  font-size: 14px;
-  color: var(--gray-mid);
+.tool-bubble__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem;
+  flex-wrap: wrap;
 }
 
-/* ===== FIELD GROUPS ===== */
-.field-group {
+.tool-bubble__desc {
+  font-size: 0.875rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+  flex: 1;
+  min-width: 200px;
+}
+
+.tool-bubble__cta {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-pill);
+  background: var(--red);
+  color: #fff;
+  border: none;
+  transition: background var(--ease);
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.tool-bubble__cta:hover {
+  background: var(--red-dark);
+}
+
+
+/* ------------------------------------------------------------
+   FOOTER
+   ------------------------------------------------------------ */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+  margin-top: 4rem;
+}
+
+.site-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--midnight);
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.footer-links a {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  transition: color var(--ease);
+}
+
+.footer-links a:hover {
+  color: var(--midnight);
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  width: 100%;
+}
+
+@media (max-width: 540px) {
+  .site-footer .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* ============================================================
+   ALLERGY CARD APP — styles below this line
+   These are ISOLATED from the site palette above.
+   Do not use --midnight or --terra inside app components.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   APP LAYOUT
+   ------------------------------------------------------------ */
+.app-wrap {
+  min-height: 100vh;
+  background: #F5F5F5;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+}
+
+.app-header {
+  background: var(--red);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-header h1 {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.app-main {
+  flex: 1;
+  padding: 1.5rem 1.25rem;
+  max-width: var(--max-card);
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+/* ------------------------------------------------------------
+   PROFILE BUILDER — Screen 1
+   ------------------------------------------------------------ */
+.field-group {
+  margin-bottom: 1.25rem;
 }
 
 .field-label {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--gray-dark);
-}
-
-.optional {
-  font-weight: 400;
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--gray-light);
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 0.35rem;
 }
 
 .field-input {
-  font-family: var(--font);
-  font-size: 15px;
-  padding: 11px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
-  background: var(--white);
-  color: var(--black);
-  outline: none;
-  transition: border-color 0.15s;
   width: 100%;
-  appearance: none;
-  -webkit-appearance: none;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #DDDDDD;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  background: #fff;
+  color: var(--text);
+  transition: border-color var(--ease);
 }
 
 .field-input:focus {
+  outline: none;
   border-color: var(--red);
 }
 
-select.field-input {
+.allergen-block {
+  background: #fff;
+  border: 1px solid #DDDDDD;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.allergen-block__remove {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 1.25rem;
+  color: #AAAAAA;
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 36px;
-}
-
-/* ===== ALLERGENS SECTION ===== */
-.allergens-section {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.allergens-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.allergens-label {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--gray-dark);
-}
-
-.btn-add {
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--red);
-  background: none;
-  border: 1.5px solid var(--red);
-  border-radius: 6px;
-  padding: 6px 12px;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-
-.btn-add:hover {
-  background: var(--red);
-  color: var(--white);
-}
-
-.allergens-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.allergens-empty {
-  text-align: center;
-  padding: 24px;
-  border: 1.5px dashed var(--border);
-  border-radius: 8px;
-  color: var(--gray-light);
-  font-size: 14px;
-}
-
-.allergy-entry {
-  background: var(--white);
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.allergy-entry-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  background: #F9F9F9;
-  border-bottom: 1px solid var(--border);
-}
-
-.allergy-entry-num {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--gray-mid);
-}
-
-.btn-remove-allergy {
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--gray-mid);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 2px 6px;
+  line-height: 1;
+  padding: 0.1rem 0.25rem;
   border-radius: 4px;
-  transition: color 0.15s, background 0.15s;
+  transition: color var(--ease);
 }
 
-.btn-remove-allergy:hover {
+.allergen-block__remove:hover {
   color: var(--red);
-  background: #FFF0F0;
 }
 
-.allergy-fields {
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* ===== GENERATE BUTTON ===== */
-.btn-generate {
-  font-family: var(--font);
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--white);
-  background: var(--red);
-  border: none;
-  border-radius: 10px;
-  padding: 16px;
-  cursor: pointer;
+.severity-select {
   width: 100%;
-  letter-spacing: 0.3px;
-  transition: background 0.15s, opacity 0.15s;
-  margin-top: 4px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #DDDDDD;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  background: #fff;
+  color: var(--text);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.severity-select:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+.btn-add-allergen {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--red);
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition: opacity var(--ease);
+}
+
+.btn-add-allergen:hover {
+  opacity: 0.75;
+}
+
+.btn-generate {
+  display: block;
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--red);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  text-align: center;
+  margin-top: 1.5rem;
+  transition: background var(--ease);
 }
 
 .btn-generate:hover:not(:disabled) {
@@ -303,508 +646,276 @@ select.field-input {
 }
 
 .btn-generate:disabled {
-  opacity: 0.35;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
-/* Show Last Card shortcut */
-.btn-show-last {
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--gray-dark);
-  background: none;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  padding: 13px 16px;
-  cursor: pointer;
-  width: 100%;
-  letter-spacing: 0.2px;
-  transition: border-color 0.15s, color 0.15s;
-  margin-top: -8px;
-}
 
-.btn-show-last:hover {
-  border-color: var(--gray-mid);
-  color: var(--black);
-}
-
-/* ===== SCREEN 2: CARD ===== */
-#screen-card {
-  background: #EBEBEB;
-}
-
-.card-wrapper {
-  max-width: var(--max-w);
+/* ------------------------------------------------------------
+   ALLERGY CARD — Screen 2
+   ------------------------------------------------------------ */
+.card-wrap {
+  background: #fff;
+  max-width: var(--max-card);
   margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  padding: 1.25rem;
+  border: 1.5px solid #111;
+  border-radius: var(--radius-md);
 }
 
-.card-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px 6px;
-}
-
-.btn-back {
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--gray-dark);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px 10px;
-  letter-spacing: 0.2px;
-}
-
-.btn-back:hover { color: var(--red); }
-
-.btn-show-card {
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--white);
-  background: var(--red);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  cursor: pointer;
-  letter-spacing: 0.2px;
-  transition: background 0.15s;
-}
-
-.btn-show-card:hover { background: var(--red-dark); }
-
-/* ===== WALLET PASS CARD ===== */
-.allergy-card {
-  background: var(--white);
-  margin: 0 10px 28px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.14), 0 1px 3px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-}
-
-/* Card face wrapper */
-.card-face {
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── FRONT FACE ── */
-
-/* Red header bar */
-.wp-header {
-  background: #D32F2F;
-  padding: 16px 18px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.wp-header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.wp-warning-icon {
-  font-size: 28px;
-  color: #FFD600;
-  font-style: normal;
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.wp-header-text { display: flex; flex-direction: column; gap: 2px; }
-
-.wp-header-en {
-  font-size: 13px;
-  font-weight: 900;
-  color: rgba(255,255,255,0.9);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.wp-header-thai {
-  font-size: 20px;
-  font-weight: 900;
-  color: #FFFFFF;
-  line-height: 1.1;
-}
-
-.wp-name-tag {
-  background: rgba(0,0,0,0.22);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  white-space: nowrap;
-  letter-spacing: 0.3px;
-  flex-shrink: 0;
-}
-
-/* NO section */
-.wp-no-section {
-  padding: 16px 18px 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.wp-no-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.wp-no-badge {
-  background: #111111;
-  color: #FFFFFF;
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  padding: 4px 10px;
-  border-radius: 4px;
-}
-
-.wp-no-label-thai {
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--black);
-}
-
-/* Allergen grid */
-.wp-allergen-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.wp-allergen-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 11px 0;
-  border-bottom: 1px solid #F0F0F0;
-}
-
-.wp-allergen-row:last-child { border-bottom: none; }
-
-.wp-allergen-emoji {
-  font-size: 28px;
-  line-height: 1;
-  flex-shrink: 0;
-  width: 36px;
+.card-header {
   text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--red);
+  margin-bottom: 1rem;
 }
 
-.wp-allergen-names {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+.card-alert-icon {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.4rem;
 }
 
-.wp-allergen-thai {
-  font-size: 22px;
-  font-weight: 900;
-  color: #111111;
-  line-height: 1.15;
-}
-
-.wp-allergen-en {
-  font-size: 13px;
-  font-weight: 500;
-  color: #777777;
-  text-transform: capitalize;
-}
-
-/* Severity dot */
-.wp-sev-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.sev-dot-anaphylactic { background: #D32F2F; box-shadow: 0 0 0 3px rgba(211,47,47,0.2); }
-.sev-dot-severe       { background: #E06000; box-shadow: 0 0 0 3px rgba(224,96,0,0.2); }
-.sev-dot-intolerance  { background: #B08000; box-shadow: 0 0 0 3px rgba(176,128,0,0.2); }
-
-/* Copy line */
-.wp-copy-line {
-  margin: 4px 18px 0;
-  padding: 9px 14px;
-  background: #F5F5F5;
-  border-radius: 6px;
-  font-size: 14px;
-  color: #333;
-  font-weight: 500;
-  line-height: 1.5;
-}
-
-.wp-copy-no {
-  font-weight: 900;
-  color: #D32F2F;
-  margin-right: 4px;
-  letter-spacing: 1px;
-}
-
-/* Warning bar */
-.wp-warning-bar {
-  display: flex;
-  align-items: flex-start;
-  gap: 7px;
-  margin: 10px 18px 0;
-  padding: 9px 12px;
-  background: #FFF8E1;
-  border: 1px solid #F59E0B;
-  border-radius: 6px;
-}
-
-.wp-warning-icon-sm {
-  font-size: 14px;
-  color: #F59E0B;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.wp-warning-text {
-  font-size: 12px;
-  font-weight: 600;
-  color: #7A5500;
-  line-height: 1.4;
-}
-
-/* Front footer */
-.wp-front-footer {
-  padding: 14px 18px 16px;
-  border-top: 2px solid #D32F2F;
-  margin-top: 12px;
-  background: #FAFAFA;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.wp-instruct-thai {
-  font-size: 18px;
-  font-weight: 800;
-  color: #111111;
-}
-
-.wp-instruct-en {
-  font-size: 12px;
-  font-weight: 500;
-  color: #777777;
-}
-
-/* ── DIVIDER ── */
-.wp-divider {
-  display: flex;
-  align-items: center;
-  padding: 0 18px;
-  background: #D32F2F;
-  gap: 10px;
-  border-top: 1px solid rgba(255,255,255,0.15);
-}
-
-.wp-divider-label {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: rgba(255,255,255,0.75);
-  padding: 7px 0;
-  text-transform: uppercase;
-}
-
-/* ── BACK FACE ── */
-.card-back {
-  background: #FAFAFA;
-  padding: 14px 18px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.wp-detail-block {
-  background: var(--white);
-  border: 1px solid #E8E8E8;
-  border-radius: 8px;
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.wp-detail-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.wp-detail-emoji { font-size: 22px; flex-shrink: 0; }
-
-.wp-detail-title {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.wp-detail-thai {
-  font-size: 17px;
-  font-weight: 800;
-  color: #111111;
-  line-height: 1.1;
-}
-
-.wp-detail-en {
-  font-size: 12px;
-  color: #888888;
-  font-weight: 500;
-}
-
-.wp-detail-sev {
-  font-size: 11px;
+.card-thai-title {
+  font-size: 1.75rem;
   font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 4px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.sev-tag-anaphylactic { background: #FFE5E5; color: #AA0000; }
-.sev-tag-severe       { background: #FFF3E0; color: #995500; }
-.sev-tag-intolerance  { background: #FFFDE7; color: #776600; }
-
-/* Trigger chips */
-.wp-trigger-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.wp-trigger-chip {
-  background: #F3F3F3;
-  border: 1px solid #E0E0E0;
-  border-radius: 4px;
-  padding: 4px 9px;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.wp-trigger-thai {
-  font-size: 14px;
-  font-weight: 700;
-  color: #111111;
+  color: var(--red);
+  font-family: var(--font-body);
   line-height: 1.2;
 }
 
-.wp-trigger-en {
-  font-size: 10px;
-  color: #888888;
-  font-weight: 400;
+.card-en-subtitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #444;
+  margin-top: 0.2rem;
 }
 
-/* Hidden row */
-.wp-hidden-row {
+.card-name-strip {
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.card-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+
+.allergen-entry {
+  border: 1px solid #DDDDDD;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.allergen-entry__thai {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1.2;
+}
+
+.allergen-entry__en {
+  font-size: 0.875rem;
+  color: #444;
+  margin-top: 0.15rem;
+}
+
+.severity-badge {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  margin-top: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.severity-badge--anaphylactic { background: #CC0000; color: #fff; }
+.severity-badge--severe       { background: var(--orange); color: #fff; }
+.severity-badge--intolerance  { background: var(--yellow); color: #fff; }
+
+.trigger-list {
   display: flex;
-  align-items: baseline;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.trigger-tag {
+  font-size: 0.75rem;
+  background: #F5F5F5;
+  border: 1px solid #DDDDDD;
+  border-radius: var(--radius-pill);
+  padding: 0.15rem 0.55rem;
+  color: #333;
+}
+
+.hidden-ingredients {
+  background: #FFF8F8;
+  border-left: 3px solid var(--red);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 0.6rem 0.75rem;
+  margin: 0.75rem 0;
+  font-size: 0.8125rem;
+  color: #444;
+}
+
+.global-warnings {
+  background: #FFF8F8;
+  border: 1px solid #F0CCCC;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  margin: 0.75rem 0;
+}
+
+.global-warnings__thai {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 0.4rem;
+}
+
+.card-footer-confirm {
+  border-top: 1px solid #DDDDDD;
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+.card-footer-thai {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.card-footer-en {
+  font-size: 0.75rem;
+  color: #777;
+  margin-top: 0.15rem;
+}
+
+.emergency-contact {
+  margin-top: 0.6rem;
+}
+
+.emergency-thai {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.emergency-en {
+  font-size: 0.6875rem;
+  color: #777;
+}
+
+
+/* ------------------------------------------------------------
+   CARD ACTIONS (screen 2 buttons)
+   ------------------------------------------------------------ */
+.card-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
   flex-wrap: wrap;
 }
 
-.wp-hidden-label {
-  font-size: 11px;
-  font-weight: 800;
-  color: #999999;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  flex-shrink: 0;
-}
-
-.wp-hidden-chips {
-  font-size: 12px;
-  color: #666666;
+.btn-card-action {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
   font-weight: 500;
+  text-align: center;
+  transition: background var(--ease);
 }
 
-/* Polite note */
-.wp-polite {
-  padding: 10px 14px;
-  background: #F0F4E8;
-  border: 1px solid #C5D49A;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.btn-card-action--edit {
+  background: #F5F5F5;
+  color: #333;
+  border: 1px solid #DDDDDD;
 }
 
-.wp-polite-thai {
-  font-size: 15px;
-  font-weight: 700;
-  color: #4F5D2F;
+.btn-card-action--edit:hover {
+  background: #EBEBEB;
 }
 
-.wp-polite-en {
-  font-size: 12px;
-  color: #6B7D3D;
-  font-weight: 500;
+.btn-card-action--show {
+  background: var(--red);
+  color: #fff;
+  border: 1px solid var(--red);
 }
 
-/* Emergency */
-.wp-emergency {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 14px;
-  background: #FFE5E5;
-  border: 1.5px solid #FFBBBB;
-  border-radius: 8px;
+.btn-card-action--show:hover {
+  background: var(--red-dark);
 }
 
-.wp-em-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
 
-.wp-em-thai {
-  font-size: 15px;
-  font-weight: 800;
-  color: #AA0000;
-}
-
-.wp-em-en {
-  font-size: 12px;
-  color: #AA0000;
-  font-weight: 500;
-  opacity: 0.8;
-}
-
-/* ===== QUICK SHOW OVERLAY ===== */
-.quick-overlay {
+/* ------------------------------------------------------------
+   QUICK SHOW OVERLAY
+   ------------------------------------------------------------ */
+#quick-overlay {
+  display: none;
   position: fixed;
   inset: 0;
-  background: #FFFFFF;
+  background: #fff;
   z-index: 9999;
   overflow-y: auto;
-  display: none;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+#quick-overlay.active {
+  display: block;
+}
+
+
+/* ------------------------------------------------------------
+   UTILITY CLASSES
+   ------------------------------------------------------------ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
-.quick-overlay.active { display: block; }
+.text-center { text-align: center; }
+.mt-1  { margin-top: 0.5rem; }
+.mt-2  { margin-top: 1rem; }
+.mt-3  { margin-top: 1.5rem; }
+.mb-1  { margin-bottom: 0.5rem; }
+.mb-2  { margin-bottom: 1rem; }
+.mb-3  { margin-bottom: 1.5rem; }
 
-.quick-overlay .allergy-card {
-  margin: 0;
-  border-radius: 0;
-  border: none;
-  box-shadow: none;
-  min-height: 100vh;
+
+/* ------------------------------------------------------------
+   RESPONSIVE — Mobile first, one breakpoint
+   ------------------------------------------------------------ */
+@media (max-width: 600px) {
+  .hero { padding: 3rem 0 2.5rem; }
+  .section { padding: 2.5rem 0; }
+  .pillar-grid { grid-template-columns: 1fr; }
+  .tool-bubble__body { flex-direction: column; align-items: flex-start; }
+  h1 { font-size: 1.875rem; }
+  h2 { font-size: 1.375rem; }
 }
+

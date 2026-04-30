@@ -1,23 +1,21 @@
 {
   "name": "The Book of Abe — Allergy Card",
   "short_name": "AllergyCard",
-  "description": "Thailand food allergy card generator for travellers",
+  "description": "Bilingual Thai and English food allergy card for Thailand. Build once, show anywhere.",
   "start_url": "/app.html",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#FFFFFF",
   "theme_color": "#CC0000",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
