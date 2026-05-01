@@ -96,42 +96,55 @@
       font-size: 17px;
     }
 
-    /* ── Nav — copy of landing page nav ── */
+    /* ── Nav — Book of Abe site nav ── */
     nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--olive-dk);
+      background: #FAF8F5;
+      border-bottom: 1px solid #E0DBD4;
+      height: 60px;
+      display: flex;
+      align-items: center;
       padding: 0 20px;
+    }
+    nav .nav-inner {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 52px;
+      gap: 1rem;
     }
     nav a.logo {
-      color: #fff;
+      font-family: Georgia, 'Times New Roman', serif;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 1.05rem;
+      color: #1C2340;
       text-decoration: none;
-      letter-spacing: -0.3px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
     }
-    nav .nav-links { display: flex; align-items: center; gap: 24px; }
+    nav a.logo:hover { color: #E8805A; }
+    nav .nav-links { display: flex; align-items: center; gap: 1.5rem; }
     nav .nav-links a {
-      color: rgba(255,255,255,0.85);
+      color: #444;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 0.875rem;
     }
-    nav .nav-links a:hover { color: #fff; }
+    nav .nav-links a:hover { color: #1C2340; }
     nav .nav-cta {
-      background: #fff;
-      color: var(--olive-dk);
-      font-weight: 600;
-      font-size: 13px;
-      padding: 7px 16px;
-      border-radius: 6px;
+      background: #1C2340;
+      color: #FAF8F5;
+      font-weight: 500;
+      font-size: 0.8125rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
       text-decoration: none;
       white-space: nowrap;
     }
+    nav .nav-cta:hover { background: #2C3560; }
 
     /* ── Page layout ── */
     .page-wrap {
@@ -289,20 +302,23 @@
     @media (max-width: 480px) {
       body { font-size: 16px; }
       .article-header { padding: 32px 0 24px; }
-      .nav-links a:not(.nav-cta) { display: none; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ── Nav (matches site nav) ── -->
+  <!-- ── Nav ── -->
   <nav>
-    <a class="logo" href="/">AllergyCard TH</a>
-    <div class="nav-links">
-      <a href="/thailand.html">Thailand</a>
-      <a href="/blog/" style="color:rgba(255,255,255,0.6); pointer-events:none;">Blog</a>
-      <a class="nav-cta" href="/app.html">Create Card</a>
+    <div class="nav-inner">
+      <a class="logo" href="/">The Book of Abe</a>
+      <div class="nav-links">
+        <a href="/blog/food/">Food</a>
+        <a href="/blog/expat-life/">Expat life</a>
+        <a href="/blog/things-to-do/">Things to do</a>
+      </div>
+      <a class="nav-cta" href="/allergy-card/">Allergy card</a>
     </div>
   </nav>
 
@@ -312,7 +328,7 @@
     <header class="article-header">
       <span class="article-tag">Street Food Guide</span>
       <h1>Can You Safely Eat Street Food in Thailand with Food Allergies?</h1>
-      <p class="article-meta">By AllergyCard TH &nbsp;·&nbsp; Thailand street food allergy guide</p>
+      <p class="article-meta">By Abe &nbsp;·&nbsp; Thailand street food allergy guide</p>
     </header>
 
     <!-- ── Article body ── -->
@@ -545,7 +561,7 @@
   </div><!-- /page-wrap -->
 
   <footer>
-    <p><a href="/">AllergyCard TH</a> &nbsp;·&nbsp; <a href="/app.html">Create Your Card</a> &nbsp;·&nbsp; <a href="/thailand.html">Thailand Food Guide</a></p>
+    <p><a href="/">The Book of Abe</a> &nbsp;·&nbsp; <a href="/blog/food/">Food guides</a> &nbsp;·&nbsp; <a href="/allergy-card/">Allergy card</a></p>
     <p style="margin-top:10px;">Free · Offline · No sign-up required</p>
   </footer>
 
