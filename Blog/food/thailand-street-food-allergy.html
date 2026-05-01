@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Can You Eat Street Food in Thailand with a Food Allergy? (A Practical Guide)</title>
+  <meta name="description" content="Traveling Thailand with a food allergy doesn't mean skipping street food entirely. Here's how to read the risk, spot safer stalls, and eat with confidence — not anxiety." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://allergycard.th/blog/thailand-street-food-allergy" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Can You Eat Street Food in Thailand with a Food Allergy?" />
+  <meta property="og:description" content="Peanuts, fish sauce, shrimp paste — Thai street food has real hidden risks. Here's how to navigate it strategically, not avoid it entirely." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://allergycard.th/blog/thailand-street-food-allergy" />
+
+  <!-- Article schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Can You Safely Eat Street Food in Thailand with Food Allergies?",
+    "description": "A practical guide for travelers with food allergies on how to eat Thai street food safely — what to avoid, how to communicate, and when to skip the stall.",
+    "author": { "@type": "Organization", "name": "AllergyCard TH" },
+    "publisher": { "@type": "Organization", "name": "AllergyCard TH" },
+    "mainEntityOfPage": "https://allergycard.th/blog/thailand-street-food-allergy"
+  }
+  </script>
+
+  <!-- FAQ schema for Google featured snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is Thai street food safe for people with peanut allergies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Some of it is, some of it isn't. Peanuts appear in many common dishes — pad thai, satay, som tam — but not in everything. Grilled meats, fresh fruit, and rice-based dishes without sauces tend to be lower risk. The bigger risk at street stalls is cross-contamination from shared woks and utensils, which can't be controlled regardless of what's in the dish itself."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you explain a food allergy to a Thai street food vendor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Written Thai is more reliable than spoken English. Showing a card or your phone screen with your allergy written in Thai, listing the specific ingredients to avoid rather than just the allergy category, is the clearest communication method available."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Thai food always contain fish sauce?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not always, but very often. Fish sauce is used in a majority of savory Thai dishes as a foundational seasoning. The exception is jay food (Buddhist vegetarian), which replaces it with soy sauce or mushroom-based sauces."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I eat pad thai with a peanut allergy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Standard pad thai includes crushed peanuts as a garnish, and many versions use peanut-containing sauces in the base. It is one of the higher-risk dishes for peanut allergy. At a busy street stall, cross-contamination is also a concern."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ── Design tokens — match landing page palette ── */
+    :root {
+      --bg:       #F4F1EA;
+      --olive:    #6B7D3D;
+      --olive-dk: #4F5D2F;
+      --olive-lt: #EEF2E5;
+      --red:      #CC0000;
+      --text:     #111111;
+      --gray:     #555555;
+      --border:   #D8D3C8;
+      --max:      680px;        /* Slightly narrower than landing pages — better reading line length */
+      --font:     system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    /* ── Nav — copy of landing page nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--olive-dk);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+    }
+    nav a.logo {
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    nav .nav-links { display: flex; align-items: center; gap: 24px; }
+    nav .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    nav .nav-links a:hover { color: #fff; }
+    nav .nav-cta {
+      background: #fff;
+      color: var(--olive-dk);
+      font-weight: 600;
+      font-size: 13px;
+      padding: 7px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* ── Page layout ── */
+    .page-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* ── Article header ── */
+    .article-header {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .article-tag {
+      display: inline-block;
+      background: var(--olive-lt);
+      color: var(--olive-dk);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .article-meta {
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    /* ── Article body ── */
+    .article-body { color: var(--text); }
+
+    .article-body p { margin-bottom: 20px; }
+
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 48px 0 14px;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      padding-top: 8px;
+      border-top: 2px solid var(--olive-lt);
+    }
+    .article-body h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 32px 0 10px;
+      color: var(--olive-dk);
+    }
+
+    .article-body ul, .article-body ol {
+      margin: 0 0 20px 20px;
+    }
+    .article-body li { margin-bottom: 8px; }
+    .article-body li:last-child { margin-bottom: 0; }
+
+    /* ── Inline CTA box ── */
+    .cta-box {
+      background: var(--olive-lt);
+      border: 1px solid #c9d8a4;
+      border-left: 4px solid var(--olive-dk);
+      border-radius: 8px;
+      padding: 20px 22px;
+      margin: 40px 0;
+    }
+    .cta-box p {
+      margin: 0 0 14px;
+      font-size: 15px;
+      color: #333;
+    }
+    .cta-box p:last-child { margin-bottom: 0; }
+    .cta-box a.btn {
+      display: inline-block;
+      background: var(--olive-dk);
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .cta-box a.btn:hover { background: var(--olive); }
+
+    /* ── Risk list (visual) ── */
+    .risk-tag {
+      display: inline-block;
+      background: #fdf0f0;
+      border: 1px solid #f0c8c8;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin: 0 4px 6px 0;
+    }
+
+    /* ── FAQ section ── */
+    .faq-section { margin-top: 56px; }
+    .faq-section h2 {
+      border-top: 2px solid var(--olive-lt);
+      padding-top: 8px;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .faq-a { font-size: 15px; color: #333; line-height: 1.65; }
+
+    /* ── Takeaways box ── */
+    .takeaways {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 26px;
+      margin: 48px 0 0;
+    }
+    .takeaways h2 {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+      font-size: 18px;
+    }
+    .takeaways ul { margin: 16px 0 0 18px; }
+    .takeaways li { margin-bottom: 10px; font-size: 15px; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--gray);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+    }
+    footer a { color: var(--olive); text-decoration: none; }
+
+    /* ── Mobile ── */
+    @media (max-width: 480px) {
+      body { font-size: 16px; }
+      .article-header { padding: 32px 0 24px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Nav (matches site nav) ── -->
+  <nav>
+    <a class="logo" href="/">AllergyCard TH</a>
+    <div class="nav-links">
+      <a href="/thailand.html">Thailand</a>
+      <a href="/blog/" style="color:rgba(255,255,255,0.6); pointer-events:none;">Blog</a>
+      <a class="nav-cta" href="/app.html">Create Card</a>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+
+    <!-- ── Article header ── -->
+    <header class="article-header">
+      <span class="article-tag">Street Food Guide</span>
+      <h1>Can You Safely Eat Street Food in Thailand with Food Allergies?</h1>
+      <p class="article-meta">By AllergyCard TH &nbsp;·&nbsp; Thailand street food allergy guide</p>
+    </header>
+
+    <!-- ── Article body ── -->
+    <article class="article-body">
+
+      <p>Yes — but not without some strategy. Street food in Thailand is one of the genuinely great food experiences on the planet, and most travelers with allergies can participate in it. The key is understanding when the risk is manageable and when it isn't, rather than treating every cart as equally dangerous or equally safe.</p>
+
+      <p>This guide is honest about both sides. Thailand street food is not automatically riskier than a restaurant, and it's not automatically safer. The stall matters. The dish matters. Your allergen matters. And how clearly you can communicate matters a lot.</p>
+
+      <!-- ─────────────────────────────────── -->
+      <h2>Why Thailand Street Food Feels Risky for Allergy Travelers</h2>
+
+      <p>The anxiety is understandable. You're standing on a footpath somewhere in Yaowarat or Chatuchak, pointing at something sizzling in a wok, and you have no idea what's in the sauce. The vendor is busy. The menu is in Thai. There are five dishes going at once.</p>
+
+      <p>That scenario is genuinely harder than sitting in a restaurant where you can speak to a manager, read a menu slowly, or send something back.</p>
+
+      <p>But "harder" doesn't mean impossible. The people cooking at those carts have usually made the same three or four dishes for years. They know exactly what goes into them. The problem is almost never knowledge — it's communication.</p>
+
+      <!-- ─────────────────────────────────── -->
+      <h2>The Actual Risks: What Makes Thai Street Food Complicated</h2>
+
+      <h3>Peanuts Appear Constantly</h3>
+
+      <p>This is the allergen that causes the most anxiety, for good reason. Peanuts show up in:</p>
+      <ul>
+        <li><strong>Pad Thai</strong> — almost always includes crushed peanuts as a garnish, added at the end</li>
+        <li><strong>Satay sauces</strong></li>
+        <li><strong>Some curry pastes</strong></li>
+        <li><strong>Som tam (papaya salad)</strong> — frequently topped with peanuts and dried shrimp</li>
+        <li><strong>Stir-fry dishes</strong> in certain regions, particularly in the north</li>
+      </ul>
+
+      <p>The tricky part isn't the obvious peanuts you can see. It's the peanut oil used for frying, or the peanut sauce stirred into something before it reaches your plate.</p>
+
+      <h3>Fish Sauce and Shrimp Paste Are Everywhere</h3>
+
+      <p>Nam pla (fish sauce) and kapi (shrimp paste) are foundational ingredients in Thai cooking. Not decorative, not optional — foundational. They go into curries, soups, stir-fries, dipping sauces, and marinades. A dish can contain both and look completely unrelated to seafood.</p>
+
+      <p>If you have a shellfish allergy, this matters. Shrimp paste is made from fermented shrimp. Fish sauce is made from fermented fish. Neither is optional in the dishes they're used in, and neither is visible on the plate.</p>
+
+      <h3>Cross-Contamination at Street Stalls</h3>
+
+      <p>A busy street stall with one wok, one cutting board, and dozens of orders flying out is not a controlled environment. The same wok that just finished a peanut pad thai will be used for your dish 40 seconds later. The same utensils touch everything.</p>
+
+      <p>For mild intolerances, this may not matter much. For anaphylactic allergies, this is where street food becomes genuinely high risk — no matter what the vendor says about ingredients.</p>
+
+      <h3>Language Creates Real Gaps</h3>
+
+      <p>Most street vendors speak limited English. When you try to explain an allergy in English, there's a real chance of being misunderstood or reassured without the vendor fully grasping what you've asked.</p>
+
+      <p>"I cannot eat peanuts" sometimes gets heard as "I don't want peanuts on top." Those are very different things.</p>
+
+      <!-- ─────────────────────────────────── -->
+      <h2>When Street Food Is Lower Risk</h2>
+
+      <p>Not all stalls operate the same way. There are genuinely safer situations.</p>
+
+      <h3>Stalls That Specialize in One or Two Dishes</h3>
+
+      <p>A cart that only makes mango sticky rice, or only grills corn, or only serves fresh-cut fruit has a short, consistent ingredient list. The vendor knows every ingredient because they've made the same thing hundreds of times. Ask simply and specifically.</p>
+
+      <p>Contrast this with a stall offering eight dishes with multiple sauces, where the risk surface is much wider.</p>
+
+      <h3>Dishes with Visible, Simple Ingredients</h3>
+
+      <p>Some Thai street food is genuinely transparent. Grilled meats on skewers without sauce. Plain jasmine rice. Fresh fruit. Roti cooked plain with egg and sugar. Corn on the cob with butter and salt. These are low-complexity, and what you see is largely what you get.</p>
+
+      <h3>Markets Where You Can Observe the Cooking</h3>
+
+      <p>When you can stand and watch your food being prepared from raw ingredients, you can see what's going in. Watch the oil being used, watch what's added, watch whether they use shared utensils across dishes. Not always possible, but use it when it is.</p>
+
+      <h3>When the Vendor Responds with Specifics, Not Just Reassurance</h3>
+
+      <p>There's a difference between a vendor who waves their hand and says "no problem, no problem" and one who stops, considers your question, and either confirms the ingredients or tells you they're not sure. The second response is the more honest one. It means they actually thought about it.</p>
+
+      <!-- ─────────────────────────────────── -->
+      <h2>When to Avoid Street Food Entirely</h2>
+
+      <p>Be honest with yourself about your allergy severity.</p>
+
+      <p>If you carry an EpiPen and have had anaphylactic reactions before, the cross-contamination reality of most street stalls is a serious risk. No amount of communication fixes a shared wok.</p>
+
+      <p>High-risk scenarios worth skipping:</p>
+      <ul>
+        <li>Any dish known to contain your allergen (pad thai with a peanut allergy, for example)</li>
+        <li>Busy stalls with one wok serving multiple dishes</li>
+        <li>Dishes with complex sauces, pastes, or curries you can't verify</li>
+        <li>Situations where you cannot communicate your allergy clearly</li>
+      </ul>
+
+      <p>For anaphylactic allergies, restaurants with actual kitchen management — where you can speak to someone who controls the preparation environment — are a safer choice for most meals.</p>
+
+      <!-- ─────────────────────────────────── -->
+      <h2>How to Communicate Food Allergies at Thai Street Stalls</h2>
+
+      <p>This is where most guides stop at "just say it in Thai." That's necessary but not sufficient.</p>
+
+      <p>A few practical approaches that actually work:</p>
+
+      <ul>
+        <li><strong>Use written Thai, not spoken English.</strong> Showing a written card or your phone screen is more reliable than trying to pronounce allergy vocabulary correctly. Thai script is phonetically specific, and mispronunciation can change meaning entirely.</li>
+        <li><strong>Be specific about ingredients, not just the category.</strong> Instead of "I'm allergic to shellfish," naming the actual ingredients — shrimp, crab, shrimp paste, fish sauce — is more useful to a cook who doesn't think in allergy categories.</li>
+        <li><strong>Show the card before you order, not after.</strong> Handing over something explaining your allergy at the point of ordering gives the vendor the chance to tell you whether your dish is actually possible.</li>
+        <li><strong>Ask about oil and sauces specifically.</strong> Visible ingredients are easier to remove. Oil and premixed sauces are not. Both are where hidden allergens live.</li>
+      </ul>
+
+      <!-- ── Inline CTA ── -->
+      <div class="cta-box">
+        <p>One of the easiest ways to close the language gap is to carry your allergy information in written Thai. The AllergyCard TH generator lets you build a custom card listing your specific allergens, severity level, and the exact ingredients to avoid — formatted to show directly to vendors.</p>
+        <p>Free, offline, no sign-up required.</p>
+        <a class="btn" href="/app.html">Create Your Allergy Card</a>
+      </div>
+
+      <!-- ─────────────────────────────────── -->
+      <h2>Practical Decision Framework Before Ordering</h2>
+
+      <p>Ask yourself three questions before approaching any stall:</p>
+
+      <ol>
+        <li><strong>Does this dish commonly contain my allergen?</strong> Do a quick mental check before you even approach. If pad thai is a known risk for your peanut allergy, don't test it at a busy cart.</li>
+        <li><strong>Can I clearly explain what I need to avoid?</strong> If you have a written card in Thai, this is answerable. If you're relying on hand gestures, it's a risk.</li>
+        <li><strong>Is this stall single-dish or multi-dish?</strong> A cart making one thing is a better bet than one making eight.</li>
+      </ol>
+
+      <p>If all three work in your favor, the risk is manageable. If one or more don't, make a different choice. There is always another option in Thailand. Street food is not the only food.</p>
+
+      <!-- ─────────────────────────────────── -->
+      <h2>Lower-Risk Thai Street Food by Allergen</h2>
+
+      <p>This is not a universal guarantee. Ingredients vary by vendor, region, and day. But as general guidance:</p>
+
+      <h3>For peanut allergies</h3>
+      <ul>
+        <li>Fresh-cut fruit stalls (mango, pineapple, watermelon)</li>
+        <li>Grilled corn — check for unusual sauces</li>
+        <li>Plain grilled meats without sauce — skip the peanut dipping sauce</li>
+        <li>Roti cooked plain or with egg</li>
+      </ul>
+
+      <h3>For shellfish and seafood allergies</h3>
+      <ul>
+        <li>Fish sauce and shrimp paste appear in more dishes than you'd expect — even dishes that look vegetarian</li>
+        <li>Fresh fruit is safe</li>
+        <li>Specifically vegetarian jay food stalls (yellow flag) exclude fish sauce and shrimp paste entirely</li>
+      </ul>
+
+      <h3>For gluten sensitivity</h3>
+      <ul>
+        <li>Rice-based dishes without sauce (khao man gai, plain jasmine rice)</li>
+        <li>Note: soy sauce contains gluten and is common in stir-fry dishes</li>
+      </ul>
+
+      <h3>For dairy</h3>
+      <ul>
+        <li>Thai cooking is largely dairy-free in its base form</li>
+        <li>Be cautious with desserts and coffee drinks, which often use sweetened condensed milk</li>
+      </ul>
+
+      <!-- ─────────────────────────────────── -->
+      <h2>The Jay Food Option (Yellow Flag Stalls)</h2>
+
+      <p>Thailand has a parallel food system worth knowing about. Jay food (เจ) is traditional Chinese-Thai Buddhist cuisine that excludes all animal products, including fish sauce and shrimp paste. Jay stalls are marked with a yellow flag and yellow signage.</p>
+
+      <p>For travelers with shellfish or fish-based allergens, jay food stalls significantly reduce the hidden-ingredient risk. They're not designed with Western allergy frameworks in mind, but they operate without the fish sauce and shrimp paste that create most hidden allergen problems.</p>
+
+      <p>You'll find them more commonly in Bangkok's Chinatown (Yaowarat), Phuket Town, and during the annual Vegetarian Festival in October.</p>
+
+      <!-- ─────────────────────────────────── -->
+      <h2>Emergency Preparedness in Thailand</h2>
+
+      <p>This is the section people skip. Don't skip it.</p>
+
+      <ul>
+        <li><strong>Carry your medication.</strong> EpiPens, antihistamines, anything your doctor has prescribed. Bring more than you think you'll need. Pharmacies in Bangkok carry antihistamines easily, but epinephrine auto-injectors are harder to find reliably.</li>
+        <li><strong>Know the word for hospital.</strong> โรงพยาบาล (rohng paya-bahn). Save it in your phone phonetically.</li>
+        <li><strong>Bumrungrad International Hospital</strong> in Bangkok is the most internationally accessible private hospital, with English-speaking staff. Most tourist areas have at least one hospital with some English capability.</li>
+        <li><strong>Have your emergency contact information visible</strong> on your phone or on a physical card. If you're traveling alone and have a severe allergy, someone nearby needs to be able to act on your behalf.</li>
+      </ul>
+
+      <!-- ── FAQ ── -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <p class="faq-q">Is Thai street food safe for people with peanut allergies?</p>
+          <p class="faq-a">Some of it is, some of it isn't. Peanuts appear in many common dishes — pad thai, satay, som tam — but not in everything. Grilled meats, fresh fruit, and rice-based dishes without sauces tend to be lower risk. The bigger concern at street stalls is cross-contamination from shared woks and utensils, which can't be controlled regardless of what's in the dish itself.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">How do you explain a food allergy to a Thai street food vendor?</p>
+          <p class="faq-a">Written Thai is more reliable than spoken English. Showing a card or your phone screen with your allergy written in Thai — listing the specific ingredients to avoid, not just the allergy category — is the clearest communication method available. Saying "I'm allergic to peanuts" in English is less useful than showing ถั่วลิสง in writing.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Does Thai food always contain fish sauce?</p>
+          <p class="faq-a">Not always, but very often. Fish sauce is used in a majority of savory Thai dishes as a foundational seasoning. The exception is jay food (Buddhist vegetarian), which replaces it with soy sauce or mushroom-based sauces. If you have a fish or shellfish allergy and need to avoid fish sauce completely, jay food stalls marked with a yellow flag are your most reliable street food option.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Can I eat pad thai with a peanut allergy?</p>
+          <p class="faq-a">Standard pad thai includes crushed peanuts as a garnish, and many versions use peanut-containing sauces in the base. It's one of the higher-risk dishes for peanut allergy. At a busy street stall, cross-contamination is also a concern. At a proper restaurant where you can request preparation without peanuts and explain your allergy clearly, the risk is lower but not zero.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What is the best way to prepare for eating street food in Thailand with allergies?</p>
+          <p class="faq-a">Three things make a meaningful difference: knowing which dishes to avoid before you go, carrying your allergy information in written Thai, and keeping your emergency medication accessible at all times. A printed or digital allergy card in Thai removes the communication barrier that causes most of the real risk.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Are there street food options in Thailand that are completely allergy-safe?</p>
+          <p class="faq-a">"Completely safe" is hard to guarantee in any food environment. But fresh fruit stalls, plain grilled meats without sauce, and jay food stalls significantly reduce the common allergen risks. The simpler the dish and the fewer the ingredients, the lower the risk.</p>
+        </div>
+      </section>
+
+      <!-- ── Takeaways ── -->
+      <div class="takeaways">
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li>Street food in Thailand is not uniformly dangerous or safe — it depends on the stall, the dish, your allergen, and your ability to communicate.</li>
+          <li>Peanuts, fish sauce, and shrimp paste are the three hidden allergens that create the most problems for travelers.</li>
+          <li>Single-dish stalls with simple, visible cooking are lower risk than multi-dish stalls with complex sauces.</li>
+          <li>Cross-contamination at busy street stalls is a real concern for anaphylactic allergies, regardless of what the vendor says.</li>
+          <li>Written Thai is more reliable than spoken English for allergy communication.</li>
+          <li>Jay food stalls (yellow flag) are the most reliably fish-sauce-free and shrimp-paste-free option on the street.</li>
+          <li>Carry your emergency medication. Always.</li>
+        </ul>
+      </div>
+
+    </article>
+  </div><!-- /page-wrap -->
+
+  <footer>
+    <p><a href="/">AllergyCard TH</a> &nbsp;·&nbsp; <a href="/app.html">Create Your Card</a> &nbsp;·&nbsp; <a href="/thailand.html">Thailand Food Guide</a></p>
+    <p style="margin-top:10px;">Free · Offline · No sign-up required</p>
+  </footer>
+
+</body>
+</html>
