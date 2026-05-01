@@ -1,0 +1,11 @@
+{
+  "country": "thailand",
+  "status": "live",
+  "content_scope": "thailand-wide",
+  "primary_cities": ["Bangkok", "Chiang Mai", "Phuket", "Koh Samui", "Pattaya", "Hua Hin"],
+  "currency": "THB",
+  "emergency_number": "1669",
+  "healthcare_tier": "strong_private",
+  "supported_tools": ["allergypass"],
+  "future_tools": ["esim-finder", "area-guide", "first-week-checklist"]
+}
