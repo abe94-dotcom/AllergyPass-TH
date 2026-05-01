@@ -1,0 +1,53 @@
+{
+  "country": "thailand",
+  "language": "th",
+  "high_risk_allergens": [
+    {
+      "id": "fish_sauce",
+      "name_en": "Fish Sauce",
+      "name_th": "น้ำปลา",
+      "romanized": "nam pla",
+      "risk_level": "high",
+      "hidden_in": ["curries", "stir-fries", "soups", "dipping sauces", "fried rice"],
+      "thai_phrase_avoid": "ไม่ใส่น้ำปลา"
+    },
+    {
+      "id": "shrimp_paste",
+      "name_en": "Shrimp Paste",
+      "name_th": "กะปิ",
+      "romanized": "kapi",
+      "risk_level": "high",
+      "hidden_in": ["curry paste", "nam prik", "som tam", "stir-fries"],
+      "thai_phrase_avoid": "ไม่ใส่กะปิ"
+    },
+    {
+      "id": "peanuts",
+      "name_en": "Peanuts / Peanut Oil",
+      "name_th": "ถั่วลิสง",
+      "romanized": "thua lisong",
+      "risk_level": "high",
+      "hidden_in": ["pad thai", "satay sauce", "fried dishes", "garnishes"],
+      "thai_phrase_avoid": "แพ้ถั่วลิสง"
+    },
+    {
+      "id": "dried_shrimp",
+      "name_en": "Dried Shrimp",
+      "name_th": "กุ้งแห้ง",
+      "romanized": "kung haeng",
+      "risk_level": "medium",
+      "hidden_in": ["som tam", "fried rice", "morning glory stir-fry", "noodle dishes"],
+      "thai_phrase_avoid": "ไม่ใส่กุ้งแห้ง"
+    }
+  ],
+  "emergency_phrases": [
+    { "situation": "severe allergy", "thai": "แพ้อาหารรุนแรง", "romanized": "pae ahan run raeng" },
+    { "situation": "help me", "thai": "ช่วยด้วย", "romanized": "chuai duai" },
+    { "situation": "I cannot eat", "thai": "ฉันกินไม่ได้", "romanized": "chan gin mai dai" }
+  ],
+  "emergency_numbers": {
+    "ems": "1669",
+    "police": "191",
+    "tourist_police": "1155"
+  },
+  "last_updated": "2025-01"
+}
