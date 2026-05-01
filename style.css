@@ -650,249 +650,6 @@ strong { font-weight: 500; }
   cursor: not-allowed;
 }
 
-
-/* ------------------------------------------------------------
-   ALLERGY CARD — Screen 2
-   ------------------------------------------------------------ */
-.card-wrap {
-  background: #fff;
-  max-width: var(--max-card);
-  margin: 0 auto;
-  padding: 1.25rem;
-  border: 1.5px solid #111;
-  border-radius: var(--radius-md);
-}
-
-.card-header {
-  text-align: center;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid var(--red);
-  margin-bottom: 1rem;
-}
-
-.card-alert-icon {
-  font-size: 2rem;
-  line-height: 1;
-  margin-bottom: 0.4rem;
-}
-
-.card-thai-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--red);
-  font-family: var(--font-body);
-  line-height: 1.2;
-}
-
-.card-en-subtitle {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #444;
-  margin-top: 0.2rem;
-}
-
-.card-name-strip {
-  background: var(--red);
-  color: #fff;
-  text-align: center;
-  padding: 0.4rem 0.75rem;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-}
-
-.card-section-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #777;
-  margin-bottom: 0.5rem;
-}
-
-.allergen-entry {
-  border: 1px solid #DDDDDD;
-  border-radius: var(--radius-sm);
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.allergen-entry__thai {
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: var(--red);
-  line-height: 1.2;
-}
-
-.allergen-entry__en {
-  font-size: 0.875rem;
-  color: #444;
-  margin-top: 0.15rem;
-}
-
-.severity-badge {
-  display: inline-block;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  padding: 0.15rem 0.5rem;
-  border-radius: var(--radius-pill);
-  margin-top: 0.35rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.severity-badge--anaphylactic { background: #CC0000; color: #fff; }
-.severity-badge--severe       { background: var(--orange); color: #fff; }
-.severity-badge--intolerance  { background: var(--yellow); color: #fff; }
-
-.trigger-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-  margin-top: 0.5rem;
-}
-
-.trigger-tag {
-  font-size: 0.75rem;
-  background: #F5F5F5;
-  border: 1px solid #DDDDDD;
-  border-radius: var(--radius-pill);
-  padding: 0.15rem 0.55rem;
-  color: #333;
-}
-
-.hidden-ingredients {
-  background: #FFF8F8;
-  border-left: 3px solid var(--red);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 0.6rem 0.75rem;
-  margin: 0.75rem 0;
-  font-size: 0.8125rem;
-  color: #444;
-}
-
-.global-warnings {
-  background: #FFF8F8;
-  border: 1px solid #F0CCCC;
-  border-radius: var(--radius-sm);
-  padding: 0.75rem;
-  margin: 0.75rem 0;
-}
-
-.global-warnings__thai {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: var(--red);
-  margin-bottom: 0.4rem;
-}
-
-.card-footer-confirm {
-  border-top: 1px solid #DDDDDD;
-  padding-top: 0.75rem;
-  margin-top: 0.75rem;
-  text-align: center;
-}
-
-.card-footer-thai {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: #111;
-}
-
-.card-footer-en {
-  font-size: 0.75rem;
-  color: #777;
-  margin-top: 0.15rem;
-}
-
-.emergency-contact {
-  margin-top: 0.6rem;
-}
-
-.emergency-thai {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: var(--red);
-}
-
-.emergency-en {
-  font-size: 0.6875rem;
-  color: #777;
-}
-
-
-/* ------------------------------------------------------------
-   CARD ACTIONS (screen 2 buttons)
-   ------------------------------------------------------------ */
-.card-actions {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.btn-card-action {
-  flex: 1;
-  min-width: 120px;
-  padding: 0.7rem 1rem;
-  border-radius: var(--radius-md);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-align: center;
-  transition: background var(--ease);
-}
-
-.btn-card-action--edit {
-  background: #F5F5F5;
-  color: #333;
-  border: 1px solid #DDDDDD;
-}
-
-.btn-card-action--edit:hover {
-  background: #EBEBEB;
-}
-
-.btn-card-action--show {
-  background: var(--red);
-  color: #fff;
-  border: 1px solid var(--red);
-}
-
-.btn-card-action--show:hover {
-  background: var(--red-dark);
-}
-
-
-/* ------------------------------------------------------------
-   QUICK SHOW OVERLAY
-   ------------------------------------------------------------ */
-#quick-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  z-index: 9999;
-  overflow-y: auto;
-  padding: 1rem;
-  cursor: pointer;
-}
-
-#quick-overlay.active {
-  display: block;
-}
-
-
-/* ------------------------------------------------------------
-   UTILITY CLASSES
-   ------------------------------------------------------------ */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
   clip: rect(0,0,0,0);
   white-space: nowrap;
   border-width: 0;
@@ -918,4 +675,429 @@ strong { font-weight: 500; }
   h1 { font-size: 1.875rem; }
   h2 { font-size: 1.375rem; }
 }
+}
 
+
+
+/* ============================================================
+   WALLET CARD LAYOUT — app.js renders these classes
+   Isolated from both site palette and old card styles.
+   ============================================================ */
+
+/* Screens */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* App nav */
+.app-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #E0DBD4;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+}
+.app-nav-inner {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.app-nav-logo {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--midnight);
+  text-decoration: none;
+}
+.app-nav-logo span { color: var(--red); }
+.app-nav-link {
+  font-size: 0.875rem;
+  color: #444;
+  text-decoration: none;
+}
+.app-nav-link:hover { color: var(--midnight); }
+
+/* Profile screen */
+.profile-container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+.profile-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.profile-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.profile-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: #111;
+  margin-bottom: 0.25rem;
+}
+.profile-title .red { color: var(--red); }
+.profile-subtitle { font-size: 0.9rem; color: #666; }
+
+.optional { color: #999; font-weight: 400; }
+
+.allergens-section { margin: 1.5rem 0 1.25rem; }
+.allergens-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.allergens-label { font-size: 0.8125rem; font-weight: 500; color: #444; }
+.allergens-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.allergens-empty {
+  font-size: 0.875rem;
+  color: #999;
+  text-align: center;
+  padding: 1.5rem 0;
+  border: 1px dashed #DDD;
+  border-radius: 10px;
+}
+
+.btn-add {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--red);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.btn-add:hover { opacity: 0.75; }
+
+.allergy-entry {
+  background: #fff;
+  border: 1px solid #DDDDDD;
+  border-radius: 10px;
+  padding: 1rem;
+}
+.allergy-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.allergy-entry-num { font-size: 0.75rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+.allergy-fields { display: flex; flex-direction: column; gap: 0.75rem; }
+.btn-remove-allergy {
+  font-size: 1rem;
+  color: #AAA;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+}
+.btn-remove-allergy:hover { color: var(--red); }
+
+.btn-show-last {
+  display: block;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.7rem;
+  background: none;
+  border: 1px solid #DDD;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.btn-show-last:hover { background: #F5F5F5; }
+
+/* Card screen */
+.card-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 3rem;
+}
+.card-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.btn-back {
+  font-size: 0.875rem;
+  color: #555;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem 0;
+}
+.btn-back:hover { color: #111; }
+.btn-show-card {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--red);
+  border: none;
+  border-radius: 6px;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.btn-show-card:hover { background: var(--red-dark); }
+
+/* ── WALLET CARD ITSELF ── */
+.allergy-card {
+  background: #fff;
+  border: 1.5px solid #111;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--font-body);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+/* Header bar */
+.wp-header {
+  background: var(--red);
+  color: #fff;
+  padding: 0.875rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.wp-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.wp-warning-icon {
+  font-size: 1.25rem;
+  font-style: normal;
+  line-height: 1;
+}
+.wp-header-text { }
+.wp-header-en {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+  line-height: 1;
+}
+.wp-header-thai {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0.15rem;
+}
+.wp-name-tag {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* NO section */
+.wp-no-section { padding: 0.875rem 1rem; }
+.wp-no-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.625rem;
+}
+.wp-no-badge {
+  background: var(--red);
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+.wp-no-label-thai {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #111;
+}
+
+/* Allergen grid */
+.wp-allergen-grid { display: flex; flex-direction: column; gap: 0.5rem; }
+.wp-allergen-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  background: #F8F8F8;
+  border-left: 4px solid #CCC;
+}
+.wp-allergen-row.sev-anaphylactic { border-left-color: var(--red); background: #FFF5F5; }
+.wp-allergen-row.sev-severe       { border-left-color: var(--orange); background: #FFF8F0; }
+.wp-allergen-row.sev-intolerance  { border-left-color: var(--yellow); background: #FFFDF0; }
+
+.wp-allergen-emoji { font-size: 1.25rem; flex-shrink: 0; }
+.wp-allergen-names { flex: 1; }
+.wp-allergen-thai { font-size: 1.125rem; font-weight: 700; color: #111; line-height: 1.2; }
+.wp-allergen-en   { font-size: 0.75rem; color: #555; margin-top: 0.1rem; }
+
+.wp-sev-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.wp-sev-dot.sev-dot-anaphylactic { background: var(--red); }
+.wp-sev-dot.sev-dot-severe       { background: var(--orange); }
+.wp-sev-dot.sev-dot-intolerance  { background: var(--yellow); }
+
+/* Copy line */
+.wp-copy-line {
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  color: #555;
+  border-top: 1px dashed #E0E0E0;
+}
+.wp-copy-no { font-weight: 700; color: var(--red); margin-right: 0.25rem; }
+
+/* Warning bar */
+.wp-warning-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  background: #FFF8F0;
+  border-top: 1px solid #F0DDD0;
+  padding: 0.6rem 1rem;
+  font-size: 0.75rem;
+  color: #6B3E1A;
+}
+.wp-warning-icon-sm { font-size: 0.875rem; flex-shrink: 0; margin-top: 1px; }
+.wp-warning-text { line-height: 1.45; }
+
+/* Front footer */
+.wp-front-footer {
+  background: #111;
+  color: #fff;
+  padding: 0.625rem 1rem;
+  text-align: center;
+}
+.wp-instruct-thai { font-size: 0.9375rem; font-weight: 700; }
+.wp-instruct-en   { font-size: 0.6875rem; opacity: 0.7; margin-top: 0.15rem; }
+
+/* Divider between front and back */
+.wp-divider {
+  background: #F2EEE9;
+  border-top: 1px solid #E0DBD4;
+  border-bottom: 1px solid #E0DBD4;
+  padding: 0.4rem 1rem;
+  text-align: center;
+}
+.wp-divider-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #999;
+}
+
+/* Back face — detail blocks */
+.card-back { padding: 0.875rem 1rem; display: flex; flex-direction: column; gap: 0.875rem; }
+
+.wp-detail-block {
+  border: 1px solid #E8E8E8;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+.wp-detail-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+.wp-detail-emoji { font-size: 1.125rem; flex-shrink: 0; }
+.wp-detail-title { flex: 1; display: flex; flex-direction: column; gap: 0.1rem; }
+.wp-detail-thai { font-size: 1rem; font-weight: 700; color: #111; }
+.wp-detail-en   { font-size: 0.75rem; color: #666; }
+
+.wp-detail-sev {
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.sev-tag-anaphylactic { background: var(--red);    color: #fff; }
+.sev-tag-severe       { background: var(--orange); color: #fff; }
+.sev-tag-intolerance  { background: var(--yellow); color: #fff; }
+
+/* Trigger chips */
+.wp-trigger-list { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.5rem; }
+.wp-trigger-chip {
+  display: flex;
+  flex-direction: column;
+  background: #F5F5F5;
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  padding: 0.25rem 0.55rem;
+}
+.wp-trigger-thai { font-size: 0.875rem; font-weight: 600; color: #111; line-height: 1.2; }
+.wp-trigger-en   { font-size: 0.6875rem; color: #777; }
+
+/* Hidden row */
+.wp-hidden-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: #555;
+  background: #FFF5F5;
+  border-radius: 5px;
+  padding: 0.35rem 0.55rem;
+  margin-top: 0.25rem;
+}
+.wp-hidden-label { font-weight: 600; color: var(--red); white-space: nowrap; }
+.wp-hidden-chips { line-height: 1.45; }
+
+/* Polite note */
+.wp-polite {
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px dashed #E0E0E0;
+}
+.wp-polite-thai { font-size: 0.9375rem; font-weight: 700; color: #111; }
+.wp-polite-en   { font-size: 0.75rem; color: #777; margin-top: 0.15rem; }
+
+/* Emergency */
+.wp-emergency {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  background: #FFF5F5;
+  border: 1.5px solid var(--red);
+  border-radius: 8px;
+  padding: 0.625rem 0.875rem;
+}
+.wp-em-icon { font-size: 1.25rem; flex-shrink: 0; }
+.wp-em-thai { font-size: 0.9375rem; font-weight: 700; color: var(--red); }
+.wp-em-en   { font-size: 0.6875rem; color: #777; margin-top: 0.1rem; }
+
+/* Quick show overlay */
+#quick-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 1rem;
+  cursor: pointer;
+}
+#quick-overlay.active { display: block; }
+#quick-overlay .allergy-card { max-width: 420px; margin: 0 auto; }

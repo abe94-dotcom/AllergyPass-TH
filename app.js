@@ -516,14 +516,6 @@ function renderCard(data) {
   cardEl.appendChild(back);
 }
 
-function renderAllergenBlock(allergen) {
-  // Legacy — kept for compatibility but not used in wallet layout
-  const block = el('div', 'allergen-block');
-  block.appendChild(el('div', 'allergen-block-name-thai', getThaiAllergen(allergen.name)));
-  block.appendChild(el('div', 'allergen-block-name-en', allergen.name));
-  return block;
-}
-
 // ===== DOM UTILS =====
 function el(tag, className, text) {
   const node = document.createElement(tag || 'div');

@@ -1,4 +1,4 @@
-const CACHE = 'bookofabe-v1';
+const CACHE_NAME = 'bookofabe-v1';
 const APP_SHELL = [
   '/',
   '/app.html',
