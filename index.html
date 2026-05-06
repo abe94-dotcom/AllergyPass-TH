@@ -3,245 +3,548 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Book of Abe — Thailand, explained properly</title>
-  <meta name="description" content="Practical tools, trusted recommendations, and real-world guidance for navigating Thailand safely and intelligently. Built by a healthcare professional living in Thailand." />
-  <meta name="keywords" content="Thailand travel guide, food allergy Thailand, expat Thailand, Thailand safety, Bangkok guide, living in Thailand" />
-  <meta property="og:title" content="The Book of Abe — Thailand, explained properly" />
-  <meta property="og:description" content="Practical tools, trusted recommendations, and real-world guidance for navigating Thailand safely and intelligently." />
+  <title>AllergyCard — Communicate Your Food Allergies Anywhere</title>
+  <meta name="description" content="Build a free bilingual food allergy card in seconds. Show restaurant staff exactly what you can't eat — in their language. Works offline. No sign-up required." />
+  <meta name="keywords" content="food allergy card, allergy card travel, food allergy translation card, allergy card free, bilingual allergy card" />
+  <meta property="og:title" content="AllergyCard — Communicate Your Food Allergies Anywhere" />
+  <meta property="og:description" content="Build a free bilingual food allergy card. Show restaurant staff exactly what you can't eat — in their language. Works offline. No sign-up." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://bookofabe.com/" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "The Book of Abe",
-    "url": "https://bookofabe.com",
-    "description": "Practical tools, guides, and recommendations for navigating Thailand safely and intelligently.",
-    "author": {
-      "@type": "Person",
-      "name": "Abe",
-      "jobTitle": "Healthcare Professional",
-      "description": "A healthcare professional living and working in Thailand."
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,600;1,400;1,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --clay:       #C4593A;
+      --clay-dark:  #A3452A;
+      --clay-light: #F2DDD6;
+      --amber:      #D4860A;
+      --amber-lt:   #FBF0D9;
+      --bark:       #2C1F14;
+      --bark-mid:   #4A3728;
+      --soil:       #6B5040;
+      --dust:       #9C8070;
+      --linen:      #FAF6F1;
+      --linen-dark: #F0E8DF;
+      --parch:      #EAE0D5;
+      --border:     #DDD0C4;
+      --border-dk:  #C4B4A4;
+      --white:      #FFFFFF;
+      --red:        #CC0000;
+      --red-dark:   #AA0000;
+      --orange:     #D96B00;
+      --yellow:     #B08000;
+      --font-d: 'Plus Jakarta Sans', sans-serif;
+      --font-s: 'Lora', Georgia, serif;
+      --ease:   0.2s cubic-bezier(0.4,0,0.2,1);
+      --max:    1060px;
+      --r:      16px;
     }
-  }
-  </script>
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#1C2340" />
-  <link rel="stylesheet" href="/style.css" />
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-d); font-weight: 400; background: var(--linen); color: var(--soil); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NAV ── */
+    .nav { position: sticky; top: 0; z-index: 200; height: 60px; background: var(--bark); display: flex; align-items: center; padding: 0 2rem; }
+    .nav-inner { width: 100%; max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-family: var(--font-d); font-size: 1.0625rem; font-weight: 800; color: var(--linen); letter-spacing: -0.01em; }
+    .nav-logo span { color: var(--clay-light); opacity: 0.9; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links a { font-size: 0.8125rem; font-weight: 400; color: rgba(250,246,241,0.5); transition: color var(--ease); }
+    .nav-links a:hover { color: var(--linen); }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-ig { display: flex; align-items: center; gap: 0.45rem; font-size: 0.8125rem; font-weight: 400; color: rgba(250,246,241,0.45); transition: color var(--ease); }
+    .nav-ig:hover { color: var(--linen); }
+    .nav-ig svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .nav-cta { font-size: 0.8125rem; font-weight: 600; background: var(--clay); color: #fff; padding: 0.45rem 1.15rem; border-radius: 999px; transition: background var(--ease); white-space: nowrap; }
+    .nav-cta:hover { background: var(--clay-dark); }
+    @media (max-width: 700px) { .nav-links { display: none; } }
+    @media (max-width: 480px) { .nav-ig { display: none; } }
+
+    /* ── HERO ── */
+    .hero { background: var(--bark); padding: 5.5rem 2rem 6rem; position: relative; overflow: hidden; }
+    .hero-grain { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"); pointer-events: none; opacity: 0.5; }
+    .hero-glow { position: absolute; top: -160px; right: -160px; width: 580px; height: 580px; background: radial-gradient(circle, rgba(196,89,58,0.22) 0%, transparent 65%); pointer-events: none; }
+    .hero-glow2 { position: absolute; bottom: -80px; left: -80px; width: 360px; height: 360px; background: radial-gradient(circle, rgba(212,134,10,0.1) 0%, transparent 70%); pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 5rem; align-items: center; }
+
+    .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-light); opacity: 0.85; margin-bottom: 1.5rem; }
+    .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clay-light); animation: blink 2.5s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero h1 { font-family: var(--font-d); font-size: clamp(2.75rem, 6.5vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.025em; color: var(--linen); }
+    .hero h1 .warm { color: var(--clay-light); }
+    .hero h1 .sub { display: block; font-family: var(--font-s); font-style: italic; font-size: clamp(1.125rem, 2.5vw, 1.75rem); font-weight: 400; color: rgba(250,246,241,0.3); margin-top: 0.4rem; letter-spacing: 0; }
+
+    .hero-desc { font-size: 1.0625rem; font-weight: 300; color: rgba(250,246,241,0.6); line-height: 1.8; margin-top: 1.5rem; max-width: 460px; }
+    .hero-actions { display: flex; align-items: center; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
+    .btn-hero { font-family: var(--font-d); font-size: 1rem; font-weight: 600; background: var(--clay); color: #fff; padding: 0.875rem 2rem; border-radius: 999px; border: none; cursor: pointer; transition: background var(--ease), transform var(--ease); display: inline-block; }
+    .btn-hero:hover { background: var(--clay-dark); transform: translateY(-1px); }
+    .btn-ghost-light { font-size: 0.9rem; font-weight: 400; color: rgba(250,246,241,0.45); transition: color var(--ease); display: inline-flex; align-items: center; gap: 0.3rem; }
+    .btn-ghost-light:hover { color: var(--linen); }
+
+    .hero-pills { display: flex; gap: 0.5rem; margin-top: 2rem; flex-wrap: wrap; }
+    .pill { font-size: 0.75rem; font-weight: 400; color: rgba(250,246,241,0.4); border: 1px solid rgba(250,246,241,0.1); border-radius: 999px; padding: 0.275rem 0.875rem; }
+
+    /* card mock */
+    .hero-card-col { position: relative; flex-shrink: 0; }
+    .card-glow { position: absolute; inset: -40px; background: radial-gradient(circle, rgba(196,89,58,0.25) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+    .card-mock { position: relative; z-index: 1; background: #fff; border-radius: 18px; border: 2px solid rgba(255,255,255,0.08); overflow: hidden; width: 272px; font-family: var(--font-d); box-shadow: 0 32px 80px rgba(0,0,0,0.55), 0 8px 20px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05); }
+    .cm-hd { background: var(--red); padding: 0.875rem 1rem; display: flex; align-items: center; gap: 0.625rem; }
+    .cm-warn { font-size: 1.25rem; line-height: 1; }
+    .cm-hd-en { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; color: rgba(255,255,255,0.8); }
+    .cm-hd-th { font-size: 1rem; font-weight: 700; color: #fff; margin-top: 0.1rem; }
+    .cm-body { padding: 0.875rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .cm-no { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.15rem; }
+    .cm-no-badge { background: var(--red); color: #fff; font-size: 0.5625rem; font-weight: 800; letter-spacing: 0.1em; padding: 0.1rem 0.35rem; border-radius: 3px; }
+    .cm-no-th { font-size: 0.875rem; font-weight: 700; color: #111; }
+    .cm-row { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.5rem 0.65rem; border-radius: 8px; border-left: 4px solid #ccc; background: #f8f8f8; }
+    .cm-row.ana { border-left-color: var(--red); background: #fff5f5; }
+    .cm-row.sev { border-left-color: var(--orange); background: #fff8f0; }
+    .cm-row.tol { border-left-color: var(--yellow); background: #fffdf0; }
+    .cm-emoji { font-size: 1rem; line-height: 1.4; flex-shrink: 0; }
+    .cm-th { font-size: 0.9375rem; font-weight: 700; color: #111; line-height: 1.2; }
+    .cm-en { font-size: 0.625rem; color: #666; margin-top: 0.1rem; }
+    .cm-ft { border-top: 1px dashed #e0e0e0; padding-top: 0.5rem; margin-top: 0.25rem; text-align: center; }
+    .cm-ft-th { font-size: 0.9375rem; font-weight: 700; color: #111; }
+    .cm-ft-en { font-size: 0.625rem; color: #888; margin-top: 0.1rem; }
+    .card-badge { position: absolute; top: -11px; right: 12px; background: var(--amber); color: #fff; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border-radius: 999px; box-shadow: 0 4px 12px rgba(212,134,10,0.5); }
+
+    /* language flags row on card */
+    .cm-langs { display: flex; align-items: center; gap: 0.35rem; padding: 0.5rem 1rem; border-top: 1px solid #f0f0f0; background: #fafafa; flex-wrap: wrap; }
+    .cm-lang-flag { font-size: 0.875rem; }
+    .cm-lang-more { font-size: 0.6rem; font-weight: 600; color: var(--clay); letter-spacing: 0.06em; margin-left: 0.1rem; }
+
+    @media (max-width: 820px) { .hero-inner { grid-template-columns: 1fr; gap: 3rem; } .hero-card-col { display: flex; justify-content: center; } }
+    @media (max-width: 480px) { .hero { padding: 3.5rem 1.25rem 4.5rem; } }
+
+    /* ── STATS ── */
+    .stats { background: var(--linen-dark); border-bottom: 1px solid var(--border); }
+    .stats-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); }
+    .stat { padding: 1.625rem 1.75rem; border-right: 1px solid var(--border); }
+    .stat:last-child { border-right: none; }
+    .stat-val { font-family: var(--font-d); font-size: 1.875rem; font-weight: 800; color: var(--bark); letter-spacing: -0.025em; line-height: 1; }
+    .stat-val em { font-style: italic; color: var(--clay); font-family: var(--font-s); }
+    .stat-lbl { font-size: 0.8125rem; font-weight: 400; color: var(--dust); margin-top: 0.3rem; }
+    @media (max-width: 640px) { .stats-inner { grid-template-columns: repeat(2,1fr); } .stat:nth-child(2){border-right:none;} .stat{border-bottom:1px solid var(--border);} .stat:nth-child(3),.stat:last-child{border-bottom:none;} }
+
+    /* ── HOW IT WORKS ── */
+    .how { padding: 5.5rem 2rem; background: var(--linen); }
+    .how-inner { max-width: var(--max); margin: 0 auto; }
+    .sec-label { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay); margin-bottom: 0.75rem; }
+    .sec-h { font-family: var(--font-d); font-size: clamp(1.875rem, 4.5vw, 3rem); font-weight: 800; letter-spacing: -0.025em; color: var(--bark); line-height: 1.05; margin-bottom: 3rem; }
+    .sec-h em { font-family: var(--font-s); font-style: italic; font-weight: 600; color: var(--clay); }
+
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    @media (max-width: 640px) { .steps { grid-template-columns: 1fr; } }
+    .step { background: var(--linen-dark); border: 1px solid var(--border); border-radius: var(--r); padding: 2rem 1.75rem; transition: border-color var(--ease), box-shadow var(--ease); }
+    .step:hover { border-color: var(--clay); box-shadow: 0 6px 24px rgba(196,89,58,0.1); }
+    .step-num { font-family: var(--font-s); font-style: italic; font-size: 3.5rem; font-weight: 600; color: var(--clay-light); line-height: 1; margin-bottom: 1rem; }
+    .step h3 { font-family: var(--font-d); font-size: 1.125rem; font-weight: 700; color: var(--bark); margin-bottom: 0.5rem; }
+    .step p { font-size: 0.9rem; color: var(--soil); line-height: 1.75; }
+
+    /* ── FEATURES ── */
+    .feats { background: var(--bark-mid); }
+    .feats-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); }
+    .feat { padding: 2.25rem 2rem; border-right: 1px solid rgba(250,246,241,0.08); }
+    .feat:last-child { border-right: none; }
+    .feat-icon { font-size: 1.375rem; margin-bottom: 0.875rem; }
+    .feat-title { font-family: var(--font-d); font-size: 1rem; font-weight: 700; color: var(--linen); margin-bottom: 0.35rem; }
+    .feat-desc { font-size: 0.8125rem; color: rgba(250,246,241,0.45); line-height: 1.65; font-weight: 300; }
+    @media (max-width: 700px) { .feats-inner { grid-template-columns: repeat(2,1fr); } .feat:nth-child(2){border-right:none;} .feat{border-bottom:1px solid rgba(250,246,241,0.08);} .feat:nth-child(3),.feat:last-child{border-bottom:none;} }
+
+    /* ── ABOUT ABE ── */
+    .about { background: var(--linen-dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 5.5rem 2rem; }
+    .about-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    @media (max-width: 780px) { .about-inner { grid-template-columns: 1fr; gap: 3rem; } }
+
+    .about h2 { font-family: var(--font-d); font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -0.025em; color: var(--bark); line-height: 1.08; }
+    .about h2 em { font-family: var(--font-s); font-style: italic; font-weight: 600; color: var(--clay); }
+    .about-desc { font-size: 1rem; color: var(--soil); line-height: 1.85; font-weight: 400; margin-top: 1.25rem; max-width: 420px; }
+    .about-desc p + p { margin-top: 0.875rem; }
+
+    /* IG card */
+    .ig-card { background: var(--linen); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; box-shadow: 0 8px 32px rgba(44,31,20,0.08); }
+    .ig-hd { padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.875rem; border-bottom: 1px solid var(--border); background: #fff; }
+    .ig-avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); display: flex; align-items: center; justify-content: center; font-family: var(--font-d); font-size: 1.25rem; font-weight: 800; color: #fff; }
+    .ig-name { font-weight: 700; font-size: 0.9375rem; color: var(--bark); }
+    .ig-sub { font-size: 0.75rem; color: var(--dust); margin-top: 0.1rem; }
+    .ig-follow { margin-left: auto; font-size: 0.8125rem; font-weight: 600; background: var(--clay); color: #fff; padding: 0.4rem 1rem; border-radius: 999px; flex-shrink: 0; transition: background var(--ease); }
+    .ig-follow:hover { background: var(--clay-dark); }
+
+    .ig-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--border); }
+    .ig-post { aspect-ratio: 1; position: relative; overflow: hidden; cursor: pointer; }
+    .ig-post:nth-child(1){background:#2C1F14;} .ig-post:nth-child(2){background:#3D1C08;} .ig-post:nth-child(3){background:#1A1408;}
+    .ig-post:nth-child(4){background:#08141A;} .ig-post:nth-child(5){background:#1A0808;} .ig-post:nth-child(6){background:#14081A;}
+    .ig-overlay { position: absolute; inset: 0; background: rgba(196,89,58,0.35); opacity: 0; transition: opacity var(--ease); display: flex; align-items: center; justify-content: center; }
+    .ig-post:hover .ig-overlay { opacity: 1; }
+    .ig-ov-icon { color: #fff; font-size: 1.25rem; }
+    .ig-lbl { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.4rem 0.5rem; font-size: 0.5625rem; font-weight: 500; color: rgba(250,246,241,0.55); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .ig-ft { padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); background: #fff; }
+    .ig-ft-note { font-size: 0.8125rem; color: var(--dust); }
+    .ig-open { font-size: 0.8125rem; font-weight: 600; color: var(--clay); display: inline-flex; align-items: center; gap: 0.3rem; transition: gap var(--ease); }
+    .ig-open:hover { gap: 0.55rem; }
+
+    /* about CTA row */
+    .about-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+    .btn-clay { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem; font-weight: 600; color: #fff; background: var(--clay); padding: 0.65rem 1.4rem; border-radius: 999px; transition: background var(--ease); }
+    .btn-clay:hover { background: var(--clay-dark); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem; font-weight: 500; color: var(--bark); border: 1.5px solid var(--border-dk); padding: 0.65rem 1.4rem; border-radius: 999px; transition: border-color var(--ease), color var(--ease); }
+    .btn-outline:hover { border-color: var(--clay); color: var(--clay); }
+    .btn-outline svg { width: 16px; height: 16px; }
+
+    /* ── THAILAND SECTION ── */
+    .thailand { padding: 5.5rem 2rem; background: var(--linen); }
+    .thailand-inner { max-width: var(--max); margin: 0 auto; }
+    .thailand-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-top: 3rem; }
+    @media (max-width: 680px) { .thailand-grid { grid-template-columns: 1fr; } }
+
+    .th-card { background: var(--linen-dark); border: 1px solid var(--border); border-radius: var(--r); padding: 1.75rem; display: block; transition: border-color var(--ease), transform var(--ease), box-shadow var(--ease); }
+    .th-card:hover { border-color: var(--clay); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(196,89,58,0.09); }
+    .th-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+    .th-name { font-family: var(--font-d); font-size: 1.125rem; font-weight: 700; color: var(--bark); margin-bottom: 0.4rem; }
+    .th-desc { font-size: 0.875rem; color: var(--soil); line-height: 1.7; margin-bottom: 1.25rem; }
+    .th-link { font-size: 0.8125rem; font-weight: 600; color: var(--clay); display: inline-flex; align-items: center; gap: 0.35rem; transition: gap var(--ease); }
+    .th-card:hover .th-link { gap: 0.6rem; }
+
+    /* ── RECS ── */
+    .recs { padding: 5.5rem 2rem; background: var(--linen-dark); border-top: 1px solid var(--border); }
+    .recs-inner { max-width: var(--max); margin: 0 auto; }
+    .recs-sub { font-size: 0.9375rem; color: var(--dust); font-weight: 400; margin-top: 0.35rem; margin-bottom: 2.75rem; }
+    .recs-sub a { color: var(--clay); text-decoration: underline; text-underline-offset: 2px; }
+    .rec-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+    @media (max-width: 680px) { .rec-grid { grid-template-columns: 1fr; } }
+    .rec-card { background: var(--linen); border: 1px solid var(--border); border-radius: var(--r); padding: 1.625rem; opacity: 0.6; }
+    .rec-tag { display: inline-block; font-size: 0.625rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.65rem; border-radius: 999px; margin-bottom: 1rem; }
+    .rec-tag.c { background: var(--amber-lt); color: var(--amber); }
+    .rec-tag.i { background: #EEF5EE; color: #2A6B2A; }
+    .rec-tag.s { background: var(--clay-light); color: var(--clay-dark); }
+    .rec-name { font-family: var(--font-d); font-size: 1.125rem; font-weight: 700; color: var(--bark); margin-bottom: 0.4rem; }
+    .rec-desc { font-size: 0.875rem; color: var(--soil); line-height: 1.7; margin-bottom: 1rem; }
+    .rec-coming { font-size: 0.75rem; color: var(--dust); font-style: italic; }
+    .rec-note { font-size: 0.6875rem; color: var(--dust); margin-top: 2.75rem; padding-top: 1.25rem; border-top: 1px solid var(--border); line-height: 1.65; }
+
+    /* ── CTA ── */
+    .cta { background: var(--clay); padding: 5.5rem 2rem; text-align: center; position: relative; overflow: hidden; }
+    .cta-bg { position: absolute; font-family: var(--font-s); font-style: italic; font-size: 22rem; font-weight: 600; color: rgba(255,255,255,0.05); white-space: nowrap; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; line-height: 1; letter-spacing: -0.03em; }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta h2 { font-family: var(--font-d); font-size: clamp(2.5rem,6vw,5rem); font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1rem; }
+    .cta p { font-size: 1rem; color: rgba(255,255,255,0.7); font-weight: 400; margin-bottom: 2.25rem; }
+    .btn-linen { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--linen); color: var(--clay-dark); font-family: var(--font-d); font-size: 1rem; font-weight: 700; padding: 0.9rem 2.25rem; border-radius: 999px; transition: background var(--ease), color var(--ease); }
+    .btn-linen:hover { background: var(--bark); color: var(--linen); }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--bark); padding: 3.25rem 2rem 2rem; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; padding-bottom: 2rem; border-bottom: 1px solid rgba(250,246,241,0.08); }
+    .footer-logo { font-family: var(--font-d); font-size: 1.125rem; font-weight: 800; color: var(--linen); letter-spacing: -0.01em; }
+    .footer-logo span { color: var(--clay-light); opacity: 0.8; }
+    .footer-tag { font-size: 0.8125rem; color: rgba(250,246,241,0.3); margin-top: 0.25rem; }
+    .footer-tag a { color: rgba(250,246,241,0.3); transition: color var(--ease); }
+    .footer-tag a:hover { color: var(--linen); }
+    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.8125rem; color: rgba(250,246,241,0.4); transition: color var(--ease); }
+    .footer-links a:hover { color: var(--linen); }
+    .footer-btm { max-width: var(--max); margin: 1.5rem auto 0; font-size: 0.75rem; color: rgba(250,246,241,0.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* ── ANIM ── */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+    .fu { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both; }
+    .d1{animation-delay:0.05s} .d2{animation-delay:0.15s} .d3{animation-delay:0.27s} .d4{animation-delay:0.4s} .d5{animation-delay:0.55s}
+
+    @media(max-width:480px){ .how,.about,.thailand,.recs{padding:3.5rem 1.25rem;} .cta{padding:4rem 1.25rem;} .feats-inner{grid-template-columns:1fr;} .feat{border-right:none!important;border-bottom:1px solid rgba(250,246,241,0.08);} .feat:last-child{border-bottom:none;} }
+  </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav class="site-nav" aria-label="Main navigation">
-    <div class="container">
-      <a href="/" class="nav-logo">The Book of Abe</a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Book of Abe<span> ·</span></a>
       <div class="nav-links">
-        <a href="/tools/">Tools</a>
-        <a href="/guides/">Guides</a>
-        <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="#about">About</a>
+        <a href="/thailand.html">Thailand</a>
         <a href="/recommendations/">Recommendations</a>
-        <a href="/about.html">About</a>
       </div>
-      <a href="/allergy-card/" class="nav-cta">Allergy Card</a>
+      <div class="nav-right">
+        <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener" class="nav-ig">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          @bookofabe
+        </a>
+        <a href="/app.html" class="nav-cta">Build My Card</a>
+      </div>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section class="hero" style="text-align:left; padding-bottom:3rem;">
-    <div class="container">
-      <p class="eyebrow">Thailand &middot; Practical intelligence</p>
-      <h1 class="mt-1">The Book of Abe</h1>
-      <p class="hero-sub mt-1">Thailand, explained properly.</p>
-      <p class="lead mt-2" style="margin-left:0; max-width:520px;">
-        Practical tools, trusted recommendations, and real-world guidance for
-        navigating Thailand safely and intelligently.
-      </p>
-      <div class="btn-row mt-3" style="justify-content:flex-start;">
-        <a href="/tools/" class="btn btn--primary">Explore Tools</a>
-        <a href="/allergy-card/" class="btn btn--secondary">Build Allergy Card</a>
-      </div>
-    </div>
-  </section>
+  <section class="hero">
+    <div class="hero-grain"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-inner">
 
-  <!-- FEATURED TOOL -->
-  <section class="section section--alt">
-    <div class="container">
-      <p class="eyebrow">Featured Safety Tool by The Book of Abe</p>
-      <div class="featured-tool mt-2">
-        <div class="featured-tool__content">
-          <span class="tool-badge">AllergyPass TH</span>
-          <h2 class="mt-1">Avoid dangerous food<br>misunderstandings in Thailand.</h2>
-          <p style="color:var(--text-mid); line-height:1.75; margin-top:1rem; max-width:420px;">
-            Thai food contains ingredients that rarely appear on menus: fish sauce, shrimp paste,
-            peanut oil, dried shrimp. A medically clear bilingual card gives restaurant staff
-            exactly what they need to keep you safe.
-          </p>
-          <ul class="tool-features mt-2">
-            <li><span class="tf-check">✓</span> Thai and English — readable by any restaurant or street stall</li>
-            <li><span class="tf-check">✓</span> Severity levels: anaphylactic, severe, intolerance</li>
-            <li><span class="tf-check">✓</span> Hidden ingredient warnings built in</li>
-            <li><span class="tf-check">✓</span> Works offline. No sign-up. Free.</li>
-          </ul>
-          <div class="btn-row mt-3" style="justify-content:flex-start;">
-            <a href="/allergy-card/" class="btn btn--terra">Build My Card &rarr;</a>
-            <a href="/guides/food-allergy-survival-guide.html" class="btn btn--ghost">Read the allergy guide</a>
-          </div>
+      <div>
+        <div class="hero-tag fu d1"><span class="hero-dot"></span>Free · No sign-up · Works offline</div>
+        <h1 class="fu d2">
+          Show this.<br>
+          <span class="warm">Stay safe.</span>
+          <span class="sub">In any language, anywhere you eat.</span>
+        </h1>
+        <p class="hero-desc fu d3">Build a bilingual food allergy card in seconds. Show restaurant staff exactly what you can't eat — in their language — including the hidden ingredients that never appear on the menu.</p>
+        <div class="hero-actions fu d4">
+          <a href="/app.html" class="btn-hero">Build My Card &rarr;</a>
+          <a href="#how" class="btn-ghost-light">See how it works ↓</a>
         </div>
-        <div class="featured-tool__preview" aria-label="Sample AllergyPass TH card" role="img">
-          <div class="cp-shell">
-            <div class="cp-header">
-              <span class="cp-warn">⚠️</span>
-              <div>
-                <div class="cp-en-head">FOOD ALLERGY NOTICE</div>
-                <div class="cp-th-head">แจ้งเตือนการแพ้อาหาร</div>
-              </div>
+        <div class="hero-pills fu d5">
+          <span class="pill">Anaphylactic · Severe · Intolerance</span>
+          <span class="pill">Hidden ingredients auto-added</span>
+          <span class="pill">Offline ready</span>
+          <span class="pill">More languages coming</span>
+        </div>
+      </div>
+
+      <div class="hero-card-col fu d3">
+        <div class="card-glow"></div>
+        <div class="card-mock">
+          <span class="card-badge">Sample Card</span>
+          <div class="cm-hd">
+            <span class="cm-warn">⚠️</span>
+            <div>
+              <div class="cm-hd-en">FOOD ALLERGY NOTICE</div>
+              <div class="cm-hd-th">แจ้งเตือนการแพ้อาหาร</div>
             </div>
-            <div class="cp-body">
-              <div class="cp-no-row">
-                <span class="cp-no-badge">NO</span>
-                <span class="cp-no-th">ห้ามใส่</span>
-              </div>
-              <div class="cp-allergen cp-ana">
-                <span>🥜</span>
-                <div>
-                  <div class="cp-th">ถั่วลิสง</div>
-                  <div class="cp-en">Peanuts — anaphylactic</div>
-                </div>
-              </div>
-              <div class="cp-allergen cp-sev">
-                <span>🦐</span>
-                <div>
-                  <div class="cp-th">กุ้ง / น้ำปลา / กะปิ</div>
-                  <div class="cp-en">Shellfish, fish sauce, shrimp paste</div>
-                </div>
-              </div>
-              <div class="cp-foot">
-                <div class="cp-foot-th">กรุณาแจ้งเชฟด้วย</div>
-                <div class="cp-foot-en">Please inform the chef</div>
-              </div>
+          </div>
+          <div class="cm-body">
+            <div class="cm-no"><span class="cm-no-badge">NO</span><span class="cm-no-th">ห้ามใส่</span></div>
+            <div class="cm-row ana">
+              <span class="cm-emoji">🥜</span>
+              <div><div class="cm-th">ถั่วลิสง</div><div class="cm-en">Peanuts — anaphylactic</div></div>
             </div>
+            <div class="cm-row sev">
+              <span class="cm-emoji">🦐</span>
+              <div><div class="cm-th">กุ้ง / น้ำปลา / กะปิ</div><div class="cm-en">Shellfish · fish sauce · shrimp paste</div></div>
+            </div>
+            <div class="cm-row tol">
+              <span class="cm-emoji">🥛</span>
+              <div><div class="cm-th">นม / เนย</div><div class="cm-en">Dairy, butter — intolerance</div></div>
+            </div>
+            <div class="cm-ft">
+              <div class="cm-ft-th">กรุณาแจ้งเชฟด้วย</div>
+              <div class="cm-ft-en">Please inform the chef</div>
+            </div>
+          </div>
+          <div class="cm-langs">
+            <span class="cm-lang-flag">🇹🇭</span>
+            <span class="cm-lang-flag">🇯🇵</span>
+            <span class="cm-lang-flag">🇻🇳</span>
+            <span class="cm-lang-flag">🇹🇷</span>
+            <span class="cm-lang-flag">🇰🇷</span>
+            <span class="cm-lang-more">+ more coming</span>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- PILLAR GRID -->
-  <section class="section" id="guides">
-    <div class="container">
-      <p class="eyebrow">What's here</p>
-      <h2 class="mt-1">Everything you need to navigate Thailand properly.</h2>
-      <div class="pillar-grid mt-3">
-        <a href="/tools/" class="pillar-card" style="text-decoration:none;">
-          <div class="pillar-icon">🛠</div>
-          <h3>Free Tools</h3>
-          <p>Practical utilities starting with the allergy card. Built for real-world situations, not ideal ones.</p>
-          <span class="pillar-link">Explore tools &rarr;</span>
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stats-inner">
+      <div class="stat"><div class="stat-val"><em>Free</em></div><div class="stat-lbl">No account, no cost, ever</div></div>
+      <div class="stat"><div class="stat-val"><em>Bilingual</em></div><div class="stat-lbl">Side-by-side, readable instantly</div></div>
+      <div class="stat"><div class="stat-val"><em>Offline</em></div><div class="stat-lbl">Works without cell signal</div></div>
+      <div class="stat"><div class="stat-val">60 <em>sec</em></div><div class="stat-lbl">From nothing to card in hand</div></div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="how-inner">
+      <p class="sec-label">How it works</p>
+      <h2 class="sec-h">Three steps.<br><em>One card. Full safety.</em></h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Add your allergens</h3>
+          <p>Enter what you're allergic to. Set severity — anaphylactic, severe, or intolerance. Add specific triggers if needed.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Generate your card</h3>
+          <p>Built instantly in your chosen language and English. Hidden ingredients are included automatically based on what you're allergic to.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Show it at the table</h3>
+          <p>One tap opens the card full-screen. Hand your phone to any server or street vendor. No translation app. No guesswork.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="feats">
+    <div class="feats-inner">
+      <div class="feat">
+        <div class="feat-icon">✍️</div>
+        <div class="feat-title">Human translated</div>
+        <div class="feat-desc">Written by a healthcare professional — not machine translated or AI-guessed.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📵</div>
+        <div class="feat-title">Works offline</div>
+        <div class="feat-desc">Installs as a PWA. No signal needed when you need it most.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔒</div>
+        <div class="feat-title">No account</div>
+        <div class="feat-desc">Your profile saves locally. Nothing goes to any server. Ever.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🆓</div>
+        <div class="feat-title">Free forever</div>
+        <div class="feat-desc">No subscription. No premium tier. Build it and use it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT ABE -->
+  <section class="about" id="about">
+    <div class="about-inner">
+
+      <div>
+        <p class="sec-label">Who's behind this</p>
+        <h2>Built by someone<br>who <em>actually eats here.</em></h2>
+        <div class="about-desc">
+          <p>I'm Abe — a healthcare professional living and working in Bangkok. I built this card because I watched people struggle to communicate food allergies in kitchens where nobody spoke English and translation apps got the nuance wrong.</p>
+          <p>The translations are hardcoded by hand, not generated. The hidden ingredients are there because I know the cuisine, not because an algorithm guessed.</p>
+          <p>On Instagram I share what it's actually like to live here — the observations, the systems, the things that don't make it into any guidebook.</p>
+        </div>
+        <div class="about-actions">
+          <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener" class="btn-clay">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+            Follow @bookofabe
+          </a>
+          <a href="/about.html" class="btn-outline">Read more</a>
+        </div>
+      </div>
+
+      <div class="ig-card">
+        <div class="ig-hd">
+          <div class="ig-avatar">A</div>
+          <div>
+            <div class="ig-name">@bookofabe</div>
+            <div class="ig-sub">Bangkok · Healthcare · Observer</div>
+          </div>
+          <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener" class="ig-follow">Follow</a>
+        </div>
+        <div class="ig-grid">
+          <div class="ig-post"><div class="ig-lbl">The Observer</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">The Rebuild</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">Street Level</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">Systems & Work</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">Identity & Place</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">The Uncomfortable Middle</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+        </div>
+        <div class="ig-ft">
+          <span class="ig-ft-note">Observations from Bangkok</span>
+          <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener" class="ig-open">Open Instagram &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- THAILAND -->
+  <section class="thailand">
+    <div class="thailand-inner">
+      <p class="sec-label">Thailand</p>
+      <h2 class="sec-h" style="margin-bottom:0.5rem;">Guides built for<br><em>people actually going.</em></h2>
+      <p style="font-size:0.9375rem;color:var(--dust);margin-bottom:0;font-weight:400;">Thailand is where AllergyCard started. These guides go deeper.</p>
+      <div class="thailand-grid">
+        <a href="/thailand.html" class="th-card">
+          <div class="th-icon">🍜</div>
+          <div class="th-name">Thai Food & Allergens</div>
+          <div class="th-desc">What's hidden in Thai food, why fish sauce is everywhere, and how to navigate it safely.</div>
+          <span class="th-link">Read guide &rarr;</span>
         </a>
-        <a href="/guides/food-allergy-survival-guide.html" class="pillar-card" style="text-decoration:none;">
-          <div class="pillar-icon">🍜</div>
-          <h3>Food &amp; Allergens</h3>
-          <p>What's in Thai food, what's hidden, and how to eat safely across Thailand.</p>
-          <span class="pillar-link">Read the guides &rarr;</span>
+        <a href="/guides/" class="th-card">
+          <div class="th-icon">🏥</div>
+          <div class="th-name">Healthcare in Thailand</div>
+          <div class="th-desc">Emergency numbers, best hospitals in Bangkok, what to do if you have a reaction.</div>
+          <span class="th-link">Read guide &rarr;</span>
         </a>
-        <a href="/thailand-essentials/" class="pillar-card" style="text-decoration:none;">
-          <div class="pillar-icon">🗺</div>
-          <h3>Thailand Essentials</h3>
-          <p>Healthcare, SIM cards, first-week checklist, emergency contacts. Things that matter before they matter.</p>
-          <span class="pillar-link">Read essentials &rarr;</span>
-        </a>
-        <a href="/recommendations/" class="pillar-card" style="text-decoration:none;">
-          <div class="pillar-icon">⭐</div>
-          <h3>Recommendations</h3>
-          <p>Vetted picks for eSIMs, apps, and gear that hold up across Thailand. Affiliate-supported.</p>
-          <span class="pillar-link">See recommendations &rarr;</span>
+        <a href="/thailand-essentials/" class="th-card">
+          <div class="th-icon">📋</div>
+          <div class="th-name">First Week Checklist</div>
+          <div class="th-desc">SIM cards, apps, cash, pharmacies. The things that matter before they matter.</div>
+          <span class="th-link">Read guide &rarr;</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- POSITIONING PULL QUOTE -->
-  <section class="section">
-    <div class="container">
-      <div style="border-left:3px solid var(--terra); padding-left:1.5rem; max-width:580px;">
-        <p style="font-family:var(--font-display); font-size:1.25rem; line-height:1.6; color:var(--midnight); font-style:italic;">
-          Most content about Thailand is written by people passing through.
-          This isn't. I live here, work here, and deal with the same situations you will.
-        </p>
+  <!-- RECS -->
+  <section class="recs">
+    <div class="recs-inner">
+      <p class="sec-label">Recommended</p>
+      <h2 class="sec-h" style="margin-bottom:0.4rem;">Things worth having<br><em>before you land.</em></h2>
+      <p class="recs-sub">Vetted picks for staying connected, covered, and safe. <a href="#">Affiliate links</a> — costs you nothing extra.</p>
+      <div class="rec-grid">
+        <div class="rec-card">
+          <span class="rec-tag c">Connectivity</span>
+          <div class="rec-name">eSIM for Travel</div>
+          <div class="rec-desc">Data from the moment you land. No local SIM hunt required. Airalo and Holafly both work well for short stays.</div>
+          <span class="rec-coming">Link coming soon</span>
+        </div>
+        <div class="rec-card">
+          <span class="rec-tag i">Insurance</span>
+          <div class="rec-name">Travel Insurance</div>
+          <div class="rec-desc">Medical evacuation coverage matters more in Southeast Asia than most places. What to look for, what to avoid.</div>
+          <span class="rec-coming">Link coming soon</span>
+        </div>
+        <div class="rec-card">
+          <span class="rec-tag s">Safety</span>
+          <div class="rec-name">EpiPen & Meds</div>
+          <div class="rec-desc">What to bring, what's available locally, and which hospitals stock what you need.</div>
+          <span class="rec-coming">Link coming soon</span>
+        </div>
       </div>
+      <p class="rec-note">This page contains affiliate links. If you buy through them, I earn a small commission at no extra cost to you. I only recommend things I've actually used or researched properly.</p>
     </div>
   </section>
 
-  <!-- FAQ / AI-RETRIEVAL CONTENT -->
-  <section class="section section--alt">
-    <div class="container">
-      <p class="eyebrow">Common questions</p>
-      <h2 class="mt-1">Things people actually need to know</h2>
-      <div class="faq-grid mt-3">
-
-        <div class="faq-item">
-          <h3>What hidden allergens are common in Thai food?</h3>
-          <p>Fish sauce (น้ำปลา) and shrimp paste (กะปิ) appear in the vast majority of Thai curries, stir-fries, and dipping sauces — including dishes that don't mention seafood on the menu. Peanuts and peanut oil are used broadly as cooking fat and garnish. Dried shrimp appears in som tam, fried rice, and many street dishes. These four account for most allergic incidents in Thai restaurants.</p>
-          <a href="/guides/hidden-allergens-thai-food.html" class="faq-link">Full hidden allergens guide &rarr;</a>
-        </div>
-
-        <div class="faq-item">
-          <h3>How do I tell Thai restaurant staff about a food allergy?</h3>
-          <p>A written card in Thai is significantly more reliable than spoken requests. Verbal English explanations are frequently misunderstood, especially at street stalls. A card that names allergens in Thai — including hidden ingredients like fish sauce and shrimp paste — changes that conversation entirely.</p>
-          <a href="/allergy-card/" class="faq-link">Build a free bilingual allergy card &rarr;</a>
-        </div>
-
-        <div class="faq-item">
-          <h3>What should I do in a medical emergency in Thailand?</h3>
-          <p>Dial 1669 for national EMS. Private hospitals including Bumrungrad, Bangkok Hospital, and Samitivej provide internationally accredited emergency care in major cities. Travel insurance with emergency evacuation coverage is strongly recommended before arriving.</p>
-          <a href="/thailand-essentials/emergency-healthcare.html" class="faq-link">Thailand emergency healthcare guide &rarr;</a>
-        </div>
-
-        <div class="faq-item">
-          <h3>What's the best eSIM or SIM card for Thailand?</h3>
-          <p>AIS and True Move H offer the best coverage nationally, including islands and rural areas. For short trips, Airalo or Holafly eSIMs work well without a Thai SIM. For stays beyond two weeks, a local Thai SIM from the airport offers significantly better data pricing.</p>
-          <a href="/recommendations/best-esims-thailand.html" class="faq-link">eSIM and SIM recommendations &rarr;</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- FOUNDER TRUST -->
-  <section class="section">
-    <div class="container">
-      <div style="display:flex; align-items:flex-start; gap:1.25rem; max-width:540px;">
-        <div style="width:52px; height:52px; border-radius:50%; background:#E8EDD8; border:1px solid #D0D8B8; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:1.25rem; color:var(--midnight); flex-shrink:0;">A</div>
-        <div>
-          <p style="font-size:0.9375rem; color:var(--text-mid); line-height:1.65; margin-bottom:0.75rem;">
-            Built by a healthcare professional living and working in Thailand. The focus is
-            practical tools that solve real navigation and safety problems — not content written
-            at a distance by people who visited for a week.
-          </p>
-          <a href="/about.html" style="font-size:0.875rem; font-weight:500; color:var(--midnight); text-decoration:none;">Read more about this project &rarr;</a>
-        </div>
-      </div>
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-bg">safe</div>
+    <div class="cta-inner">
+      <h2>Build your card.<br>Eat safely.</h2>
+      <p>Free. Takes 60 seconds. Works offline wherever you are.</p>
+      <a href="/app.html" class="btn-linen">Build My Free Card &rarr;</a>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1.5rem; margin-bottom:1rem;">
-        <div>
-          <span class="footer-logo">The Book of Abe</span>
-          <p style="font-size:0.8125rem; color:var(--text-muted); margin-top:0.25rem;">Thailand, explained properly.</p>
-        </div>
-        <nav class="footer-links" aria-label="Footer navigation">
-          <a href="/tools/">Tools</a>
-          <a href="/guides/">Guides</a>
-          <a href="/thailand-essentials/">Thailand Essentials</a>
-          <a href="/recommendations/">Recommendations</a>
-          <a href="/about.html">About</a>
-          <a href="/allergy-card/">Allergy Card</a>
-        </nav>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">Book of Abe<span> ·</span></div>
+        <div class="footer-tag">By <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">@bookofabe</a> · Built in Bangkok</div>
       </div>
-      <p class="footer-copy">Built in Thailand. &copy; 2025 The Book of Abe. All rights reserved.</p>
+      <nav class="footer-links">
+        <a href="/app.html">AllergyCard</a>
+        <a href="/thailand.html">Thailand</a>
+        <a href="/recommendations/">Recommendations</a>
+        <a href="/about.html">About</a>
+        <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+    </div>
+    <div class="footer-btm">
+      <span>&copy; 2025 The Book of Abe. All rights reserved.</span>
+      <span>Free tool. No data collected.</span>
     </div>
   </footer>
 
