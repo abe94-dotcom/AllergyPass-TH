@@ -23,8 +23,8 @@
     "@type": "Article",
     "headline": "Can You Safely Eat Street Food in Thailand with Food Allergies?",
     "description": "A practical guide for travelers with food allergies on how to eat Thai street food safely — what to avoid, how to communicate, and when to skip the stall.",
-    "author": { "@type": "Organization", "name": "AllergyCard TH" },
-    "publisher": { "@type": "Organization", "name": "AllergyCard TH" },
+    "author": { "@type": "Organization", "name": "AllergyPass" },
+    "publisher": { "@type": "Organization", "name": "AllergyPass" },
     "mainEntityOfPage": "https://allergycard.th/blog/food/thailand-street-food-allergy"
   }
   </script>
@@ -96,7 +96,7 @@
       font-size: 17px;
     }
 
-    /* ── Nav — Book of Abe site nav ── */
+    /* ── Nav ── */
     nav {
       position: sticky;
       top: 0;
@@ -121,7 +121,7 @@
       font-family: Georgia, 'Times New Roman', serif;
       font-weight: 700;
       font-size: 1.05rem;
-      color: #1C2340;
+      color: #2C1F14;
       text-decoration: none;
       letter-spacing: -0.01em;
       white-space: nowrap;
@@ -133,9 +133,9 @@
       text-decoration: none;
       font-size: 0.875rem;
     }
-    nav .nav-links a:hover { color: #1C2340; }
+    nav .nav-links a:hover { color: #2C1F14; }
     nav .nav-cta {
-      background: #1C2340;
+      background: #2C1F14;
       color: #FAF8F5;
       font-weight: 500;
       font-size: 0.8125rem;
@@ -310,15 +310,17 @@
 <body>
 
   <!-- ── Nav ── -->
-  <nav>
-    <div class="nav-inner">
-      <a class="logo" href="/">The Book of Abe</a>
+    <nav class="site-nav" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="nav-logo">AllergyPass</a>
       <div class="nav-links">
-        <a href="/blog/food/">Food</a>
-        <a href="/guides/">Expat life</a>
-        <a href="/blog/things-to-do/">Things to do</a>
+        <a href="/tools/">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="/recommendations/">Recommendations</a>
+        <a href="/about.html">About</a>
       </div>
-      <a class="nav-cta" href="/allergy-card/">Allergy card</a>
+      <a href="/app.html" class="nav-cta">Build My Card</a>
     </div>
   </nav>
 
@@ -437,7 +439,7 @@
 
       <!-- ── Inline CTA ── -->
       <div class="cta-box">
-        <p>One of the easiest ways to close the language gap is to carry your allergy information in written Thai. The AllergyCard TH generator lets you build a custom card listing your specific allergens, severity level, and the exact ingredients to avoid — formatted to show directly to vendors.</p>
+        <p>One of the easiest ways to close the language gap is to carry your allergy information in written Thai. The AllergyPass generator lets you build a custom card listing your specific allergens, severity level, and the exact ingredients to avoid — formatted to show directly to vendors.</p>
         <p>Free, offline, no sign-up required.</p>
         <a class="btn" href="/app.html">Create Your Allergy Card</a>
       </div>
@@ -560,9 +562,18 @@
     </article>
   </div><!-- /page-wrap -->
 
-  <footer>
-    <p><a href="/">The Book of Abe</a> &nbsp;·&nbsp; <a href="/blog/food/">Food guides</a> &nbsp;·&nbsp; <a href="/allergy-card/">Allergy card</a></p>
-    <p style="margin-top:10px;">Free · Offline · No sign-up required</p>
+    <footer class="site-footer">
+    <div class="container">
+      <span class="footer-logo">AllergyPass</span>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/tools/">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="/recommendations/">Recommendations</a>
+        <a href="/about.html">About</a>
+      </nav>
+      <p class="footer-copy mt-2">Built in Thailand. &copy; 2025 AllergyPass. All rights reserved.</p>
+    </div>
   </footer>
 
 </body>
