@@ -3,14 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thailand Tools — The Book of Abe</title>
+  <title>Thailand Tools — AllergyPass</title>
   <meta name="description" content="Free practical tools for navigating Thailand safely. AllergyPass TH generates a bilingual Thai-English food allergy card. More tools coming." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="AllergyPass" />
+  <link rel="apple-touch-icon" href="/icon-180.png" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <nav class="site-nav" aria-label="Main navigation">
+    <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
-      <a href="/" class="nav-logo">The Book of Abe</a>
+      <a href="/" class="nav-logo">AllergyPass</a>
       <div class="nav-links">
         <a href="/tools/" aria-current="page">Tools</a>
         <a href="/guides/">Guides</a>
@@ -18,7 +23,7 @@
         <a href="/recommendations/">Recommendations</a>
         <a href="/about.html">About</a>
       </div>
-      <a href="/allergy-card/" class="nav-cta">Allergy Card</a>
+      <a href="/app.html" class="nav-cta">Build My Card</a>
     </div>
   </nav>
 
@@ -35,7 +40,7 @@
   <section class="section section--alt">
     <div class="container">
       <div class="pillar-grid">
-        <a href="/allergy-card/" class="pillar-card" style="text-decoration:none;">
+        <a href="/app.html" class="pillar-card" style="text-decoration:none;">
           <div class="pillar-icon">🚫</div>
           <span class="tool-badge" style="margin-bottom:0.75rem;">AllergyPass TH</span>
           <h3>Food Allergy Card Generator</h3>
@@ -58,16 +63,17 @@
     </div>
   </section>
 
-  <footer class="site-footer">
+    <footer class="site-footer">
     <div class="container">
-      <span class="footer-logo">The Book of Abe</span>
-      <nav class="footer-links">
+      <span class="footer-logo">AllergyPass</span>
+      <nav class="footer-links" aria-label="Footer navigation">
         <a href="/tools/">Tools</a>
         <a href="/guides/">Guides</a>
         <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="/recommendations/">Recommendations</a>
         <a href="/about.html">About</a>
       </nav>
-      <p class="footer-copy mt-2">Built in Thailand. &copy; 2025 The Book of Abe. All rights reserved.</p>
+      <p class="footer-copy mt-2">Built in Thailand. &copy; 2025 AllergyPass. All rights reserved.</p>
     </div>
   </footer>
 </body>
