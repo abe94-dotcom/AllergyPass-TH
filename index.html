@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AllergyPass — Communicate Food Allergies Anywhere</title>
+  <meta name="description" content="Build a free bilingual food allergy card in seconds. Show restaurant staff exactly what you can't eat — in their language. Works offline. No sign-up required." />
+  <meta name="keywords" content="food allergy card, allergy card travel, food allergy translation card, AllergyPass, bilingual allergy card, travel food allergy" />
+  <meta property="og:title" content="AllergyPass — Communicate Food Allergies Anywhere" />
+  <meta property="og:description" content="Build a free bilingual food allergy card. Show restaurant staff exactly what you can't eat — in their language. Works offline. No sign-up." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#2C1F14" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="AllergyPass" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icon-180.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,600;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- PWA INSTALL BANNER (Android + iOS, shown contextually by JS) -->
+  <div id="pwa-banner" class="pwa-banner" role="banner" aria-live="polite" hidden>
+    <div class="pwa-banner-inner">
+      <div class="pwa-banner-icon">🛡️</div>
+      <div class="pwa-banner-text">
+        <strong>Install AllergyPass</strong>
+        <span>Offline access · Home screen · Instant cards</span>
+      </div>
+      <button id="pwa-install-btn" class="pwa-install-btn" aria-label="Install AllergyPass app">Install</button>
+      <button id="pwa-dismiss-btn" class="pwa-dismiss-btn" aria-label="Dismiss install prompt">✕</button>
+    </div>
+  </div>
+
+  <!-- iOS INSTALL INSTRUCTIONS SHEET -->
+  <div id="ios-install-sheet" class="ios-sheet" hidden aria-modal="true" role="dialog" aria-label="How to install AllergyPass on iOS">
+    <div class="ios-sheet-inner">
+      <div class="ios-sheet-handle"></div>
+      <div class="ios-sheet-icon">🛡️</div>
+      <h2 class="ios-sheet-title">Install AllergyPass</h2>
+      <p class="ios-sheet-sub">Add to your home screen for offline access and instant travel-ready allergy cards.</p>
+      <ol class="ios-steps">
+        <li class="ios-step">
+          <span class="ios-step-num">1</span>
+          <span class="ios-step-text">Tap the <strong>Share</strong> button <span class="ios-share-icon">&#x2BAD;</span> in Safari's toolbar</span>
+        </li>
+        <li class="ios-step">
+          <span class="ios-step-num">2</span>
+          <span class="ios-step-text">Scroll down and tap <strong>"Add to Home Screen"</strong></span>
+        </li>
+        <li class="ios-step">
+          <span class="ios-step-num">3</span>
+          <span class="ios-step-text">Tap <strong>Add</strong> — AllergyPass launches like a native app</span>
+        </li>
+      </ol>
+      <button id="ios-sheet-close" class="ios-sheet-close">Got it</button>
+    </div>
+  </div>
+  <div id="ios-sheet-backdrop" class="ios-sheet-backdrop" hidden></div>
+
+  <!-- NAV -->
+    <nav class="site-nav" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="nav-logo">AllergyPass</a>
+      <div class="nav-links">
+        <a href="/tools/">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="/recommendations/">Recommendations</a>
+        <a href="/about.html">About</a>
+      </div>
+      <a href="/app.html" class="nav-cta">Build My Card</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grain" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-glow2" aria-hidden="true"></div>
+    <div class="hero-inner">
+
+      <div>
+        <div class="hero-tag fu d1"><span class="hero-dot" aria-hidden="true"></span>Free · No sign-up · Works offline</div>
+        <h1 class="fu d2">
+          Travel with food<br>
+          <span class="warm">allergies, safely.</span>
+          <span class="sub">In any language, anywhere you eat.</span>
+        </h1>
+        <p class="hero-desc fu d3">Build a bilingual food allergy card in seconds. Show restaurant staff exactly what you can't eat — in their language — including hidden ingredients that never appear on the menu.</p>
+        <div class="hero-actions fu d4">
+          <a href="/app.html" class="btn-hero">Build My Card &rarr;</a>
+          <a href="#how" class="btn-ghost-light">See how it works ↓</a>
+        </div>
+        <div class="hero-pills fu d5">
+          <span class="pill">Anaphylactic · Severe · Intolerance</span>
+          <span class="pill">Hidden ingredients auto-added</span>
+          <span class="pill">Offline ready</span>
+          <span class="pill">14 countries supported</span>
+        </div>
+      </div>
+
+      <div class="hero-card-col fu d3">
+        <div class="card-glow" aria-hidden="true"></div>
+        <div class="card-mock" role="img" aria-label="Sample AllergyPass card showing peanut, shellfish and dairy allergies in Thai and English">
+          <span class="card-badge">Sample Card</span>
+          <div class="cm-hd">
+            <span class="cm-warn" aria-hidden="true">⚠️</span>
+            <div>
+              <div class="cm-hd-en">FOOD ALLERGY NOTICE</div>
+              <div class="cm-hd-th">แจ้งเตือนการแพ้อาหาร</div>
+            </div>
+          </div>
+          <div class="cm-body">
+            <div class="cm-no"><span class="cm-no-badge">NO</span><span class="cm-no-th">ห้ามใส่</span></div>
+            <div class="cm-row ana">
+              <span class="cm-emoji" aria-hidden="true">🥜</span>
+              <div><div class="cm-th">ถั่วลิสง</div><div class="cm-en">Peanuts — anaphylactic</div></div>
+            </div>
+            <div class="cm-row sev">
+              <span class="cm-emoji" aria-hidden="true">🦐</span>
+              <div><div class="cm-th">กุ้ง / น้ำปลา / กะปิ</div><div class="cm-en">Shellfish · fish sauce · shrimp paste</div></div>
+            </div>
+            <div class="cm-row tol">
+              <span class="cm-emoji" aria-hidden="true">🥛</span>
+              <div><div class="cm-th">นม / เนย</div><div class="cm-en">Dairy, butter — intolerance</div></div>
+            </div>
+            <div class="cm-ft">
+              <div class="cm-ft-th">กรุณาแจ้งเชฟด้วย</div>
+              <div class="cm-ft-en">Please inform the chef</div>
+            </div>
+          </div>
+          <div class="cm-langs">
+            <span class="cm-lang-flag" title="Thai">🇹🇭</span>
+            <span class="cm-lang-flag" title="Japanese">🇯🇵</span>
+            <span class="cm-lang-flag" title="Vietnamese">🇻🇳</span>
+            <span class="cm-lang-flag" title="Korean">🇰🇷</span>
+            <span class="cm-lang-flag" title="Chinese">🇨🇳</span>
+            <span class="cm-lang-more">+9 more</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats" aria-label="Key facts">
+    <div class="stats-inner">
+      <div class="stat"><div class="stat-val"><em>Free</em></div><div class="stat-lbl">No account, no cost, ever</div></div>
+      <div class="stat"><div class="stat-val"><em>Bilingual</em></div><div class="stat-lbl">Side-by-side, readable instantly</div></div>
+      <div class="stat"><div class="stat-val"><em>Offline</em></div><div class="stat-lbl">Works without cell signal</div></div>
+      <div class="stat"><div class="stat-val">60 <em>sec</em></div><div class="stat-lbl">From nothing to card in hand</div></div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="how-inner">
+      <p class="sec-label">How it works</p>
+      <h2 class="sec-h">Three steps.<br><em>One card. Full safety.</em></h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" aria-hidden="true">01</div>
+          <h3>Add your allergens</h3>
+          <p>Tap to select what you're allergic to. Set severity — anaphylactic, severe, or intolerance. Add specific triggers if needed.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" aria-hidden="true">02</div>
+          <h3>Generate your card</h3>
+          <p>Built instantly in your chosen language and English. Hidden ingredients are included automatically — things like shrimp paste in Thai food, or dashi in Japanese broth.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" aria-hidden="true">03</div>
+          <h3>Show it at the table</h3>
+          <p>One tap opens the card full-screen. Hand your phone to any server or street vendor. No translation app. No guesswork. No risk of misunderstanding.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="feats" aria-label="Key features">
+    <div class="feats-inner">
+      <div class="feat">
+        <div class="feat-icon" aria-hidden="true">✍️</div>
+        <div class="feat-title">Human translated</div>
+        <div class="feat-desc">Written and verified by a healthcare professional — not machine-translated or AI-guessed.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon" aria-hidden="true">📵</div>
+        <div class="feat-title">Works offline</div>
+        <div class="feat-desc">Install as a PWA. No signal needed when you're at the table, in the market, or mid-flight.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon" aria-hidden="true">🔒</div>
+        <div class="feat-title">No account required</div>
+        <div class="feat-desc">Your profile saves locally on your device. Nothing is sent to any server. Ever.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon" aria-hidden="true">🌏</div>
+        <div class="feat-title">14 countries</div>
+        <div class="feat-desc">Thailand, Japan, Vietnam, Korea, China, Singapore, and more. One profile, every destination.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTALL CTA (mobile only) -->
+  <section class="install-section" id="install-section" aria-label="Install AllergyPass">
+    <div class="install-inner">
+      <div class="install-content">
+        <p class="sec-label">Install the app</p>
+        <h2 class="sec-h" style="margin-bottom:0.75rem;">Travel-ready.<br><em>Always in your pocket.</em></h2>
+        <p class="install-desc">Install AllergyPass to your home screen for instant offline access — no App Store, no download, no wait.</p>
+        <ul class="install-benefits" aria-label="Installation benefits">
+          <li><span aria-hidden="true">⚡</span> Opens instantly from your home screen</li>
+          <li><span aria-hidden="true">📶</span> Works without any internet connection</li>
+          <li><span aria-hidden="true">🃏</span> Your allergy card is always one tap away</li>
+          <li><span aria-hidden="true">🍽️</span> Full-screen restaurant mode at the table</li>
+        </ul>
+        <div class="install-actions">
+          <button id="install-cta-btn" class="btn-hero" style="display:none" aria-label="Install AllergyPass to home screen">Install AllergyPass &rarr;</button>
+          <button id="ios-install-cta-btn" class="btn-hero" style="display:none" aria-label="Add AllergyPass to home screen on iOS">Add to Home Screen &rarr;</button>
+          <a href="/app.html" class="btn-ghost-light">Use in browser ↗</a>
+        </div>
+      </div>
+      <div class="install-visual" aria-hidden="true">
+        <div class="install-phone">
+          <div class="install-phone-screen">
+            <div class="install-phone-header">
+              <span class="install-phone-dot"></span>
+              <span class="install-phone-dot"></span>
+              <span class="install-phone-dot"></span>
+            </div>
+            <div class="install-phone-icon">🛡️</div>
+            <div class="install-phone-name">AllergyPass</div>
+            <div class="install-phone-sub">Tap to open</div>
+          </div>
+          <div class="install-phone-homerow">
+            <div class="install-phone-app"></div>
+            <div class="install-phone-app" style="background:rgba(196,89,58,0.2); border-color:rgba(196,89,58,0.4);"></div>
+            <div class="install-phone-app" style="background:rgba(212,134,10,0.2); border-color:rgba(212,134,10,0.4);"></div>
+            <div class="install-phone-app ap-highlight"><span>🛡️</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT ABE -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div>
+        <p class="sec-label">Who's behind this</p>
+        <h2>Built by someone<br>who <em>actually eats here.</em></h2>
+        <div class="about-desc">
+          <p>I'm Abe — a healthcare professional living and working in Bangkok. I built AllergyPass because I watched people struggle to communicate food allergies in kitchens where nobody spoke English and translation apps got the nuance wrong.</p>
+          <p>The translations are verified by hand, not generated. The hidden ingredients are there because I know the cuisine — not because an algorithm guessed.</p>
+          <p>On Instagram I share what it's actually like to live here — the observations, the systems, the things that don't make it into any guidebook.</p>
+        </div>
+        <div class="about-actions">
+          <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener" class="btn-clay">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+            Follow @bookofabe
+          </a>
+          <a href="/about.html" class="btn-outline">Read more</a>
+        </div>
+      </div>
+
+      <div class="ig-card" aria-label="Instagram profile preview for @bookofabe">
+        <div class="ig-hd">
+          <div class="ig-avatar" aria-hidden="true">A</div>
+          <div>
+            <div class="ig-name">@bookofabe</div>
+            <div class="ig-sub">Bangkok · Healthcare · Observer</div>
+          </div>
+          <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener" class="ig-follow">Follow</a>
+        </div>
+        <div class="ig-grid" aria-hidden="true">
+          <div class="ig-post"><div class="ig-lbl">The Observer</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">The Rebuild</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">Street Level</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">Systems &amp; Work</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">Identity &amp; Place</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+          <div class="ig-post"><div class="ig-lbl">The Uncomfortable Middle</div><div class="ig-overlay"><span class="ig-ov-icon">♥</span></div></div>
+        </div>
+        <div class="ig-ft">
+          <span class="ig-ft-note">Observations from Bangkok</span>
+          <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener" class="ig-open">Open Instagram &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THAILAND -->
+  <section class="thailand">
+    <div class="thailand-inner">
+      <p class="sec-label">Thailand</p>
+      <h2 class="sec-h" style="margin-bottom:0.5rem;">Guides built for<br><em>people actually going.</em></h2>
+      <p style="font-size:0.9375rem;color:var(--dust);margin-bottom:0;font-weight:400;">Thailand is where AllergyPass started. These guides go deeper.</p>
+      <div class="thailand-grid">
+        <a href="/guides/hidden-allergens-thai-food.html" class="th-card">
+          <div class="th-icon" aria-hidden="true">🍜</div>
+          <div class="th-name">Thai Food &amp; Allergens</div>
+          <div class="th-desc">What's hidden in Thai food, why fish sauce is everywhere, and how to navigate it safely.</div>
+          <span class="th-link">Read guide &rarr;</span>
+        </a>
+        <a href="/thailand-essentials/emergency-healthcare.html" class="th-card">
+          <div class="th-icon" aria-hidden="true">🏥</div>
+          <div class="th-name">Healthcare in Thailand</div>
+          <div class="th-desc">Emergency numbers, best hospitals in Bangkok, what to do if you have a reaction.</div>
+          <span class="th-link">Read guide &rarr;</span>
+        </a>
+        <a href="/thailand-essentials/" class="th-card">
+          <div class="th-icon" aria-hidden="true">📋</div>
+          <div class="th-name">First Week Checklist</div>
+          <div class="th-desc">SIM cards, apps, cash, pharmacies. The things that matter before they matter.</div>
+          <span class="th-link">Read guide &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECS -->
+  <section class="recs">
+    <div class="recs-inner">
+      <p class="sec-label">Recommended</p>
+      <h2 class="sec-h" style="margin-bottom:0.4rem;">Things worth having<br><em>before you land.</em></h2>
+      <p class="recs-sub">Vetted picks for staying connected, covered, and safe. <a href="/about.html#affiliate">Affiliate links</a> — costs you nothing extra.</p>
+      <div class="rec-grid">
+        <div class="rec-card">
+          <span class="rec-tag c">Connectivity</span>
+          <div class="rec-name">eSIM for Travel</div>
+          <div class="rec-desc">Data from the moment you land. No local SIM hunt required. Airalo and Holafly both work well for short stays.</div>
+          <span class="rec-coming">Link coming soon</span>
+        </div>
+        <div class="rec-card">
+          <span class="rec-tag i">Insurance</span>
+          <div class="rec-name">Travel Insurance</div>
+          <div class="rec-desc">Medical evacuation coverage matters more in Southeast Asia than most places. What to look for, what to avoid.</div>
+          <span class="rec-coming">Link coming soon</span>
+        </div>
+        <div class="rec-card">
+          <span class="rec-tag s">Safety</span>
+          <div class="rec-name">EpiPen &amp; Meds</div>
+          <div class="rec-desc">What to bring, what's available locally, and which hospitals stock what you need.</div>
+          <span class="rec-coming">Link coming soon</span>
+        </div>
+      </div>
+      <p class="rec-note">This page contains affiliate links. If you buy through them, I earn a small commission at no extra cost to you. I only recommend things I've actually used or researched properly.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" aria-label="Call to action">
+    <div class="cta-bg" aria-hidden="true">safe</div>
+    <div class="cta-inner">
+      <h2>Build your card.<br>Eat safely.</h2>
+      <p>Free. Takes 60 seconds. Works offline wherever you are.</p>
+      <a href="/app.html" class="btn-linen">Build My Free Card &rarr;</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+    <footer class="site-footer">
+    <div class="container">
+      <span class="footer-logo">AllergyPass</span>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/tools/">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="/recommendations/">Recommendations</a>
+        <a href="/about.html">About</a>
+      </nav>
+      <p class="footer-copy mt-2">Built in Thailand. &copy; 2025 AllergyPass. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── PWA Install Logic ──────────────────────────────────────
+    let deferredPrompt = null;
+    const DISMISSED_KEY = 'ap_install_dismissed';
+    const DISMISSED_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+    function isIOS() {
+      return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+    }
+    function isInStandaloneMode() {
+      return window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;
+    }
+    function wasDismissedRecently() {
+      const ts = localStorage.getItem(DISMISSED_KEY);
+      if (!ts) return false;
+      return (Date.now() - parseInt(ts, 10)) < DISMISSED_EXPIRY;
+    }
+    function markDismissed() {
+      localStorage.setItem(DISMISSED_KEY, String(Date.now()));
+    }
+
+    // Android: capture beforeinstallprompt
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!isInStandaloneMode() && !wasDismissedRecently()) {
+        showAndroidBanner();
+      }
+      // Also show the inline install button
+      const inlineBtn = document.getElementById('install-cta-btn');
+      if (inlineBtn) inlineBtn.style.display = 'inline-flex';
+    });
+
+    function showAndroidBanner() {
+      const banner = document.getElementById('pwa-banner');
+      if (banner) banner.hidden = false;
+    }
+
+    // Android: install button in banner
+    document.getElementById('pwa-install-btn')?.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      document.getElementById('pwa-banner').hidden = true;
+    });
+
+    // Android: dismiss banner
+    document.getElementById('pwa-dismiss-btn')?.addEventListener('click', () => {
+      markDismissed();
+      document.getElementById('pwa-banner').hidden = true;
+    });
+
+    // Android: inline CTA button
+    document.getElementById('install-cta-btn')?.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    });
+
+    // iOS: show instructions
+    function showIOSSheet() {
+      document.getElementById('ios-install-sheet').hidden = false;
+      document.getElementById('ios-sheet-backdrop').hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function hideIOSSheet() {
+      document.getElementById('ios-install-sheet').hidden = true;
+      document.getElementById('ios-sheet-backdrop').hidden = true;
+      document.body.style.overflow = '';
+      markDismissed();
+    }
+
+    document.getElementById('ios-sheet-close')?.addEventListener('click', hideIOSSheet);
+    document.getElementById('ios-sheet-backdrop')?.addEventListener('click', hideIOSSheet);
+
+    document.getElementById('ios-install-cta-btn')?.addEventListener('click', showIOSSheet);
+
+    // iOS detection and setup
+    if (isIOS() && !isInStandaloneMode()) {
+      const iosBtn = document.getElementById('ios-install-cta-btn');
+      if (iosBtn) iosBtn.style.display = 'inline-flex';
+      // Show banner on iOS too
+      if (!wasDismissedRecently()) {
+        const banner = document.getElementById('pwa-banner');
+        const installBtn = document.getElementById('pwa-install-btn');
+        if (banner && installBtn) {
+          installBtn.textContent = 'How to Install';
+          installBtn.addEventListener('click', showIOSSheet);
+          banner.hidden = false;
+        }
+      }
+    }
+
+    // Hide install section if already installed
+    if (isInStandaloneMode()) {
+      const section = document.getElementById('install-section');
+      if (section) section.hidden = true;
+    }
+
+    // Service Worker registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
