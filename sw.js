@@ -1,4 +1,4 @@
-const CACHE = 'allergypass-v1';
+const CACHE = 'allergypass-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -19,6 +19,13 @@ const ASSETS = [
   '/thailand-essentials/emergency-healthcare.html',
   '/blog/',
   '/blog/index.html',
+  '/recommendations/',
+  '/recommendations/index.html',
+  '/recommendations/best-esims-thailand.html',
+  '/allergy-card/',
+  '/allergy-card/index.html',
+  '/tools/',
+  '/tools/index.html',
   'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,600;1,400;1,600&display=swap'
 ];
 

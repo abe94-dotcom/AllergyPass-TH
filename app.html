@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Build a bilingual food allergy card for any country. Show restaurant staff exactly what you can't eat — in their language. Works offline, no sign-up needed." />
   <meta name="theme-color" content="#0F0F0F" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -103,7 +103,7 @@
     }
 
     /* ── FLAG SELECTOR ───────────────────────────────────── */
-    #flag-selector { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    #flag-selector { display: grid; grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 8px; }
     .flag-btn {
       background: var(--surface2); border: 1.5px solid var(--border);
       border-radius: var(--radius); padding: 10px 4px 8px;
@@ -381,7 +381,7 @@
     }
     #quick-overlay.active { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
     #quick-overlay .allergy-card { width: 100%; max-width: 480px; }
-    .overlay-dismiss { margin-top: 18px; font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.25); text-align: center; }
+    .overlay-dismiss { margin-top: 18px; font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.25); text-align: center; transition: opacity 0.8s ease; }
 
     /* ── PAYWALL SHEET ───────────────────────────────────── */
     .paywall-overlay {
@@ -605,9 +605,7 @@
   </div>
 
   <!-- Quick Show Overlay -->
-  <div id="quick-overlay">
-    <div class="overlay-dismiss">Tap anywhere to close</div>
-  </div>
+  <div id="quick-overlay"></div>
 
   <!-- Paywall Sheet -->
   <div class="paywall-overlay" id="paywall-overlay">

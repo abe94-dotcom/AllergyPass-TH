@@ -334,7 +334,7 @@ const TRANSLATIONS = {
 };
 
 // Fallback for countries without their own bundle yet
-const TRANSLATION_FALLBACKS = { km: 'th', lo: 'th', my: 'ms', si: 'ms', 'zh-TW': 'zh', 'zh-HK': 'zh' };
+const TRANSLATION_FALLBACKS = { km: 'th', lo: 'th', my: 'ms', si: 'ms', tw: 'zh', hk: 'zh' };
 
 function getBundle(langCode) {
   if (TRANSLATIONS[langCode]) return TRANSLATIONS[langCode];
@@ -567,7 +567,7 @@ function renderSelectedAllergens() {
     datalist.id = listId;
     hints.forEach(h => { const o = document.createElement('option'); o.value = h; datalist.appendChild(o); });
 
-    trigInput.addEventListener('change', () => {
+    trigInput.addEventListener('blur', () => {
       const triggers = trigInput.value.split(',').map(t => t.trim()).filter(Boolean);
       State.setTriggers(entry.key, triggers);
     });
@@ -833,7 +833,10 @@ function buildCardForCountry(countryCode, profile) {
 
   // Polite close
   const polite = el('div', 'wp-polite');
-  polite.appendChild(el('div', 'wp-polite-en', 'Thank you for your care — ขอบคุณ · ありがとう · 谢谢'));
+  const politePhrases = { th: 'ขอบคุณ', ja: 'ありがとう', zh: '谢谢', vi: 'Cảm ơn', ko: '감사합니다', id: 'Terima kasih', ms: 'Terima kasih', sg: 'Thank you · 谢谢 · Terima kasih' };
+  const politeLocal = politePhrases[primaryLang] || '';
+  const politeText = politeLocal ? 'Thank you for your care — ' + politeLocal : 'Thank you for your care';
+  polite.appendChild(el('div', 'wp-polite-en', politeText));
   back.appendChild(polite);
 
   // Emergency
@@ -899,7 +902,12 @@ function enterQuickShow() {
 
   overlay.innerHTML = '';
   if (clone) overlay.appendChild(clone);
+  const dismiss = document.createElement('div');
+  dismiss.className = 'overlay-dismiss';
+  dismiss.textContent = 'Tap anywhere or swipe to close';
+  overlay.appendChild(dismiss);
   overlay.classList.add('active');
+  setTimeout(() => { dismiss.style.opacity = '0'; }, 2500);
 
   try {
     const root = document.documentElement;
