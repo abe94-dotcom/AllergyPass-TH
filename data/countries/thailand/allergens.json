@@ -8,7 +8,13 @@
       "name_th": "น้ำปลา",
       "romanized": "nam pla",
       "risk_level": "high",
-      "hidden_in": ["curries", "stir-fries", "soups", "dipping sauces", "fried rice"],
+      "hidden_in": [
+        "curries",
+        "stir-fries",
+        "soups",
+        "dipping sauces",
+        "fried rice"
+      ],
       "thai_phrase_avoid": "ไม่ใส่น้ำปลา"
     },
     {
@@ -17,7 +23,12 @@
       "name_th": "กะปิ",
       "romanized": "kapi",
       "risk_level": "high",
-      "hidden_in": ["curry paste", "nam prik", "som tam", "stir-fries"],
+      "hidden_in": [
+        "curry paste",
+        "nam prik",
+        "som tam",
+        "stir-fries"
+      ],
       "thai_phrase_avoid": "ไม่ใส่กะปิ"
     },
     {
@@ -26,7 +37,12 @@
       "name_th": "ถั่วลิสง",
       "romanized": "thua lisong",
       "risk_level": "high",
-      "hidden_in": ["pad thai", "satay sauce", "fried dishes", "garnishes"],
+      "hidden_in": [
+        "pad thai",
+        "satay sauce",
+        "fried dishes",
+        "garnishes"
+      ],
       "thai_phrase_avoid": "แพ้ถั่วลิสง"
     },
     {
@@ -35,19 +51,37 @@
       "name_th": "กุ้งแห้ง",
       "romanized": "kung haeng",
       "risk_level": "medium",
-      "hidden_in": ["som tam", "fried rice", "morning glory stir-fry", "noodle dishes"],
+      "hidden_in": [
+        "som tam",
+        "fried rice",
+        "morning glory stir-fry",
+        "noodle dishes"
+      ],
       "thai_phrase_avoid": "ไม่ใส่กุ้งแห้ง"
     }
   ],
   "emergency_phrases": [
-    { "situation": "severe allergy", "thai": "แพ้อาหารรุนแรง", "romanized": "pae ahan run raeng" },
-    { "situation": "help me", "thai": "ช่วยด้วย", "romanized": "chuai duai" },
-    { "situation": "I cannot eat", "thai": "ฉันกินไม่ได้", "romanized": "chan gin mai dai" }
+    {
+      "situation": "severe allergy",
+      "thai": "แพ้อาหารรุนแรง",
+      "romanized": "pae ahan run raeng"
+    },
+    {
+      "situation": "help me",
+      "thai": "ช่วยด้วย",
+      "romanized": "chuai duai"
+    },
+    {
+      "situation": "I cannot eat",
+      "thai": "ฉันกินไม่ได้",
+      "romanized": "chan gin mai dai"
+    }
   ],
   "emergency_numbers": {
     "ems": "1669",
     "police": "191",
     "tourist_police": "1155"
   },
-  "last_updated": "2025-01"
+  "last_updated": "2025-01",
+  "_note": "Reference data only. The live app uses inline TRANSLATIONS in app.js. This file is not fetched at runtime. Keep in sync manually."
 }
