@@ -3,156 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>AllergyPass — Travel with Food Allergies, Safely</title>
+  <title>Build Your Card — AllergyPass</title>
   
-  <meta name="description" content="The only food allergy card verified by healthcare professionals. Create your free bilingual card with hidden ingredient protection. Works 100% offline." />
-  <meta property="og:title" content="AllergyPass — Eat Safely Anywhere" />
-  <meta property="og:image" content="/og-image.png" />
-  <meta name="theme-color" content="#2C1F14" />
-
   <link rel="manifest" href="/manifest.json" />
-  <link rel="apple-touch-icon" href="/icon-180.png" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
   <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#2C1F14" />
 </head>
-<body>
+<body class="app-interface">
 
-  <nav class="nav-container" aria-label="Main Navigation">
-    <a href="/" class="logo" aria-label="AllergyPass Home">
-      <span class="logo-shield">🛡️</span> AllergyPass
-    </a>
-    <div class="nav-links">
-      <a href="/guides">Guides</a>
-      <a href="/about">Expertise</a>
-      <a href="/app" class="btn-primary-sm">Build My Card</a>
+  <nav class="nav-container app-nav">
+    <div class="container nav-flex">
+      <a href="index.html" class="logo">🛡️ AllergyPass</a>
+      <div id="offline-status-ready" class="offline-badge">Offline Ready</div>
     </div>
   </nav>
 
-  <main>
-    <section class="hero-section">
-      <div class="container">
-        <div class="hero-content">
-          <h1 class="display-text">Eat with confidence,<br><span class="text-clay">wherever you land.</span></h1>
-          <p class="lead-text">
-            Don't trust your safety to a translation app. Get a bilingual food allergy card that understands local cuisines and <strong>hidden ingredients</strong>. 
-          </p>
-          <div class="cta-group">
-            <a href="/app" class="btn-primary-lg">Create My Free Card</a>
-            <span class="cta-subtext">✨ No sign-up • Works 100% Offline</span>
-          </div>
-        </div>
+  <main class="container app-main">
+    
+    <div class="mode-toggle-container">
+      <div class="segmented-control">
+        <button id="btn-mode-single" class="active">Single City</button>
+        <button id="btn-mode-trip">Multi-Country Trip ✈️</button>
+      </div>
+    </div>
+
+    <div class="app-grid">
+      
+      <section class="builder-controls">
         
-        <div class="hero-visual">
-          <div class="sample-card-stack">
-            <div class="mini-card-preview">
-              <div class="card-tag">Thailand Entry</div>
-              <div class="card-item">🥜 No Peanuts</div>
-              <div class="card-detail">Includes: Peanut Oil, Satay Sauce</div>
+        <div class="control-group">
+          <label class="section-label">1. Select Destination</label>
+          <div id="flag-selector" class="flag-grid">
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="trust-bar">
-      <div class="container">
-        <p class="trust-label">Built by Healthcare Professionals in Bangkok</p>
-        <div class="trust-icons">
-          <span>🩺 Clinically Verified</span>
-          <span>📵 Works without Data</span>
-          <span>🔒 Zero Data Tracking</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="feature-grid">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="h2-text">Why translation apps aren't enough.</h2>
-          <p>Standard translators miss the "invisible" ingredients that cause reactions.</p>
         </div>
 
-        <div class="grid-3col">
-          <div class="feature-card">
-            <div class="icon">🔍</div>
-            <h3>Hidden Triggers</h3>
-            <p>Our system automatically adds local specifics, like <strong>Shrimp Paste</strong> in Thai curries or <strong>Dashi</strong> in Japanese broth.</p>
-          </div>
-          <div class="feature-card">
-            <div class="icon">🏥</div>
-            <h3>Clinical Precision</h3>
-            <p>Translations are verified for medical accuracy, ensuring kitchen staff understand the severity of cross-contamination.</p>
-          </div>
-          <div class="feature-card">
-            <div class="icon">✈️</div>
-            <h3>Airside Ready</h3>
-            <p>Once created, your card lives on your phone. No signal? No problem. Use it at 35,000 feet or in remote markets.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="install-section" class="install-hub">
-      <div class="container">
-        <div class="install-content">
-          <h2>Always in your pocket.</h2>
-          <p>Install AllergyPass to your home screen for instant, one-tap access at the table.</p>
-          
-          <div class="install-steps">
-            <div class="step">
-              <span class="step-num">1</span>
-              <p>Tap <strong>Share</strong> in Safari or Chrome</p>
+        <div class="control-group">
+          <label class="section-label">2. Add Allergens</label>
+          <div id="allergen-picker-grid" class="allergen-grid">
             </div>
-            <div class="step">
-              <span class="step-num">2</span>
-              <p>Scroll to <strong>'Add to Home Screen'</strong></p>
+        </div>
+
+        <div class="control-group">
+          <label class="section-label">3. Set Severity & Review</label>
+          <div id="selected-allergens" class="selected-list">
             </div>
-            <div class="step">
-              <span class="step-num">3</span>
-              <p>Eat safely everywhere</p>
+        </div>
+
+        <div class="personal-info-fields">
+          <input type="text" id="user-name" placeholder="Name (Optional)" class="app-input" />
+          <input type="text" id="emergency-contact" placeholder="Emergency Phone" class="app-input" />
+        </div>
+
+        <div class="builder-actions">
+          <button id="btn-generate" class="btn-primary-lg" disabled>Generate Card</button>
+          <button id="btn-restaurant-mode" class="btn-secondary">Restaurant Mode (High Contrast) 🌓</button>
+        </div>
+      </section>
+
+      <section class="preview-area">
+        <div class="preview-sticky">
+          <label class="section-label center">Live Card Preview</label>
+          <div id="allergy-card" class="card-display-area">
+            <div class="card-placeholder">
+              Select an allergen to see your card preview
             </div>
           </div>
           
-          <button id="pwa-install-btn" class="btn-secondary">Install AllergyPass</button>
+          <div class="clinical-assurance">
+            <p>🛡️ <strong>Clinically Verified Translation</strong></p>
+            <p>This card is generated based on verified medical protocols used in Bangkok clinics.</p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-brand">
-        <div class="logo">🛡️ AllergyPass</div>
-        <p>Documenting a journey toward safer travel. Created in Bangkok.</p>
+  <div id="paywall-overlay" class="overlay" hidden>
+    <div class="paywall-card">
+      <button id="btn-paywall-dismiss" class="close-btn">✕</button>
+      <div class="paywall-header">
+        <span class="icon">✈️</span>
+        <h3>Unlock Trip Mode</h3>
       </div>
-      <div class="footer-links">
-        <div class="link-group">
-          <h4>Resources</h4>
-          <a href="/guides">Thailand Guides</a>
-          <a href="/about">Our Story</a>
-        </div>
-        <div class="link-group">
-          <h4>Support</h4>
-          <a href="https://instagram.com/bookofabe">Follow the Build</a>
-          <a href="/about#affiliate">Affiliate Disclosure</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 AllergyPass. Designed for human safety.</p>
-    </div>
-  </footer>
-
-  <script src="app.js"></script>
-  
-  <div id="pwa-banner" class="pwa-banner-fixed" hidden>
-    <div class="banner-flex">
-      <p>📲 Add to Home Screen for offline safety</p>
-      <button id="banner-close">✕</button>
+      <p>Planning a multi-country journey? Get unlimited bilingual cards for all 14 Asian destinations in one profile.</p>
+      <ul class="paywall-features">
+        <li>✅ All 14 countries unlocked</li>
+        <li>✅ Pro Clinical translation depth</li>
+        <li>✅ Lifetime access for this trip</li>
+      </ul>
+      <button id="btn-paywall-cta" class="btn-primary-lg">Unlock for $4.99</button>
     </div>
   </div>
 
+  <script src="app.js"></script>
 </body>
 </html>
