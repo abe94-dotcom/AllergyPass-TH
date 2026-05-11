@@ -3,655 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Build a bilingual food allergy card for any country. Show restaurant staff exactly what you can't eat — in their language. Works offline, no sign-up needed." />
+  <meta name="description" content="Build a bilingual food allergy card for any country. Human-verified translations with hidden ingredient detection. Works offline." />
   <meta name="theme-color" content="#0F0F0F" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="AllergyPass" />
-  <title>AllergyPass — Build Your Allergy Card</title>
+  <title>AllergyPass — Professional Allergy Cards</title>
   <link rel="manifest" href="/manifest.json" />
-  <link rel="apple-touch-icon" href="/icon-180.png" />
-
-
+  
   <style>
-    /* ── RESET & TOKENS ──────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --red:      #B91C1C;
-      --red-dark: #7F1D1D;
-      --surface:  #0F0F0F;
+      --red: #EF4444;
+      --red-dark: #991B1B;
+      --surface: #0F0F0F;
       --surface2: #1A1A1A;
-      --surface3: #242424;
-      --border:   #2E2E2E;
-      --text:     #F5F5F5;
+      --surface3: #262626;
+      --text: #F5F5F5;
       --text-dim: #A3A3A3;
-      --text-off: #525252;
-      --accent:   #EF4444;
-      --gold:     #F59E0B;
-      --gold-bg:  rgba(245,158,11,0.09);
-      --gold-dim: #78350F;
-      --radius:   12px;
-      --mono:     'Courier New', Courier, monospace;
-      --sans:     system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
-    }
-    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
-    body { background: var(--surface); color: var(--text); font-family: var(--sans); min-height: 100dvh; overflow-x: hidden; }
-
-    /* ── NAV ─────────────────────────────────────────────── */
-    .app-nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(15,15,15,0.94); backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .app-nav-inner {
-      max-width: 480px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 16px;
-    }
-    .app-nav-logo { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
-    .app-nav-logo span { color: var(--accent); }
-    .app-nav-link { font-size: 12px; color: var(--text-dim); text-decoration: none; }
-
-    /* ── SCREENS ─────────────────────────────────────────── */
-    .screen { display: none; }
-    .screen.active { display: block; }
-
-    /* ── PROFILE SCREEN ──────────────────────────────────── */
-    .profile-container { max-width: 480px; margin: 0 auto; padding: 24px 16px 120px; }
-
-    .profile-header { text-align: center; margin-bottom: 32px; }
-    .profile-icon { font-size: 40px; margin-bottom: 12px; }
-    .profile-title { font-family: var(--mono); font-size: 22px; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 6px; }
-    .profile-title .red { color: var(--accent); }
-    .profile-subtitle { font-size: 13px; color: var(--text-dim); }
-
-    /* Section headers */
-    .section-block { margin-bottom: 28px; }
-    .section-label {
-      font-family: var(--mono); font-size: 10px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-off); margin-bottom: 12px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .section-num {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: var(--surface3); border: 1px solid var(--border);
-      font-size: 10px; display: flex; align-items: center; justify-content: center;
-      color: var(--text-dim); flex-shrink: 0;
+      --accent: #FCA5A5;
+      --border: #333333;
     }
 
-    /* ── MODE TOGGLE ─────────────────────────────────────── */
-    .mode-toggle { display: flex; gap: 6px; margin-bottom: 14px; }
-    .mode-btn {
-      flex: 1; padding: 9px 0; border-radius: 8px;
-      font-family: var(--mono); font-size: 11px; font-weight: 700;
-      letter-spacing: 0.04em; cursor: pointer;
-      border: 1.5px solid var(--border);
-      background: var(--surface2); color: var(--text-off);
-      transition: all 0.15s; position: relative;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .mode-btn.active { background: var(--surface3); color: var(--text); border-color: var(--accent); }
-    .mode-btn.trip-btn { border-color: var(--gold-dim); }
-    .mode-btn.trip-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-bg); }
-    .mode-lock {
-      position: absolute; top: -7px; right: -3px;
-      background: var(--gold); color: #000;
-      font-size: 8px; font-weight: 700; font-family: var(--mono);
-      padding: 1px 5px; border-radius: 4px; letter-spacing: 0.04em;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--surface); color: var(--text); line-height: 1.5; overscroll-behavior: none; }
 
-    /* ── FLAG SELECTOR ───────────────────────────────────── */
-    #flag-selector { display: grid; grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 8px; }
-    .flag-btn {
-      background: var(--surface2); border: 1.5px solid var(--border);
-      border-radius: var(--radius); padding: 10px 4px 8px;
-      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;
-      transition: border-color 0.12s, background 0.12s, transform 0.08s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .flag-btn:active { transform: scale(0.91); }
-    .flag-btn.selected { border-color: var(--accent); background: rgba(239,68,68,0.1); }
-    .flag-btn.selected .flag-name { color: var(--accent); }
-    .flag-emoji { font-size: 26px; line-height: 1; }
-    .flag-name { font-size: 9px; font-family: var(--mono); color: var(--text-dim); text-align: center; line-height: 1.2; }
-
-    #selected-country-label {
-      font-size: 12px; color: var(--text-dim);
-      margin-top: 10px; text-align: center; font-family: var(--mono); min-height: 18px;
-    }
-
-    /* ── FIELDS ──────────────────────────────────────────── */
-    .field-group { margin-bottom: 14px; }
-    .field-label {
-      display: block; font-size: 11px; font-weight: 600;
-      color: var(--text-dim); margin-bottom: 6px;
-      font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em;
-    }
-    .field-label .optional { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-off); }
-    .field-input {
-      width: 100%; padding: 11px 14px;
-      background: var(--surface2); border: 1.5px solid var(--border);
-      border-radius: var(--radius); color: var(--text);
-      font-family: var(--sans); font-size: 15px;
-      outline: none; transition: border-color 0.15s; -webkit-appearance: none;
-    }
-    .field-input:focus { border-color: var(--accent); }
-    .field-input::placeholder { color: var(--text-off); }
-
-    /* ── ALLERGEN PICKER GRID ────────────────────────────── */
-    .picker-intro { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; line-height: 1.5; }
-
-    #allergen-picker-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
-      margin-bottom: 6px;
-    }
+    /* ── TACTILE UI (NEUMORPHIC) ── */
     .picker-chip {
-      display: flex; align-items: center; gap: 9px;
-      padding: 10px 14px; border-radius: 10px;
-      background: var(--surface2); border: 1.5px solid var(--border);
-      cursor: pointer; text-align: left;
-      transition: border-color 0.12s, background 0.12s, transform 0.08s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .picker-chip:active { transform: scale(0.95); }
-    .picker-chip.selected {
-      border-color: var(--accent); background: rgba(239,68,68,0.1);
-    }
-    .chip-emoji { font-size: 20px; flex-shrink: 0; line-height: 1; }
-    .chip-label { font-size: 13px; font-weight: 600; color: var(--text); }
-    .picker-chip.selected .chip-label { color: var(--accent); }
-
-    /* ── SELECTED ALLERGENS ──────────────────────────────── */
-    .selected-section { margin-top: 20px; }
-    .selected-section-hdr {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 10px;
-    }
-    .selected-section-label {
-      font-family: var(--mono); font-size: 10px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-off);
-    }
-    .selected-count {
-      font-family: var(--mono); font-size: 11px;
-      background: rgba(239,68,68,0.15); color: var(--accent);
-      padding: 2px 9px; border-radius: 20px;
-    }
-
-    #selected-empty {
-      text-align: center; padding: 20px; font-size: 13px; color: var(--text-off);
-      border: 1.5px dashed var(--border); border-radius: var(--radius);
-    }
-
-    /* Selected allergen card */
-    .selected-allergen {
-      border: 1.5px solid var(--border); border-radius: var(--radius);
-      padding: 12px 14px; margin-bottom: 10px;
-      transition: border-color 0.15s;
-    }
-    .sev-bg-anaphylactic { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.04); }
-    .sev-bg-severe       { border-color: rgba(249,115,22,0.4); background: rgba(249,115,22,0.04); }
-    .sev-bg-intolerance  { border-color: rgba(234,179,8,0.3);  background: rgba(234,179,8,0.03); }
-
-    .sa-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .sa-emoji  { font-size: 22px; flex-shrink: 0; }
-    .sa-name   { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; }
-    .sa-remove {
-      background: none; border: none; cursor: pointer;
-      color: var(--text-off); font-size: 14px; padding: 3px 6px;
-      border-radius: 4px; transition: color 0.12s; flex-shrink: 0;
-    }
-    .sa-remove:hover { color: var(--accent); }
-
-    /* Severity toggle */
-    .sa-sev-row { display: flex; gap: 5px; margin-bottom: 10px; }
-    .sev-btn {
-      flex: 1; padding: 6px 2px; border-radius: 7px; font-size: 11px; font-weight: 600;
-      border: 1.5px solid var(--border); background: var(--surface3); color: var(--text-dim);
-      cursor: pointer; transition: all 0.12s; font-family: var(--mono);
-      -webkit-tap-highlight-color: transparent;
-    }
-    .sev-btn:active { transform: scale(0.95); }
-    .sev-active-anaphylactic { background: rgba(239,68,68,0.15); border-color: #ef4444; color: #ef4444; }
-    .sev-active-severe       { background: rgba(249,115,22,0.15); border-color: #f97316; color: #f97316; }
-    .sev-active-intolerance  { background: rgba(234,179,8,0.15);  border-color: #eab308; color: #eab308; }
-
-    /* Trigger input */
-    .sa-trigger-row { }
-    .sa-trig-label {
-      display: block; font-size: 10px; font-weight: 600;
-      color: var(--text-off); margin-bottom: 5px;
-      font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em;
-    }
-    .sa-trig-hint { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-off); margin-left: 5px; }
-    .sa-trig-input { font-size: 13px; padding: 8px 12px; }
-
-    /* ── GENERATE BUTTON ─────────────────────────────────── */
-    .btn-generate {
-      width: 100%; padding: 16px; background: var(--red); color: #fff;
-      border: none; border-radius: var(--radius);
-      font-family: var(--mono); font-size: 15px; font-weight: 700;
-      letter-spacing: 0.02em; cursor: pointer;
-      transition: background 0.15s, opacity 0.15s;
-      margin-top: 8px;
-    }
-    .btn-generate:disabled { opacity: 0.3; cursor: not-allowed; }
-    .btn-generate:not(:disabled):active { background: var(--red-dark); }
-
-    .btn-show-last {
-      width: 100%; margin-top: 10px; padding: 12px;
-      background: transparent; color: var(--text-dim);
-      border: 1.5px solid var(--border); border-radius: var(--radius);
-      font-family: var(--mono); font-size: 13px; cursor: pointer;
-    }
-    .btn-show-last:active { border-color: var(--accent); }
-
-    /* ── CARD SCREEN ─────────────────────────────────────── */
-    .card-wrapper { max-width: 480px; margin: 0 auto; padding: 16px 16px 80px; }
-    .card-nav {
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
-    }
-    .btn-back, .btn-show-card {
-      font-family: var(--mono); font-size: 13px; font-weight: 700;
-      border: 1.5px solid var(--border); border-radius: 20px;
-      padding: 8px 16px; background: var(--surface2); color: var(--text);
-      cursor: pointer;
-    }
-    .btn-show-card { background: var(--red); border-color: var(--red); color: #fff; }
-
-    /* ── ALLERGY CARD (white, print-safe) ────────────────── */
-    .allergy-card {
-      background: #fff; color: #111; border-radius: 16px;
-      overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.55);
-      font-family: var(--sans);
-    }
-
-    /* Card front */
-    .wp-header {
-      background: #B91C1C; color: #fff;
-      padding: 11px 14px 10px; display: flex;
-      align-items: flex-start; justify-content: space-between; gap: 10px;
-    }
-    .wp-header-left { display: flex; align-items: flex-start; gap: 10px; flex: 1; }
-    .wp-warning-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
-    .wp-header-text { flex: 1; }
-    .wp-header-local { font-size: 13px; font-weight: 800; line-height: 1.35; white-space: pre-line; }
-    .wp-header-en { font-size: 10px; opacity: 0.65; margin-top: 3px; font-family: var(--mono); letter-spacing: 0.03em; }
-    .wp-name-tag {
-      font-size: 11px; font-weight: 700;
-      background: rgba(0,0,0,0.2); border-radius: 20px;
-      padding: 3px 9px; white-space: nowrap; flex-shrink: 0; align-self: flex-start;
-    }
-
-    .wp-country-badge {
-      display: flex; align-items: center; gap: 8px;
-      padding: 7px 14px; background: #f9fafb; border-bottom: 1px solid #e5e7eb;
-    }
-    .wp-country-flag { font-size: 16px; }
-    .wp-country-name { font-size: 11px; color: #6b7280; font-family: var(--mono); }
-
-    .wp-no-label {
-      display: flex; align-items: center; gap: 8px; padding: 9px 14px 0;
-    }
-    .wp-no-badge {
-      background: #111; color: #fff;
-      font-family: var(--mono); font-size: 10px; font-weight: 700;
-      padding: 2px 7px; border-radius: 4px; letter-spacing: 0.08em;
-    }
-
-    .wp-allergen-grid { padding: 7px 14px 4px; display: flex; flex-direction: column; gap: 5px; }
-    .wp-allergen-row {
-      display: flex; align-items: center; gap: 10px;
-      padding: 7px 10px; border-radius: 8px; background: #f3f4f6;
-      border-left: 3px solid transparent;
-    }
-    .wp-allergen-row.sev-anaphylactic { background: #fef2f2; border-left-color: #ef4444; }
-    .wp-allergen-row.sev-severe       { background: #fff7ed; border-left-color: #f97316; }
-    .wp-allergen-row.sev-intolerance  { background: #fefce8; border-left-color: #eab308; }
-    .wp-allergen-emoji { font-size: 18px; flex-shrink: 0; }
-    .wp-allergen-names { flex: 1; min-width: 0; }
-    .wp-allergen-local { font-size: 14px; font-weight: 700; color: #111; line-height: 1.3; }
-    .wp-allergen-en    { font-size: 10px; color: #9ca3af; margin-top: 1px; font-family: var(--mono); }
-    .wp-sev-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .sev-dot-anaphylactic { background: #ef4444; }
-    .sev-dot-severe       { background: #f97316; }
-    .sev-dot-intolerance  { background: #eab308; }
-
-    /* Singapore multi-language chips */
-    .sg-chips { display: flex; flex-wrap: wrap; gap: 4px; }
-    .sg-chip { background: #f8fafc; border: 0.5px solid #e2e8f0; border-radius: 5px; padding: 2px 7px; }
-    .sg-chip-lang { font-size: 8px; color: #94a3b8; display: block; }
-    .sg-chip-text { font-size: 12px; font-weight: 600; color: #0f172a; display: block; }
-
-    .wp-warning-bar {
-      display: flex; align-items: flex-start; gap: 8px;
-      margin: 7px 14px; padding: 7px 10px;
-      background: #fff7ed; border-radius: 7px; border: 1px solid #fed7aa;
-    }
-    .wp-warning-icon-sm { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
-    .wp-warning-text { font-size: 11px; color: #92400e; line-height: 1.45; }
-
-    .wp-front-footer { padding: 8px 14px 12px; border-top: 1px solid #e5e7eb; margin-top: 7px; }
-    .wp-instruct-local { font-size: 12px; font-weight: 700; color: #111; line-height: 1.5; white-space: pre-line; }
-    .wp-instruct-en    { font-size: 10px; color: #9ca3af; font-family: var(--mono); margin-top: 2px; }
-
-    .wp-divider {
-      display: flex; align-items: center; gap: 8px;
-      padding: 7px 14px; background: #f3f4f6; border-top: 0.5px solid #e5e7eb;
-    }
-    .wp-divider-label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: #9ca3af; text-transform: uppercase; }
-
-    /* Card back */
-    .card-back { background: #fff; padding-bottom: 4px; }
-    .wp-detail-block { padding: 10px 14px; border-bottom: 1px solid #f3f4f6; }
-    .wp-detail-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
-    .wp-detail-emoji  { font-size: 15px; flex-shrink: 0; }
-    .wp-detail-title  { flex: 1; }
-    .wp-detail-local  { font-size: 13px; font-weight: 700; color: #111; display: block; }
-    .wp-detail-en     { font-size: 10px; color: #9ca3af; font-family: var(--mono); display: block; }
-    .wp-detail-sev    { font-size: 9px; font-family: var(--mono); font-weight: 700; padding: 2px 7px; border-radius: 4px; }
-    .sev-tag-anaphylactic { background: #fef2f2; color: #b91c1c; }
-    .sev-tag-severe       { background: #fff7ed; color: #c2410c; }
-    .sev-tag-intolerance  { background: #fefce8; color: #a16207; }
-
-    .wp-trigger-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 6px; }
-    .wp-trigger-chip { background: #f3f4f6; border-radius: 5px; padding: 3px 8px; }
-    .wp-trigger-local { font-size: 11px; font-weight: 600; color: #111; display: block; }
-    .wp-trigger-en    { font-size: 9px; color: #9ca3af; font-family: var(--mono); display: block; }
-
-    .wp-hidden-row { display: flex; gap: 6px; background: #f9fafb; border-radius: 6px; padding: 5px 8px; align-items: flex-start; }
-    .wp-hidden-label { font-size: 9px; font-family: var(--mono); color: #9ca3af; flex-shrink: 0; margin-top: 1px; }
-    .wp-hidden-chips { font-size: 10px; color: #4b5563; line-height: 1.5; }
-
-    .wp-polite { padding: 8px 14px; text-align: center; }
-    .wp-polite-en { font-size: 10px; color: #9ca3af; font-family: var(--mono); }
-
-    .wp-emergency {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 14px; background: #fef2f2; border-top: 1px solid #fecaca;
-    }
-    .wp-em-icon { font-size: 16px; }
-    .wp-em-en   { font-size: 12px; font-weight: 700; color: #b91c1c; font-family: var(--mono); }
-
-    /* ── QUICK SHOW OVERLAY ──────────────────────────────── */
-    #quick-overlay {
-      display: none; position: fixed; inset: 0; z-index: 200;
-      background: #000; overflow-y: auto; padding: 24px 16px 48px;
-    }
-    #quick-overlay.active { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
-    #quick-overlay .allergy-card { width: 100%; max-width: 480px; }
-    .overlay-dismiss { margin-top: 18px; font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.25); text-align: center; transition: opacity 0.8s ease; }
-
-    /* ── PAYWALL SHEET ───────────────────────────────────── */
-    .paywall-overlay {
-      display: none; position: fixed; inset: 0; z-index: 300;
-      background: rgba(0,0,0,0.8); align-items: flex-end; justify-content: center;
-    }
-    .paywall-overlay.active { display: flex; }
-    .paywall-sheet {
-      background: var(--surface2); border-radius: 20px 20px 0 0;
-      padding: 28px 24px 52px; width: 100%; max-width: 480px;
-      border-top: 1px solid var(--border);
-    }
-    .paywall-pill { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 24px; }
-    .paywall-icon { font-size: 36px; text-align: center; margin-bottom: 12px; }
-    .paywall-title { font-family: var(--mono); font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 8px; color: var(--gold); }
-    .paywall-subtitle { font-size: 13px; color: var(--text-dim); text-align: center; margin-bottom: 24px; line-height: 1.6; }
-    .paywall-features { margin-bottom: 24px; display: flex; flex-direction: column; gap: 12px; }
-    .paywall-feature { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text); }
-    .paywall-feature-icon { font-size: 18px; flex-shrink: 0; }
-    .btn-paywall-cta {
-      width: 100%; padding: 15px; border-radius: var(--radius);
-      background: var(--gold); color: #000;
-      font-family: var(--mono); font-size: 14px; font-weight: 700;
-      border: none; cursor: pointer; margin-bottom: 10px;
-    }
-    .btn-paywall-cta:active { opacity: 0.85; }
-    .btn-paywall-dismiss {
-      width: 100%; padding: 12px; border-radius: var(--radius);
-      background: transparent; color: var(--text-off);
-      font-family: var(--mono); font-size: 12px;
-      border: 1.5px solid var(--border); cursor: pointer;
-    }
-
-    /* ── SEVERITY LEGEND ─────────────────────────────────── */
-    .sev-legend { display: flex; gap: 12px; margin-bottom: 4px; flex-wrap: wrap; }
-    .sev-legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; font-family: var(--mono); color: var(--text-off); }
-    .sev-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-
-    /* ── iOS INSTALL BANNER ──────────────────────────────────── */
-    #ios-install-banner {
-      display: none;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #1a1a1a;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding: 14px 16px 20px;
-      z-index: 9999;
-      box-shadow: 0 -4px 24px rgba(0,0,0,0.4);
-    }
-    #ios-install-banner.visible { display: block; }
-    .ios-banner-inner {
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-    .ios-banner-icon {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      background: var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-    .ios-banner-text { flex: 1; }
-    .ios-banner-title {
-      font-family: var(--mono);
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-      margin: 0 0 4px;
-    }
-    .ios-banner-steps {
-      font-size: 12px;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.6;
-      margin: 0;
-    }
-    .ios-banner-steps strong { color: rgba(255,255,255,0.9); }
-    .ios-banner-close {
-      background: none;
+      background: var(--surface2);
       border: none;
-      color: rgba(255,255,255,0.4);
-      font-size: 20px;
-      line-height: 1;
+      padding: 14px 18px;
+      border-radius: 14px;
+      box-shadow: 4px 4px 10px #050505, -1px -1px 2px #2a2a2a;
       cursor: pointer;
-      padding: 0;
-      flex-shrink: 0;
-      margin-top: -2px;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-weight: 500;
     }
-    .ios-banner-close:hover { color: rgba(255,255,255,0.7); }
-    .ios-share-icon {
+
+    .picker-chip.selected {
+      box-shadow: inset 3px 3px 7px #050505, inset -1px -1px 2px #2a2a2a;
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--accent);
+      transform: scale(0.97);
+    }
+
+    /* ── HIGH-CONTRAST CARD ── */
+    #card-screen .allergy-card {
+      background: #FFFFFF !important;
+      color: #111111 !important;
+      border-radius: 20px;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header-badge {
+      background: #B91C1C;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
       display: inline-block;
-      width: 14px; height: 14px;
-      vertical-align: middle;
-      margin: 0 1px;
-      position: relative;
-      top: -1px;
+      margin-bottom: 12px;
     }
+
+    .clinical-seal {
+      margin-top: 25px;
+      padding-top: 15px;
+      border-top: 1px solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .seal-text {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #4B5563;
+    }
+
+    .btn-audio {
+      background: #F3F4F6;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #111111;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    /* Existing structure placeholders */
+    .container { padding: 20px; max-width: 600px; margin: 0 auto; }
+    .screen { display: none; padding-bottom: 100px; }
+    .screen.active { display: block; }
+    .btn-main { background: var(--red); color: white; border: none; padding: 16px; border-radius: 12px; width: 100%; font-weight: 700; font-size: 16px; margin-top: 20px; }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="app-nav">
-    <div class="app-nav-inner">
-      <a href="/" class="app-nav-logo">AllergyPass <span>·</span></a>
-      <div class="app-nav-links">
-        <a href="/tools/" class="app-nav-link">Tools</a>
-        <a href="/guides/" class="app-nav-link">Guides</a>
-        <a href="/recommendations/" class="app-nav-link">Recommendations</a>
-      </div>
-    </div>
-  </nav>
+  <div id="setup-screen" class="screen active">
+    <div class="container">
+      <h1 style="margin-bottom: 20px;">Build Your Card</h1>
+      
+      <p style="color: var(--text-dim); margin-bottom: 10px;">1. Select Destination</p>
+      <div id="country-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 30px;"></div>
 
-  <!-- ─── iOS INSTALL BANNER ──────────────────────────────── -->
-  <div id="ios-install-banner" role="dialog" aria-label="Add to Home Screen">
-    <div class="ios-banner-inner">
-      <div class="ios-banner-icon">🛡️</div>
-      <div class="ios-banner-text">
-        <p class="ios-banner-title">Add to Home Screen</p>
-        <p class="ios-banner-steps">
-          Tap
-          <svg class="ios-share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-          <strong>Share</strong>, then tap <strong>"Add to Home Screen"</strong> — works offline, no App Store needed.
-        </p>
-      </div>
-      <button class="ios-banner-close" id="ios-banner-close" aria-label="Dismiss">&times;</button>
+      <p style="color: var(--text-dim); margin-bottom: 10px;">2. Select Allergens</p>
+      <div id="allergen-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
+
+      <button id="btn-generate" class="btn-main">Create Allergy Card</button>
     </div>
   </div>
 
-  <!-- ─── SCREEN 1: Profile Builder ──────────────────────── -->
-  <div id="screen-profile" class="screen active">
-    <div class="profile-container">
-
-      <div class="profile-header">
-        <div class="profile-icon">🛡️</div>
-        <h1 class="profile-title">AllergyPass <span class="red">·</span></h1>
-        <p class="profile-subtitle">Generate a localised allergy card for any country</p>
-      </div>
-
-      <!-- Step 1: Destination -->
-      <div class="section-block">
-        <div class="section-label">
-          <span class="section-num">1</span>
-          Select destination
+  <div id="card-screen" class="screen">
+    <div class="container">
+      <div class="allergy-card" id="final-card">
         </div>
-
-        <div class="mode-toggle">
-          <button class="mode-btn active" id="btn-mode-single">Single country</button>
-          <button class="mode-btn trip-btn" id="btn-mode-trip">
-            Trip mode
-            <span class="mode-lock">PRO</span>
-          </button>
-        </div>
-
-        <div id="flag-selector"></div>
-        <div id="selected-country-label"></div>
-      </div>
-
-      <!-- Step 2: Allergies -->
-      <div class="section-block">
-        <div class="section-label">
-          <span class="section-num">2</span>
-          Select your allergens
-        </div>
-
-        <p class="picker-intro">Tap to select. Allergens you choose will appear below where you can set severity and add specific triggers.</p>
-
-        <div id="allergen-picker-grid"></div>
-
-        <!-- Selected allergens -->
-        <div class="selected-section">
-          <div class="selected-section-hdr">
-            <span class="selected-section-label">Selected</span>
-          </div>
-          <div id="selected-empty" style="display:none">No allergens selected yet — tap above to add.</div>
-          <div id="selected-allergens"></div>
-        </div>
-      </div>
-
-      <!-- Step 3: Details -->
-      <div class="section-block">
-        <div class="section-label">
-          <span class="section-num">3</span>
-          Your details <span style="font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px">(optional)</span>
-        </div>
-        <div class="field-group">
-          <label class="field-label" for="input-name">Name</label>
-          <input type="text" id="input-name" class="field-input" placeholder="e.g. Sarah" autocomplete="off" />
-        </div>
-        <div class="field-group">
-          <label class="field-label" for="input-emergency">Emergency contact</label>
-          <input type="tel" id="input-emergency" class="field-input" placeholder="e.g. +66 81 234 5678" autocomplete="off" />
-        </div>
-      </div>
-
-      <!-- Severity legend -->
-      <div class="sev-legend" style="margin-bottom:16px">
-        <div class="sev-legend-item"><div class="sev-legend-dot" style="background:#ef4444"></div>Anaphylactic</div>
-        <div class="sev-legend-item"><div class="sev-legend-dot" style="background:#f97316"></div>Severe</div>
-        <div class="sev-legend-item"><div class="sev-legend-dot" style="background:#eab308"></div>Intolerance</div>
-      </div>
-
-      <button id="btn-generate" class="btn-generate" disabled>Generate My Card →</button>
-      <button id="btn-show-last" class="btn-show-last" style="display:none">Show Last Card 👁</button>
-
-    </div>
-  </div>
-
-  <!-- ─── SCREEN 2: Card View ─────────────────────────────── -->
-  <div id="screen-card" class="screen">
-    <div class="card-wrapper">
-      <div class="card-nav">
-        <button id="btn-back" class="btn-back">← Edit</button>
-        <button id="btn-show-card" class="btn-show-card">Show Card 👁</button>
-      </div>
-      <div id="allergy-card"></div>
-    </div>
-  </div>
-
-  <!-- Quick Show Overlay -->
-  <div id="quick-overlay"></div>
-
-  <!-- Paywall Sheet -->
-  <div class="paywall-overlay" id="paywall-overlay">
-    <div class="paywall-sheet">
-      <div class="paywall-pill"></div>
-      <div class="paywall-icon">✈️</div>
-      <div class="paywall-title">Trip Mode — Pro</div>
-      <div class="paywall-subtitle">Select multiple countries and generate a full card pack for your entire trip. One profile, every destination.</div>
-      <div class="paywall-features">
-        <div class="paywall-feature"><span class="paywall-feature-icon">🗂️</span>One card per country, fully translated</div>
-        <div class="paywall-feature"><span class="paywall-feature-icon">👆</span>Swipe through your pack at the table</div>
-        <div class="paywall-feature"><span class="paywall-feature-icon">💾</span>Full trip saved offline</div>
-        <div class="paywall-feature"><span class="paywall-feature-icon">🔄</span>Re-generate all cards in one tap</div>
-      </div>
-      <button class="btn-paywall-cta" id="btn-paywall-cta">Unlock Trip Mode</button>
-      <button class="btn-paywall-dismiss" id="btn-paywall-dismiss">Maybe later</button>
+      <button class="btn-main" onclick="location.reload()" style="background: var(--surface2); margin-top: 40px;">Edit My Selection</button>
     </div>
   </div>
 
   <script src="app.js"></script>
-
-  <script>
-    // ── iOS Safari install banner ────────────────────────────────────────────
-    // Shows only on iOS Safari when the app is NOT already installed (standalone mode).
-    // Dismissed state persists in localStorage so it doesn't nag on every visit.
-    (function () {
-      var isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
-      var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-      var isStandalone = ('standalone' in navigator) && navigator.standalone;
-      var dismissed = localStorage.getItem('ios-install-dismissed');
-
-      if (isIos && isSafari && !isStandalone && !dismissed) {
-        var banner = document.getElementById('ios-install-banner');
-        var closeBtn = document.getElementById('ios-banner-close');
-
-        // Slight delay so the page renders first
-        setTimeout(function () {
-          banner.classList.add('visible');
-        }, 1200);
-
-        closeBtn.addEventListener('click', function () {
-          banner.classList.remove('visible');
-          localStorage.setItem('ios-install-dismissed', '1');
-        });
-      }
-    })();
-  </script>
 </body>
 </html>
