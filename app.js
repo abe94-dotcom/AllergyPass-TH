@@ -208,6 +208,7 @@ function goToStep(n) {
   updateNextBtn();
 
   // Step-specific renders
+  if (n === 1) { syncPickerState(); updateCountLabel(); }
   if (n === 2) renderSeverityList();
 
   window.scrollTo(0, 0);
@@ -238,6 +239,7 @@ function buildAllergenGrid(containerEl, allergens) {
   allergens.forEach(a => {
     const chip = document.createElement('button');
     chip.className = 'allergen-chip';
+    chip.dataset.key = a.key;
     chip.setAttribute('aria-pressed', State.hasAllergen(a.key) ? 'true' : 'false');
     chip.setAttribute('aria-label', `${a.label}: ${a.hint}`);
     chip.innerHTML = `
@@ -260,10 +262,9 @@ function buildAllergenGrid(containerEl, allergens) {
 
 function syncPickerState() {
   document.querySelectorAll('.allergen-chip').forEach(chip => {
-    const label = chip.querySelector('.chip-name').textContent.trim();
-    const def = ALL_ALLERGENS.find(a => a.label === label);
-    if (!def) return;
-    const selected = State.hasAllergen(def.key);
+    const key = chip.dataset.key;
+    if (!key) return;
+    const selected = State.hasAllergen(key);
     chip.classList.toggle('selected', selected);
     chip.setAttribute('aria-pressed', selected ? 'true' : 'false');
   });
