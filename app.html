@@ -4,94 +4,855 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Build Your Card — AllergyPass</title>
-  
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:ital,wght@1,600&display=swap" rel="stylesheet" />
   <meta name="theme-color" content="#2C1F14" />
-</head>
-<body class="app-interface">
+  <style>
+    /* ── APP SHELL ── */
+    .app-body {
+      background: var(--linen);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
 
-  <nav class="nav-container app-nav">
-    <div class="container nav-flex">
-      <a href="index.html" class="logo">🛡️ AllergyPass</a>
-      <div id="offline-status-ready" class="offline-badge">Offline Ready</div>
-    </div>
+    .app-topbar {
+      background: rgba(250,246,241,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    .app-topbar .logo {
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--bark);
+    }
+
+    .offline-pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      background: var(--linen-dark);
+      color: var(--soil);
+      border: 1px solid var(--border);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .offline-pill.visible { opacity: 1; }
+
+    /* ── PROGRESS STRIP ── */
+    .progress-strip {
+      background: var(--linen-dark);
+      border-bottom: 1px solid var(--border);
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--linen);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--dust);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .step-dot.active {
+      background: var(--clay);
+      border-color: var(--clay);
+      color: #fff;
+    }
+    .step-dot.done {
+      background: var(--bark);
+      border-color: var(--bark);
+      color: #fff;
+    }
+
+    .step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+    .step-line.done { background: var(--bark); }
+
+    .step-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--soil);
+      margin-left: 0.25rem;
+    }
+
+    /* ── STEP PANELS ── */
+    .steps-container {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .step-panel {
+      display: none;
+      flex-direction: column;
+      padding: 1.5rem 1.25rem 6rem;
+      min-height: calc(100dvh - 130px);
+    }
+    .step-panel.active { display: flex; }
+
+    .step-heading {
+      font-family: var(--font-d);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--bark);
+      margin-bottom: 0.4rem;
+      line-height: 1.25;
+    }
+    .step-sub {
+      font-size: 0.85rem;
+      color: var(--soil);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    /* ── ALLERGEN GROUPS ── */
+    .allergen-group-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dust);
+      margin: 1.25rem 0 0.75rem;
+    }
+    .allergen-group-label:first-of-type { margin-top: 0; }
+
+    .allergen-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.625rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .allergen-chip {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 0.875rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      text-align: left;
+      min-height: 56px;
+    }
+    .allergen-chip:active { transform: scale(0.97); }
+    .allergen-chip.selected {
+      border-color: var(--clay);
+      background: var(--clay-light);
+    }
+
+    .chip-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      width: 28px;
+      text-align: center;
+    }
+    .chip-text { flex: 1; }
+    .chip-name {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--bark);
+      line-height: 1.2;
+    }
+    .chip-hint {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--soil);
+      margin-top: 1px;
+    }
+    .chip-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      flex-shrink: 0;
+      background: var(--linen);
+      transition: all 0.18s;
+    }
+    .allergen-chip.selected .chip-check {
+      background: var(--clay);
+      border-color: var(--clay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .allergen-chip.selected .chip-check::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    /* ── STEP 2: SEVERITY ── */
+    .severity-item {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .severity-item.sev-anaphylactic { border-color: #CC0000; }
+    .severity-item.sev-severe { border-color: var(--amber); }
+    .severity-item.sev-intolerance { border-color: var(--soil); }
+
+    .sev-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.875rem 1rem;
+    }
+    .sev-item-name {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--bark);
+    }
+    .sev-item-emoji { font-size: 1.2rem; }
+
+    .sev-remove-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--linen-dark);
+      border: none;
+      color: var(--soil);
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .sev-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .sev-btn {
+      padding: 0.75rem 0.25rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--dust);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      transition: all 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      border-right: 1px solid var(--border);
+    }
+    .sev-btn:last-child { border-right: none; }
+    .sev-btn.active-ana { background: #FFF0F0; color: #CC0000; }
+    .sev-btn.active-sev { background: #FFF8EE; color: var(--amber); }
+    .sev-btn.active-int { background: var(--linen-dark); color: var(--bark); }
+
+    .sev-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* ── STEP 3: DETAILS ── */
+    .details-section { margin-bottom: 1.5rem; }
+    .details-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--soil);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .details-input {
+      width: 100%;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 0.875rem 1rem;
+      font-size: 1rem;
+      font-family: var(--font-s);
+      color: var(--bark);
+      outline: none;
+      transition: border-color 0.18s;
+    }
+    .details-input:focus { border-color: var(--clay); }
+    .details-input::placeholder { color: var(--dust); }
+
+    /* ── STEP 4: CARD ── */
+    .card-view {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .allergy-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid var(--bark);
+    }
+
+    .card-severity-banner {
+      padding: 1rem 1.25rem;
+      text-align: center;
+    }
+    .card-severity-banner.ana { background: #CC0000; }
+    .card-severity-banner.sev { background: var(--amber); }
+    .card-severity-banner.int { background: var(--soil); }
+
+    .card-banner-th {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+    }
+    .card-banner-en {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.82);
+      margin-top: 0.2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-body { padding: 1.25rem; }
+
+    .card-patient-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.875rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.875rem;
+    }
+    .card-patient-name {
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--bark);
+    }
+    .card-sos {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #CC0000;
+    }
+
+    .card-allergen-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--linen-dark);
+    }
+    .card-allergen-row:last-child { border-bottom: none; }
+
+    .card-allergen-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .card-allergen-th {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--bark);
+      line-height: 1.2;
+      display: block;
+    }
+    .card-allergen-en {
+      font-size: 0.75rem;
+      color: var(--soil);
+      display: block;
+      margin-top: 1px;
+    }
+    .card-allergen-roman {
+      font-size: 0.68rem;
+      color: var(--dust);
+      font-style: italic;
+      display: block;
+    }
+
+    .card-instruction {
+      background: var(--linen-dark);
+      border-radius: 10px;
+      padding: 0.875rem 1rem;
+      margin-top: 1rem;
+    }
+    .card-instruction-th {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--bark);
+      line-height: 1.4;
+    }
+    .card-instruction-en {
+      font-size: 0.7rem;
+      color: var(--soil);
+      margin-top: 0.25rem;
+    }
+
+    .card-cross-contact {
+      font-size: 0.72rem;
+      color: var(--amber);
+      font-weight: 700;
+      margin-top: 0.5rem;
+    }
+
+    .card-footer {
+      border-top: 1px solid var(--border);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-footer-verified {
+      font-size: 0.68rem;
+      color: var(--soil);
+      font-weight: 600;
+    }
+    .card-footer-brand {
+      font-family: var(--font-d);
+      font-size: 0.75rem;
+      color: var(--clay);
+      font-weight: 700;
+    }
+
+    /* ── SHOW CARD FULLSCREEN ── */
+    #restaurant-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    #restaurant-overlay.open { display: flex; }
+
+    .restaurant-close {
+      position: sticky;
+      top: 0;
+      background: var(--bark);
+      color: #fff;
+      padding: 1rem 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .restaurant-card {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .rc-banner {
+      background: #CC0000;
+      border-radius: 16px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .rc-banner.sev { background: #D4860A; }
+    .rc-banner.int { background: #4A3728; }
+
+    .rc-banner-th {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+    }
+    .rc-banner-en {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.85);
+      margin-top: 0.25rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .rc-allergen {
+      border: 3px solid #000;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .rc-allergen-icon { font-size: 2rem; flex-shrink: 0; }
+    .rc-allergen-th {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #000;
+      line-height: 1.2;
+      display: block;
+    }
+    .rc-allergen-roman {
+      font-size: 0.9rem;
+      color: #555;
+      display: block;
+      font-style: italic;
+    }
+    .rc-allergen-en {
+      font-size: 0.85rem;
+      color: #333;
+      display: block;
+      margin-top: 0.125rem;
+    }
+
+    .rc-instruction {
+      border: 3px solid #000;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+    }
+    .rc-instruction-th {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #000;
+      line-height: 1.5;
+    }
+    .rc-instruction-en {
+      font-size: 0.85rem;
+      color: #333;
+      margin-top: 0.375rem;
+    }
+
+    .rc-sos {
+      background: #CC0000;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    /* ── STICKY BOTTOM ACTION ── */
+    .bottom-action {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 1.25rem;
+      background: rgba(250,246,241,0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      z-index: 100;
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-back {
+      background: var(--linen-dark);
+      color: var(--bark);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: var(--font-s);
+      cursor: pointer;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .btn-next {
+      background: var(--clay);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 800;
+      font-family: var(--font-s);
+      cursor: pointer;
+      flex: 1;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      transition: background 0.15s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .btn-next:active { transform: scale(0.98); background: var(--clay-dark); }
+    .btn-next:disabled { background: var(--border); color: var(--dust); cursor: not-allowed; }
+
+    .btn-show-card {
+      background: var(--bark);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 800;
+      font-family: var(--font-s);
+      cursor: pointer;
+      flex: 1;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      transition: background 0.15s;
+    }
+
+    .btn-edit {
+      background: var(--linen-dark);
+      color: var(--bark);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: var(--font-s);
+      cursor: pointer;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── HIDDEN INGREDIENT TAGS ── */
+    .hidden-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+      margin-top: 0.5rem;
+    }
+    .hidden-tag {
+      background: var(--linen-dark);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.65rem;
+      color: var(--soil);
+      font-weight: 600;
+    }
+
+    /* ── PAYWALL ── */
+    #paywall-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(44,31,20,0.6);
+      z-index: 300;
+      display: flex;
+      align-items: flex-end;
+      padding: 0;
+    }
+    #paywall-overlay[hidden] { display: none; }
+
+    .paywall-sheet {
+      background: var(--linen);
+      border-radius: 24px 24px 0 0;
+      padding: 2rem 1.5rem 3rem;
+      width: 100%;
+    }
+    .paywall-sheet h3 {
+      font-family: var(--font-d);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .paywall-sheet p { font-size: 0.9rem; color: var(--soil); margin-bottom: 1.25rem; }
+    .paywall-features { list-style: none; margin-bottom: 1.5rem; }
+    .paywall-features li { font-size: 0.85rem; padding: 0.375rem 0; color: var(--bark); }
+
+    /* ── EMPTY STATE ── */
+    .empty-severity {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--dust);
+    }
+    .empty-severity p { font-size: 0.9rem; }
+
+    /* ── MISC ── */
+    .country-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--linen-dark);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--bark);
+      margin-bottom: 1.25rem;
+    }
+
+    .selection-count {
+      font-size: 0.8rem;
+      color: var(--soil);
+      text-align: right;
+      margin-top: 0.5rem;
+    }
+    .selection-count span { color: var(--clay); font-weight: 700; }
+  </style>
+</head>
+<body class="app-body">
+
+  <!-- TOP BAR -->
+  <nav class="app-topbar" aria-label="App navigation">
+    <a href="index.html" class="logo">AllergyPass</a>
+    <div id="offline-pill" class="offline-pill" aria-live="polite">Offline Ready</div>
   </nav>
 
-  <main class="container app-main">
-    
-    <div class="mode-toggle-container">
-      <div class="segmented-control">
-        <button id="btn-mode-single" class="active">Single City</button>
-        <button id="btn-mode-trip">Multi-Country Trip ✈️</button>
+  <!-- PROGRESS STRIP -->
+  <div class="progress-strip" role="progressbar" aria-label="Step progress" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" id="progress-bar">
+    <div class="step-dot active" id="dot-1" aria-label="Step 1: Allergens">1</div>
+    <div class="step-line" id="line-1"></div>
+    <div class="step-dot" id="dot-2" aria-label="Step 2: Severity">2</div>
+    <div class="step-line" id="line-2"></div>
+    <div class="step-dot" id="dot-3" aria-label="Step 3: Details">3</div>
+    <div class="step-line" id="line-3"></div>
+    <div class="step-dot" id="dot-4" aria-label="Step 4: Your Card">4</div>
+    <div class="step-label" id="step-label-text">Pick your allergens</div>
+  </div>
+
+  <!-- STEPS CONTAINER -->
+  <div class="steps-container">
+
+    <!-- STEP 1: ALLERGENS -->
+    <section class="step-panel active" id="step-1" aria-label="Step 1: Select allergens">
+      <h1 class="step-heading">What can't you eat?</h1>
+      <p class="step-sub">Select everything that applies. You'll set severity on the next step.</p>
+
+      <div class="country-badge">
+        <span>🇹🇭</span> Thailand
       </div>
-    </div>
 
-    <div class="app-grid">
-      
-      <section class="builder-controls">
-        
-        <div class="control-group">
-          <label class="section-label">1. Select Destination</label>
-          <div id="flag-selector" class="flag-grid">
-            </div>
-        </div>
+      <p class="allergen-group-label">High risk in Thai food</p>
+      <div class="allergen-grid" id="grid-high-risk"></div>
 
-        <div class="control-group">
-          <label class="section-label">2. Add Allergens</label>
-          <div id="allergen-picker-grid" class="allergen-grid">
-            </div>
-        </div>
+      <p class="allergen-group-label">Other allergens</p>
+      <div class="allergen-grid" id="grid-common"></div>
 
-        <div class="control-group">
-          <label class="section-label">3. Set Severity & Review</label>
-          <div id="selected-allergens" class="selected-list">
-            </div>
-        </div>
-
-        <div class="personal-info-fields">
-          <input type="text" id="user-name" placeholder="Name (Optional)" class="app-input" />
-          <input type="text" id="emergency-contact" placeholder="Emergency Phone" class="app-input" />
-        </div>
-
-        <div class="builder-actions">
-          <button id="btn-generate" class="btn-primary-lg" disabled>Generate Card</button>
-          <button id="btn-restaurant-mode" class="btn-secondary">Restaurant Mode (High Contrast) 🌓</button>
-        </div>
-      </section>
-
-      <section class="preview-area">
-        <div class="preview-sticky">
-          <label class="section-label center">Live Card Preview</label>
-          <div id="allergy-card" class="card-display-area">
-            <div class="card-placeholder">
-              Select an allergen to see your card preview
-            </div>
-          </div>
-          
-          <div class="clinical-assurance">
-            <p>🛡️ <strong>Clinically Verified Translation</strong></p>
-            <p>This card is generated based on verified medical protocols used in Bangkok clinics.</p>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <div id="paywall-overlay" class="overlay" hidden>
-    <div class="paywall-card">
-      <button id="btn-paywall-dismiss" class="close-btn">✕</button>
-      <div class="paywall-header">
-        <span class="icon">✈️</span>
-        <h3>Unlock Trip Mode</h3>
+      <div class="selection-count" aria-live="polite">
+        <span id="selection-count-num">0</span> selected
       </div>
-      <p>Planning a multi-country journey? Get unlimited bilingual cards for all 14 Asian destinations in one profile.</p>
+    </section>
+
+    <!-- STEP 2: SEVERITY -->
+    <section class="step-panel" id="step-2" aria-label="Step 2: Set severity">
+      <h1 class="step-heading">How serious is each one?</h1>
+      <p class="step-sub">This determines what the card communicates to a chef. Be honest.</p>
+      <div id="severity-list"></div>
+    </section>
+
+    <!-- STEP 3: DETAILS -->
+    <section class="step-panel" id="step-3" aria-label="Step 3: Add your details">
+      <h1 class="step-heading">Add your details</h1>
+      <p class="step-sub">Optional but useful if you need emergency help and can't speak.</p>
+
+      <div class="details-section">
+        <label for="user-name" class="details-label">Your name</label>
+        <input type="text" id="user-name" class="details-input" placeholder="e.g. Sarah" autocomplete="given-name" />
+      </div>
+
+      <div class="details-section">
+        <label for="emergency-contact" class="details-label">Emergency contact number</label>
+        <input type="tel" id="emergency-contact" class="details-input" placeholder="+66 9 0000 0000" autocomplete="tel" />
+      </div>
+
+      <div class="details-section">
+        <label for="hotel-name" class="details-label">Hotel / address in Thailand (optional)</label>
+        <input type="text" id="hotel-name" class="details-input" placeholder="Hotel name or area" />
+      </div>
+    </section>
+
+    <!-- STEP 4: CARD -->
+    <section class="step-panel" id="step-4" aria-label="Step 4: Your allergy card">
+      <h1 class="step-heading">Your card</h1>
+      <p class="step-sub">Show this to any chef, vendor, or restaurant in Thailand.</p>
+      <div class="card-view">
+        <div id="generated-card"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- STICKY BOTTOM ACTIONS -->
+  <div class="bottom-action" id="bottom-action">
+    <button class="btn-back" id="btn-back" aria-label="Go back" hidden>Back</button>
+    <button class="btn-next" id="btn-next" disabled>
+      <span id="btn-next-label">Next</span>
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+
+  <!-- CARD ACTION BAR (step 4 only) -->
+  <div class="bottom-action" id="card-action" style="display:none;">
+    <button class="btn-edit" id="btn-edit-card" aria-label="Edit card">Edit</button>
+    <button class="btn-show-card" id="btn-show-restaurant" aria-label="Show card to restaurant">Show to Chef →</button>
+  </div>
+
+  <!-- RESTAURANT OVERLAY -->
+  <div id="restaurant-overlay" aria-modal="true" role="dialog" aria-label="Full-screen allergy card for restaurant">
+    <button class="restaurant-close" id="btn-close-restaurant" aria-label="Close restaurant view">
+      ✕ Tap here to close
+    </button>
+    <div class="restaurant-card" id="restaurant-card-inner"></div>
+  </div>
+
+  <!-- PAYWALL -->
+  <div id="paywall-overlay" hidden>
+    <div class="paywall-sheet">
+      <button id="btn-paywall-dismiss" style="float:right; background:none; border:none; font-size:1.25rem; cursor:pointer; color:var(--soil);" aria-label="Close paywall">✕</button>
+      <h3>Unlock Multi-Country</h3>
+      <p>Build cards for all 14 Asian destinations in one profile. One trip, one card set.</p>
       <ul class="paywall-features">
-        <li>✅ All 14 countries unlocked</li>
-        <li>✅ Pro Clinical translation depth</li>
-        <li>✅ Lifetime access for this trip</li>
+        <li>✓ All 14 countries</li>
+        <li>✓ Pro clinical translation depth</li>
+        <li>✓ Lifetime access for this trip</li>
       </ul>
-      <button id="btn-paywall-cta" class="btn-primary-lg">Unlock for $4.99</button>
+      <button class="btn-next" style="border-radius:14px; width:100%; justify-content:center;" id="btn-paywall-cta">Unlock for $4.99</button>
     </div>
   </div>
 
