@@ -1,553 +1,417 @@
 'use strict';
 
-/* ─────────────────────────────────────────────
-   ALLERGEN DATA
-   Grouped by Thai cuisine risk
-───────────────────────────────────────────── */
-const ALLERGEN_GROUPS = {
-  high: [
-    { key: 'shellfish', label: 'Shellfish & Shrimp', emoji: '🦐', hint: 'shrimp paste, oyster sauce' },
-    { key: 'fish',      label: 'Fish & Fish Sauce',  emoji: '🐟', hint: 'hidden in nearly everything' },
-    { key: 'peanuts',   label: 'Peanuts',            emoji: '🥜', hint: 'pad thai, satay, garnishes' },
-    { key: 'soy',       label: 'Soy & Soy Sauce',    emoji: '🫘', hint: 'stir-fries, marinades' },
-  ],
-  common: [
-    { key: 'tree_nuts', label: 'Tree Nuts',  emoji: '🌰', hint: 'cashew, walnut, almond' },
-    { key: 'dairy',     label: 'Dairy',      emoji: '🥛', hint: 'milk, butter, cream' },
-    { key: 'eggs',      label: 'Eggs',       emoji: '🥚', hint: 'noodles, mayo, batter' },
-    { key: 'wheat',     label: 'Wheat',      emoji: '🌾', hint: 'noodles, sauces, batter' },
-    { key: 'gluten',    label: 'Gluten',     emoji: '🍞', hint: 'soy sauce, tempura batter' },
-    { key: 'sesame',    label: 'Sesame',     emoji: '🌱', hint: 'sesame oil, tahini' },
-  ],
+/* ─── UTILS ─── */
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = String(s || '');
+  return d.innerHTML;
+}
+
+/* ─── DATA ─── */
+const HIGH = [
+  { key:'shellfish', label:'Shellfish & Shrimp', emoji:'🦐', hint:'shrimp paste, oyster sauce' },
+  { key:'fish',      label:'Fish & Fish Sauce',  emoji:'🐟', hint:'hidden in nearly everything' },
+  { key:'peanuts',   label:'Peanuts',             emoji:'🥜', hint:'pad thai, satay, garnishes' },
+  { key:'soy',       label:'Soy & Soy Sauce',     emoji:'🫘', hint:'stir-fries, marinades' },
+];
+const OTHER = [
+  { key:'tree_nuts', label:'Tree Nuts',  emoji:'🌰', hint:'cashew, walnut, almond' },
+  { key:'dairy',     label:'Dairy',      emoji:'🥛', hint:'milk, butter, cream' },
+  { key:'eggs',      label:'Eggs',       emoji:'🥚', hint:'noodles, mayo, batter' },
+  { key:'wheat',     label:'Wheat',      emoji:'🌾', hint:'noodles, sauces, batter' },
+  { key:'gluten',    label:'Gluten',     emoji:'🍞', hint:'soy sauce, tempura batter' },
+  { key:'sesame',    label:'Sesame',     emoji:'🌱', hint:'sesame oil, tahini' },
+];
+const ALL_A = [...HIGH, ...OTHER];
+
+const SEV_OPTS = [
+  { id:'anaphylactic', label:'Life-threatening', sub:'I will die',       dot:'var(--sev-ana)', cls:'active-ana' },
+  { id:'severe',       label:'Severe',           sub:'Serious reaction', dot:'var(--amber)', cls:'active-sev' },
+  { id:'intolerance',  label:'Intolerance',      sub:'Discomfort only',  dot:'var(--soil)', cls:'active-int' },
+];
+
+const TH_ALLERGENS = {
+  shellfish: { th:'กุ้ง / หอย / ปู',       rom:'kung / hoi / poo' },
+  fish:      { th:'ปลา / น้ำปลา',           rom:'pla / nam pla' },
+  peanuts:   { th:'ถั่วลิสง',               rom:'thua lisong' },
+  soy:       { th:'ถั่วเหลือง / ซีอิ๊ว',   rom:'thua lueang / si-io' },
+  tree_nuts: { th:'ถั่วเปลือกแข็ง',         rom:'thua plueak khaeng' },
+  dairy:     { th:'นม / เนย',               rom:'nom / noe' },
+  eggs:      { th:'ไข่',                    rom:'khai' },
+  wheat:     { th:'แป้งสาลี',               rom:'paeng sali' },
+  gluten:    { th:'กลูเตน',                 rom:'gluten' },
+  sesame:    { th:'งา',                     rom:'nga' },
 };
 
-const ALL_ALLERGENS = [...ALLERGEN_GROUPS.high, ...ALLERGEN_GROUPS.common];
-
-/* ─────────────────────────────────────────────
-   SEVERITY CONFIG
-───────────────────────────────────────────── */
-const SEVERITY = {
-  anaphylactic: {
-    id: 'anaphylactic',
-    label: 'Life-threatening',
-    sublabel: 'I will die',
-    activeClass: 'active-ana',
-    dotColor: '#CC0000',
-  },
-  severe: {
-    id: 'severe',
-    label: 'Severe',
-    sublabel: 'Serious reaction',
-    activeClass: 'active-sev',
-    dotColor: '#D4860A',
-  },
-  intolerance: {
-    id: 'intolerance',
-    label: 'Intolerance',
-    sublabel: 'Discomfort only',
-    activeClass: 'active-int',
-    dotColor: '#6B5040',
-  },
+const BANNER = {
+  anaphylactic: { th:'แพ้อาหารรุนแรงมาก — อันตรายถึงชีวิต', en:'LIFE-THREATENING ALLERGY — DO NOT IGNORE' },
+  severe:       { th:'แพ้อาหาร — อาจเป็นอันตรายร้ายแรง',     en:'SEVERE FOOD ALLERGY — TAKE SERIOUSLY' },
+  intolerance:  { th:'แพ้อาหาร — ไม่สบาย',                   en:'FOOD INTOLERANCE — CAUSES DISCOMFORT' },
 };
+const INSTR_TH = 'กรุณาแจ้งเชฟ: ชีวิตของลูกค้าขึ้นอยู่กับสิ่งนี้\nโปรดระวังการปนเปื้อนข้ามทุกชนิด';
+const INSTR_EN = 'Please inform the chef. Cross-contamination must be avoided.';
+const VERIFIED = 'ตรวจสอบแล้วโดยบุคลากรทางการแพทย์';
 
-/* ─────────────────────────────────────────────
-   TRANSLATIONS (Thai — verified, not AI-generated)
-───────────────────────────────────────────── */
-const TH = {
-  banner: {
-    anaphylactic: { th: 'แพ้อาหารรุนแรงมาก — อันตรายถึงชีวิต', en: 'LIFE-THREATENING ALLERGY — DO NOT IGNORE' },
-    severe:       { th: 'แพ้อาหาร — อาจเป็นอันตรายร้ายแรง',    en: 'SEVERE FOOD ALLERGY — TAKE SERIOUSLY' },
-    intolerance:  { th: 'แพ้อาหาร — ไม่สบาย',                  en: 'FOOD INTOLERANCE — CAUSES DISCOMFORT' },
-  },
-  allergens: {
-    shellfish: { th: 'กุ้ง / หอย / ปู', roman: 'kung / hoi / poo' },
-    fish:      { th: 'ปลา / น้ำปลา',    roman: 'pla / nam pla' },
-    peanuts:   { th: 'ถั่วลิสง',         roman: 'thua lisong' },
-    soy:       { th: 'ถั่วเหลือง / ซีอิ๊ว', roman: 'thua lueang / si-io' },
-    tree_nuts: { th: 'ถั่วเปลือกแข็ง',  roman: 'thua plueak khaeng' },
-    dairy:     { th: 'นม / เนย',         roman: 'nom / noi' },
-    eggs:      { th: 'ไข่',              roman: 'khai' },
-    wheat:     { th: 'แป้งสาลี',         roman: 'paeng sali' },
-    gluten:    { th: 'กลูเตน',           roman: 'gluten' },
-    sesame:    { th: 'งา',               roman: 'nga' },
-  },
-  instruction: {
-    th: 'กรุณาแจ้งเชฟ: ชีวิตของลูกค้าขึ้นอยู่กับสิ่งนี้\nโปรดระวังการปนเปื้อนข้ามทุกชนิด',
-    en: 'Please inform the chef. Cross-contamination must be avoided.',
-  },
-  verified: 'ตรวจสอบแล้วโดยบุคลากรทางการแพทย์',
-};
-
-/* ─────────────────────────────────────────────
-   STATE
-───────────────────────────────────────────── */
-const State = {
+/* ─── STATE ─── */
+const S = {
   step: 1,
-  allergens: [],       // [{ key, severity }]
-  name: '',
-  emergency: '',
-  hotel: '',
-
-  hasAllergen(key) {
-    return this.allergens.some(a => a.key === key);
-  },
-
-  toggleAllergen(key) {
-    if (this.hasAllergen(key)) {
-      this.allergens = this.allergens.filter(a => a.key !== key);
-    } else {
-      this.allergens.push({ key, severity: 'anaphylactic' });
-    }
-    this.save();
-  },
-
-  setSeverity(key, sev) {
-    const a = this.allergens.find(a => a.key === key);
-    if (a) { a.severity = sev; this.save(); }
-  },
-
-  removeAllergen(key) {
-    this.allergens = this.allergens.filter(a => a.key !== key);
-    this.save();
-    renderSeverityList();
-    syncPickerState();
-    updateCountLabel();
-    updateNextBtn();
-  },
-
-  worstSeverity() {
-    if (this.allergens.some(a => a.severity === 'anaphylactic')) return 'anaphylactic';
-    if (this.allergens.some(a => a.severity === 'severe')) return 'severe';
-    return 'intolerance';
-  },
-
-  save() {
-    try {
-      localStorage.setItem('allergypass_v2026', JSON.stringify({
-        allergens: this.allergens,
-        name: this.name,
-        emergency: this.emergency,
-        hotel: this.hotel,
-      }));
-    } catch (e) {
-      console.error('Save failed:', e);
-    }
-  },
-
-  load() {
-    try {
-      const raw = localStorage.getItem('allergypass_v2026');
-      if (!raw) return;
-      const d = JSON.parse(raw);
-      if (Array.isArray(d.allergens)) this.allergens = d.allergens;
-      if (d.name)      this.name      = d.name;
-      if (d.emergency) this.emergency = d.emergency;
-      if (d.hotel)     this.hotel     = d.hotel;
-    } catch (e) {
-      console.error('Load failed:', e);
-    }
-  },
+  allergens: [],           // [{key, sev}]
+  name: '', sos: '', hotel: '',
+  has(k)     { return this.allergens.some(a => a.key === k); },
+  toggle(k)  { this.has(k) ? this.allergens = this.allergens.filter(a => a.key !== k) : this.allergens.push({ key: k, sev: 'anaphylactic' }); this.persist(); },
+  setSev(k,v){ const a = this.allergens.find(a => a.key === k); if (a) { a.sev = v; this.persist(); } },
+  remove(k)  { this.allergens = this.allergens.filter(a => a.key !== k); this.persist(); renderSevList(); syncChips(); updateCount(); updateNext(); },
+  worst()    { if (this.allergens.some(a => a.sev === 'anaphylactic')) return 'anaphylactic'; if (this.allergens.some(a => a.sev === 'severe')) return 'severe'; return 'intolerance'; },
+  persist()  { try { localStorage.setItem('ap26', JSON.stringify({ allergens: this.allergens, name: this.name, sos: this.sos, hotel: this.hotel })); } catch(e){} },
+  load()     { try { const d = JSON.parse(localStorage.getItem('ap26')); if (!d) return; if (Array.isArray(d.allergens)) this.allergens = d.allergens.filter(a => ALL_A.some(x => x.key === a.key) && ['anaphylactic','severe','intolerance'].includes(a.sev)); this.name = String(d.name||'').slice(0,80); this.sos = String(d.sos||'').slice(0,30); this.hotel = String(d.hotel||'').slice(0,80); } catch(e){} },
 };
 
-/* ─────────────────────────────────────────────
-   STEP NAVIGATION
-───────────────────────────────────────────── */
-const STEP_LABELS = {
-  1: 'Pick your allergens',
-  2: 'Set severity',
-  3: 'Add details',
-  4: 'Your card',
-};
+/* ─── INIT ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  S.load();
+  buildGrid(document.getElementById('grid-high'), HIGH);
+  buildGrid(document.getElementById('grid-other'), OTHER);
+  syncChips(); updateCount(); updateNext();
+  if (S.name)  document.getElementById('inpName').value  = S.name;
+  if (S.sos)   document.getElementById('inpSos').value   = S.sos;
+  if (S.hotel) document.getElementById('inpHotel').value = S.hotel;
+  goTo(1);
+  setTimeout(() => document.getElementById('offlinePill').classList.add('show'), 800);
+});
 
-function goToStep(n) {
-  if (n < 1 || n > 4) return;
-
-  // Hide all panels
-  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById(`step-${n}`).classList.add('active');
-
-  // Update dots + lines
-  for (let i = 1; i <= 4; i++) {
-    const dot = document.getElementById(`dot-${i}`);
-    dot.classList.remove('active', 'done');
-    if (i < n)  dot.classList.add('done');
-    if (i === n) dot.classList.add('active');
-    if (i < 4) {
-      const line = document.getElementById(`line-${i}`);
-      line.classList.toggle('done', i < n);
-    }
-  }
-
-  document.getElementById('step-label-text').textContent = STEP_LABELS[n];
-
-  // Update progress bar aria
-  const pb = document.getElementById('progress-bar');
-  if (pb) pb.setAttribute('aria-valuenow', n);
-
-  // Back button
-  const btnBack = document.getElementById('btn-back');
-  if (n === 1) {
-    btnBack.hidden = true;
-  } else {
-    btnBack.hidden = false;
-  }
-
-  // Bottom action
-  const bottomAction = document.getElementById('bottom-action');
-  const cardAction   = document.getElementById('card-action');
-  if (n === 4) {
-    bottomAction.style.display = 'none';
-    cardAction.style.display = 'flex';
-    renderCard();
-  } else {
-    bottomAction.style.display = 'flex';
-    cardAction.style.display = 'none';
-  }
-
-  State.step = n;
-  updateNextBtn();
-
-  // Step-specific renders
-  if (n === 1) { syncPickerState(); updateCountLabel(); }
-  if (n === 2) renderSeverityList();
-
-  window.scrollTo(0, 0);
-}
-
-function updateNextBtn() {
-  const btn   = document.getElementById('btn-next');
-  const label = document.getElementById('btn-next-label');
-  const step  = State.step;
-
-  if (step === 1) {
-    btn.disabled = State.allergens.length === 0;
-    label.textContent = 'Set Severity';
-  } else if (step === 2) {
-    btn.disabled = false;
-    label.textContent = 'Add Details';
-  } else if (step === 3) {
-    btn.disabled = false;
-    label.textContent = 'See My Card';
-  }
-}
-
-/* ─────────────────────────────────────────────
-   STEP 1: ALLERGEN PICKER
-───────────────────────────────────────────── */
-function buildAllergenGrid(containerEl, allergens) {
-  containerEl.innerHTML = '';
-  allergens.forEach(a => {
-    const chip = document.createElement('button');
-    chip.className = 'allergen-chip';
-    chip.dataset.key = a.key;
-    chip.setAttribute('aria-pressed', State.hasAllergen(a.key) ? 'true' : 'false');
-    chip.setAttribute('aria-label', `${a.label}: ${a.hint}`);
-    chip.innerHTML = `
-      <span class="chip-icon" aria-hidden="true">${a.emoji}</span>
+/* ─── GRID ─── */
+function buildGrid(el, list) {
+  el.innerHTML = '';
+  list.forEach(a => {
+    const btn = document.createElement('button');
+    btn.className = 'allergen-chip';
+    btn.dataset.key = a.key;
+    btn.setAttribute('aria-pressed', 'false');
+    btn.innerHTML = `
+      <span class="chip-emoji">${a.emoji}</span>
       <span class="chip-text">
         <span class="chip-name">${a.label}</span>
         <span class="chip-hint">${a.hint}</span>
       </span>
-      <span class="chip-check" aria-hidden="true"></span>
-    `;
-    chip.addEventListener('click', () => {
-      State.toggleAllergen(a.key);
-      syncPickerState();
-      updateCountLabel();
-      updateNextBtn();
+      <span class="chip-check" aria-hidden="true"></span>`;
+    btn.addEventListener('click', () => {
+      S.toggle(a.key);
+      btn.setAttribute('aria-pressed', S.has(a.key) ? 'true' : 'false');
+      syncChips(); updateCount(); updateNext();
     });
-    containerEl.appendChild(chip);
+    el.appendChild(btn);
   });
 }
 
-function syncPickerState() {
-  document.querySelectorAll('.allergen-chip').forEach(chip => {
-    const key = chip.dataset.key;
-    if (!key) return;
-    const selected = State.hasAllergen(key);
-    chip.classList.toggle('selected', selected);
-    chip.setAttribute('aria-pressed', selected ? 'true' : 'false');
+function syncChips() {
+  document.querySelectorAll('.allergen-chip').forEach(c => {
+    const sel = S.has(c.dataset.key);
+    c.classList.toggle('selected', sel);
+    c.setAttribute('aria-pressed', sel ? 'true' : 'false');
   });
 }
-
-function updateCountLabel() {
-  const el = document.getElementById('selection-count-num');
-  if (el) el.textContent = State.allergens.length;
+function updateCount() {
+  const el = document.getElementById('selCount');
+  if (el) el.textContent = S.allergens.length;
 }
 
-/* ─────────────────────────────────────────────
-   STEP 2: SEVERITY LIST
-───────────────────────────────────────────── */
-function renderSeverityList() {
-  const container = document.getElementById('severity-list');
-  if (!container) return;
-  container.innerHTML = '';
+/* ─── NAV ─── */
+function goTo(n) {
+  if (n < 1 || n > 4) return;
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
 
-  if (State.allergens.length === 0) {
-    container.innerHTML = `
-      <div class="empty-severity">
-        <p>No allergens selected. Go back and pick some.</p>
-      </div>`;
+  for (let i = 1; i <= 4; i++) {
+    const dot  = document.getElementById('dot'  + i);
+    const name = document.getElementById('name' + i);
+    dot.classList.remove('active', 'done');
+    name.classList.remove('active', 'done');
+    if (i < n)  { dot.classList.add('done');   name.classList.add('done'); }
+    if (i === n){ dot.classList.add('active');  name.classList.add('active'); }
+    if (i < 4)  { document.getElementById('line' + i).classList.toggle('done', i < n); }
+  }
+
+  const back = document.getElementById('btnBack');
+  if (back) back.style.display = n === 1 ? 'none' : 'flex';
+
+  const navSteps = document.getElementById('navSteps');
+  const navCard  = document.getElementById('navCard');
+  if (n === 4) { navSteps.style.display = 'none'; navCard.style.display = 'flex'; renderCard(); }
+  else         { navSteps.style.display = 'flex';  navCard.style.display = 'none'; }
+
+  S.step = n;
+  updateNext();
+  if (n === 1) { syncChips(); updateCount(); }
+  if (n === 2) renderSevList();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goNext() {
+  if (S.step === 3) {
+    S.name  = document.getElementById('inpName').value.trim();
+    S.sos   = document.getElementById('inpSos').value.trim();
+    S.hotel = document.getElementById('inpHotel').value.trim();
+    S.persist();
+  }
+  goTo(S.step + 1);
+}
+function goBack() { goTo(S.step - 1); }
+
+function updateNext() {
+  const btn = document.getElementById('btnNext');
+  const lbl = document.getElementById('nextLabel');
+  if (!btn) return;
+  const labels = { 1:'Set Severity', 2:'Add Details', 3:'See My Card' };
+  if (lbl) lbl.textContent = labels[S.step] || 'Next';
+  btn.disabled = S.allergens.length === 0;
+}
+
+/* ─── SEVERITY ─── */
+function renderSevList() {
+  const c = document.getElementById('sevList');
+  c.innerHTML = '';
+  if (S.allergens.length === 0) {
+    c.innerHTML = '<p style="color:var(--dust);font-size:0.9rem;padding:2rem 0;">No allergens selected. Go back and pick some.</p>';
     return;
   }
-
-  State.allergens.forEach(entry => {
-    const def = ALL_ALLERGENS.find(a => a.key === entry.key);
-    if (!def) return;
-
-    const item = document.createElement('div');
-    item.className = `severity-item sev-${entry.severity}`;
-    item.id = `sev-item-${entry.key}`;
-
-    item.innerHTML = `
-      <div class="sev-item-header">
-        <div class="sev-item-name">
-          <span class="sev-item-emoji" aria-hidden="true">${def.emoji}</span>
-          ${def.label}
-        </div>
-        <button class="sev-remove-btn" aria-label="Remove ${def.label}" onclick="State.removeAllergen('${entry.key}')">✕</button>
-      </div>
-      <div class="sev-selector" role="group" aria-label="Severity for ${def.label}">
-        ${Object.values(SEVERITY).map(s => `
-          <button
-            class="sev-btn ${entry.severity === s.id ? s.activeClass : ''}"
-            onclick="setSevAndRefresh('${entry.key}', '${s.id}')"
-            aria-pressed="${entry.severity === s.id ? 'true' : 'false'}"
-            aria-label="${s.label}: ${s.sublabel}"
-          >
-            <span class="sev-dot" style="background:${s.dotColor}" aria-hidden="true"></span>
-            <span>${s.label}</span>
-            <span style="font-size:0.65rem; font-weight:400;">${s.sublabel}</span>
-          </button>
-        `).join('')}
-      </div>
-    `;
-
-    container.appendChild(item);
-  });
-}
-
-function setSevAndRefresh(key, sev) {
-  State.setSeverity(key, sev);
-  // Update item class
-  const item = document.getElementById(`sev-item-${key}`);
-  if (item) {
-    item.className = `severity-item sev-${sev}`;
-  }
-  // Update button states
-  const btns = item ? item.querySelectorAll('.sev-btn') : [];
-  btns.forEach(btn => {
-    const sEvData = Object.values(SEVERITY).find(s => btn.getAttribute('aria-label').startsWith(s.label));
-    if (!sEvData) return;
-    btn.classList.remove('active-ana', 'active-sev', 'active-int');
-    if (sEvData.id === sev) {
-      btn.classList.add(sEvData.activeClass);
-      btn.setAttribute('aria-pressed', 'true');
-    } else {
-      btn.setAttribute('aria-pressed', 'false');
-    }
-  });
-}
-
-/* ─────────────────────────────────────────────
-   STEP 4: CARD RENDER
-───────────────────────────────────────────── */
-function renderCard() {
-  const container = document.getElementById('generated-card');
-  if (!container) return;
-  container.innerHTML = '';
-  container.appendChild(buildCard(false));
-}
-
-function buildCard(restaurantMode) {
-  const worst   = State.worstSeverity();
-  const banner  = TH.banner[worst];
-  const bannerCls = worst === 'anaphylactic' ? 'ana' : (worst === 'severe' ? 'sev' : 'int');
-
-  if (restaurantMode) {
-    // FULL SCREEN, HIGH CONTRAST VERSION
-    const wrap = document.createElement('div');
-
-    // Banner
-    const bannerEl = document.createElement('div');
-    bannerEl.className = `rc-banner ${bannerCls}`;
-    bannerEl.innerHTML = `
-      <div class="rc-banner-th">${banner.th}</div>
-      <div class="rc-banner-en">${banner.en}</div>
-    `;
-    wrap.appendChild(bannerEl);
-
-    // Each allergen
-    State.allergens.forEach(entry => {
-      const def  = ALL_ALLERGENS.find(a => a.key === entry.key);
-      const trTH = TH.allergens[entry.key];
-      const row  = document.createElement('div');
-      row.className = 'rc-allergen';
-      row.innerHTML = `
-        <span class="rc-allergen-icon" aria-hidden="true">${def.emoji}</span>
-        <div>
-          <span class="rc-allergen-th">${trTH.th}</span>
-          <span class="rc-allergen-roman">${trTH.roman}</span>
-          <span class="rc-allergen-en">${def.label}</span>
-        </div>
-      `;
-      wrap.appendChild(row);
-    });
-
-    // Instruction
-    const inst = document.createElement('div');
-    inst.className = 'rc-instruction';
-    inst.innerHTML = `
-      <div class="rc-instruction-th">${TH.instruction.th}</div>
-      <div class="rc-instruction-en">${TH.instruction.en}</div>
-    `;
-    wrap.appendChild(inst);
-
-    // SOS
-    if (State.emergency || State.name) {
-      const sos = document.createElement('div');
-      sos.className = 'rc-sos';
-      sos.innerHTML = `
-        ${State.name ? `<div>${State.name}</div>` : ''}
-        ${State.emergency ? `<div>SOS: ${State.emergency}</div>` : ''}
-        ${State.hotel ? `<div>${State.hotel}</div>` : ''}
-      `;
-      wrap.appendChild(sos);
-    }
-
-    return wrap;
-
-  } else {
-    // COMPACT CARD VERSION
+  S.allergens.forEach(entry => {
+    const def = ALL_A.find(a => a.key === entry.key);
     const card = document.createElement('div');
-    card.className = 'allergy-card';
-
+    card.className = `sev-card sev-${entry.sev}`;
+    card.id = 'sc-' + entry.key;
     card.innerHTML = `
-      <div class="card-severity-banner ${bannerCls}" role="status">
-        <div class="card-banner-th">${banner.th}</div>
-        <div class="card-banner-en">${banner.en}</div>
-      </div>
-      <div class="card-body">
-        ${(State.name || State.emergency) ? `
-          <div class="card-patient-row">
-            ${State.name ? `<div class="card-patient-name">${State.name}</div>` : '<div></div>'}
-            ${State.emergency ? `<div class="card-sos">SOS: ${State.emergency}</div>` : ''}
-          </div>
-        ` : ''}
-
-        ${State.allergens.map(entry => {
-          const def  = ALL_ALLERGENS.find(a => a.key === entry.key);
-          const trTH = TH.allergens[entry.key];
-          return `
-            <div class="card-allergen-row">
-              <span class="card-allergen-icon" aria-hidden="true">${def.emoji}</span>
-              <div>
-                <span class="card-allergen-th">${trTH.th}</span>
-                <span class="card-allergen-roman">${trTH.roman}</span>
-                <span class="card-allergen-en">${def.label}</span>
-              </div>
-            </div>
-          `;
-        }).join('')}
-
-        <div class="card-instruction">
-          <div class="card-instruction-th">${TH.instruction.th}</div>
-          <div class="card-instruction-en">${TH.instruction.en}</div>
-          <div class="card-cross-contact">⚠ Includes cross-contamination risk</div>
+      <div class="sev-card__head">
+        <div class="sev-card__name">
+          <span style="font-size:1.3rem">${def.emoji}</span>${def.label}
         </div>
-
-        ${State.hotel ? `<div style="font-size:0.72rem; color:var(--soil); margin-top:0.75rem;">${State.hotel}</div>` : ''}
+        <button class="sev-card__remove" onclick="S.remove('${entry.key}')" aria-label="Remove ${def.label}">✕</button>
       </div>
-      <div class="card-footer">
-        <span class="card-footer-verified">${TH.verified}</span>
-        <span class="card-footer-brand">AllergyPass</span>
-      </div>
-    `;
-
-    return card;
-  }
+      <div class="sev-selector">
+        ${SEV_OPTS.map(s => `
+          <button class="sev-btn ${entry.sev === s.id ? s.cls : ''}"
+            onclick="updateSev('${entry.key}','${s.id}')"
+            aria-pressed="${entry.sev === s.id}">
+            <span class="sev-btn__dot" style="background:${s.dot}"></span>
+            <span class="sev-btn__label">${s.label}</span>
+            <span class="sev-btn__sub">${s.sub}</span>
+          </button>`).join('')}
+      </div>`;
+    c.appendChild(card);
+  });
 }
 
-/* ─────────────────────────────────────────────
-   RESTAURANT MODE (FULL SCREEN)
-───────────────────────────────────────────── */
-function openRestaurantMode() {
-  const overlay = document.getElementById('restaurant-overlay');
-  const inner   = document.getElementById('restaurant-card-inner');
-  inner.innerHTML = '';
-  inner.appendChild(buildCard(true));
-  overlay.classList.add('open');
-  overlay.focus();
+function updateSev(key, val) {
+  S.setSev(key, val);
+  const card = document.getElementById('sc-' + key);
+  if (!card) return;
+  card.className = `sev-card sev-${val}`;
+  card.querySelectorAll('.sev-btn').forEach(btn => {
+    SEV_OPTS.forEach(s => btn.classList.remove(s.cls));
+    const lbl = btn.querySelector('.sev-btn__label').textContent;
+    const match = SEV_OPTS.find(s => s.label === lbl);
+    if (match && match.id === val) btn.classList.add(match.cls);
+    btn.setAttribute('aria-pressed', match && match.id === val ? 'true' : 'false');
+  });
+}
 
-  // Lock scroll on body
+/* ─── CARD RENDER ─── */
+function renderCard() {
+  const wrap = document.getElementById('cardWrap');
+  wrap.innerHTML = '';
+  wrap.appendChild(buildCard());
+}
+
+function buildCard() {
+  const worst = S.worst();
+  const b = BANNER[worst];
+  const lvl = worst === 'anaphylactic' ? 'ana' : worst === 'severe' ? 'sev' : 'int';
+
+  const card = document.createElement('div');
+  card.className = 'allergy-card';
+  card.innerHTML = `
+    <div class="card-banner lvl-${lvl}">
+      <div class="card-banner__th">${b.th}</div>
+      <div class="card-banner__en">${b.en}</div>
+    </div>
+    <div class="card-body">
+      ${(S.name || S.sos) ? `
+        <div class="card-patient">
+          ${S.name ? `<span class="card-patient__name">${esc(S.name)}</span>` : '<span></span>'}
+          ${S.sos  ? `<span class="card-patient__sos">SOS: ${esc(S.sos)}</span>` : ''}
+        </div>` : ''}
+      ${S.allergens.map(e => {
+        const def = ALL_A.find(a => a.key === e.key);
+        const t   = TH_ALLERGENS[e.key];
+        return `<div class="card-allergen">
+          <span class="card-allergen__icon">${def.emoji}</span>
+          <div>
+            <span class="card-allergen__th">${t.th}</span>
+            <span class="card-allergen__rom">${t.rom}</span>
+            <span class="card-allergen__en">${def.label}</span>
+          </div>
+        </div>`;
+      }).join('')}
+      <div class="card-instr">
+        <div class="card-instr__th">${INSTR_TH}</div>
+        <div class="card-instr__en">${INSTR_EN}</div>
+        <div class="card-cross">⚠ Includes cross-contamination risk</div>
+      </div>
+      ${S.hotel ? `<div class="card-hotel">📍 ${esc(S.hotel)}</div>` : ''}
+    </div>
+    <div class="card-footer">
+      <span class="card-footer__v">${VERIFIED}</span>
+      <span class="card-footer__b">AllergyPass</span>
+    </div>`;
+  return card;
+}
+
+/* ─── CHEF MODE ─── */
+function openChef() {
+  const worst = S.worst();
+  const b   = BANNER[worst];
+  const lvl = worst === 'anaphylactic' ? 'ana' : worst === 'severe' ? 'sev' : 'int';
+  const ci  = document.getElementById('chefInner');
+  ci.innerHTML = '';
+
+  const banner = document.createElement('div');
+  banner.className = `chef-banner lvl-${lvl}`;
+  banner.innerHTML = `<div class="chef-banner__th">${b.th}</div><div class="chef-banner__en">${b.en}</div>`;
+  ci.appendChild(banner);
+
+  S.allergens.forEach(e => {
+    const def = ALL_A.find(a => a.key === e.key);
+    const t   = TH_ALLERGENS[e.key];
+    const row = document.createElement('div');
+    row.className = 'chef-allergen';
+    row.innerHTML = `
+      <span class="chef-allergen__icon">${def.emoji}</span>
+      <div>
+        <span class="chef-allergen__th">${t.th}</span>
+        <span class="chef-allergen__rom">${t.rom}</span>
+        <span class="chef-allergen__en">${def.label}</span>
+      </div>`;
+    ci.appendChild(row);
+  });
+
+  const instr = document.createElement('div');
+  instr.className = 'chef-instr';
+  instr.innerHTML = `<div class="chef-instr__th">${INSTR_TH}</div><div class="chef-instr__en">${INSTR_EN}</div>`;
+  ci.appendChild(instr);
+
+  document.getElementById('chef-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
-function closeRestaurantMode() {
-  const overlay = document.getElementById('restaurant-overlay');
-  overlay.classList.remove('open');
+function closeChef() {
+  document.getElementById('chef-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
 
-/* ─────────────────────────────────────────────
-   INIT
-───────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
-  State.load();
+/* expose for inline onclick */
+window.goNext   = goNext;
+window.goBack   = goBack;
+window.goTo     = goTo;
+window.updateSev = updateSev;
+window.openChef = openChef;
+window.closeChef = closeChef;
+window.S = S;
 
-  // Build allergen grids
-  buildAllergenGrid(document.getElementById('grid-high-risk'), ALLERGEN_GROUPS.high);
-  buildAllergenGrid(document.getElementById('grid-common'),    ALLERGEN_GROUPS.common);
-  syncPickerState();
-  updateCountLabel();
-  updateNextBtn();
+/* ─── SAVE TO GALLERY ─── */
+function showToast(msg, duration) {
+  const t = document.getElementById('saveToast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration || 2800);
+}
 
-  // Restore saved text fields
-  if (State.name)      document.getElementById('user-name').value        = State.name;
-  if (State.emergency) document.getElementById('emergency-contact').value = State.emergency;
-  if (State.hotel)     document.getElementById('hotel-name').value        = State.hotel;
+async function saveCardToGallery() {
+  const btn = document.getElementById('btnSave');
+  if (!btn || btn.classList.contains('saving')) return;
 
-  // Next button
-  document.getElementById('btn-next').addEventListener('click', () => {
-    const s = State.step;
-    if (s === 3) {
-      // Save text fields before proceeding
-      State.name      = document.getElementById('user-name').value.trim();
-      State.emergency = document.getElementById('emergency-contact').value.trim();
-      State.hotel     = document.getElementById('hotel-name').value.trim();
-      State.save();
+  const cardEl = document.getElementById('cardWrap');
+  if (!cardEl || !cardEl.firstElementChild) return;
+
+  btn.classList.add('saving');
+  btn.textContent = '…';
+
+  try {
+    /* Load html2canvas on demand */
+    if (!window.html2canvas) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
     }
-    goToStep(s + 1);
-  });
 
-  // Back button
-  document.getElementById('btn-back').addEventListener('click', () => {
-    goToStep(State.step - 1);
-  });
+    const canvas = await html2canvas(cardEl.firstElementChild, {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false,
+    });
 
-  // Restaurant mode
-  document.getElementById('btn-show-restaurant').addEventListener('click', openRestaurantMode);
-  document.getElementById('btn-close-restaurant').addEventListener('click', closeRestaurantMode);
+    const dataUrl = canvas.toDataURL('image/png');
 
-  // Edit card
-  document.getElementById('btn-edit-card').addEventListener('click', () => goToStep(1));
+    /* Try Web Share API first (iOS/Android native save) */
+    if (navigator.canShare) {
+      const res = await fetch(dataUrl);
+      const blob = await res.blob();
+      const file = new File([blob], 'allergypass-card.png', { type: 'image/png' });
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'My AllergyPass Card' });
+        btn.classList.remove('saving');
+        btn.textContent = '⬇ Save';
+        return;
+      }
+    }
 
-  // Paywall
-  document.getElementById('btn-paywall-dismiss').addEventListener('click', () => {
-    document.getElementById('paywall-overlay').hidden = true;
-  });
+    /* Desktop fallback — trigger download */
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = 'allergypass-card.png';
+    a.click();
+    showToast('Card downloaded — open it to save to your gallery', 3200);
 
-  // PWA offline
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(() => {
-      document.getElementById('offline-pill').classList.add('visible');
-    }).catch(() => {});
+  } catch (err) {
+    /* If share was cancelled by user, don't show error */
+    if (err && err.name === 'AbortError') {
+      btn.classList.remove('saving');
+      btn.textContent = '⬇ Save';
+      return;
+    }
+    /* Last resort — open image in new tab with instructions */
+    showToast('Press and hold the image to save it', 3500);
   }
 
-  // Start on step 1
-  goToStep(1);
-});
+  btn.classList.remove('saving');
+  btn.textContent = '⬇ Save';
+}
 
-// Expose for inline handlers
-window.State          = State;
-window.setSevAndRefresh = setSevAndRefresh;
+window.saveCardToGallery = saveCardToGallery;
+
+/* ─── RETURNING USER DETECTION ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = (() => { try { return JSON.parse(localStorage.getItem('ap26')); } catch(e){ return null; } })();
+  if (saved && Array.isArray(saved.allergens) && saved.allergens.length > 0) {
+    const banner = document.createElement('div');
+    banner.id = 'returnBanner';
+    banner.innerHTML = `
+      <span>You have a saved card</span>
+      <button onclick="goTo(4);document.getElementById('returnBanner').remove()">View it →</button>`;
+    banner.style.cssText = `
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;
+      background:var(--clay-light);border:1px solid var(--clay-mid);
+      border-radius:var(--radius);padding:0.75rem 1rem;margin-bottom:1.25rem;
+      font-size:0.875rem;font-weight:600;color:var(--clay);`;
+    banner.querySelector('button').style.cssText = `
+      background:var(--clay);color:#fff;border:none;border-radius:var(--radius-sm);
+      padding:0.4rem 0.875rem;font-size:0.8125rem;font-weight:700;cursor:pointer;white-space:nowrap;`;
+    const frame = document.querySelector('.app-frame');
+    const progressBar = frame && frame.querySelector('.progress-bar');
+    if (progressBar) progressBar.after(banner);
+  }
+});

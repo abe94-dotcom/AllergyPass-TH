@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page not found — AllergyPass</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
+      <div class="nav-links">
+        <a href="/tools/">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="/recommendations/">Recommendations</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about.html">About</a>
+      </div>
+      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
+      <a href="/app.html" class="nav-cta">Build My Card</a>
+    </div>
+  </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-drawer__head">
+      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
+      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/guides/">Guides</a>
+    <a href="/thailand-essentials/">Thailand Essentials</a>
+    <a href="/recommendations/">Recommendations</a>
+    <a href="/blog/">Blog</a>
+    <a href="/about.html">About</a>
+    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+  </div>
+  <script>
+    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
+    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+  </script>
+
+  <section style="padding:8rem 0;text-align:center;">
+    <div class="container">
+      <p style="font-size:4rem;margin-bottom:1.5rem;">🛡️</p>
+      <h1 style="font-family:var(--font-display);font-size:2.5rem;color:var(--bark);margin-bottom:1rem;">
+        Page not found
+      </h1>
+      <p style="font-size:1rem;color:var(--soil);margin-bottom:2.5rem;max-width:360px;margin-left:auto;margin-right:auto;line-height:1.7;">
+        That page doesn't exist. Try heading back to the homepage or building your allergy card.
+      </p>
+      <div style="display:flex;justify-content:center;gap:0.875rem;flex-wrap:wrap;">
+        <a href="/" class="btn btn--dark">← Back to home</a>
+        <a href="/app.html" class="btn btn--terra">Build My Card</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <span class="footer-logo">🛡️ AllergyPass</span>
+          <p class="footer-tagline">A practical Thailand platform. Built by a healthcare professional in Bangkok.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <nav class="footer-links"><a href="/app.html">Card Builder</a><a href="/tools/">All Tools</a></nav>
+        </div>
+        <div class="footer-col">
+          <h5>Content</h5>
+          <nav class="footer-links">
+            <a href="/guides/">Guides</a>
+            <a href="/thailand-essentials/">Thailand Essentials</a>
+            <a href="/recommendations/">Recommendations</a>
+            <a href="/blog/">Blog</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>About</h5>
+          <nav class="footer-links">
+            <a href="/about.html">About Abe</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+          </nav>
+        </div>
+      </div>
+      <p class="footer-copy">Built in Thailand. © 2026 AllergyPass. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

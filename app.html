@@ -2,446 +2,375 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Build Your Card — AllergyPass</title>
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:ital,wght@1,600&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Your Allergy Card — AllergyPass</title>
+  <meta name="description" content="Build a free bilingual Thai-English food allergy card. Works offline. No sign-up required." />
   <meta name="theme-color" content="#2C1F14" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icon-180.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="stylesheet" href="/style.css" />
   <style>
-    /* ── APP SHELL ── */
-    .app-body {
-      background: var(--linen);
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-    }
+    body { background: var(--linen); }
 
+    /* ── APP SHELL ── */
     .app-topbar {
-      background: rgba(250,246,241,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: var(--linen-mid);
       border-bottom: 1px solid var(--border);
-      padding: 0.875rem 1.25rem;
+      padding: 0.75rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 200;
+      font-size: 0.8125rem;
+      color: var(--soil);
     }
-
-    .app-topbar .logo {
-      font-family: var(--font-d);
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--bark);
-    }
-
+    .app-topbar__loc { font-weight: 600; display: flex; align-items: center; gap: 0.4rem; }
     .offline-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #EEF7EE;
+      color: #2E7D32;
+      border: 1px solid #C8E6C9;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
       font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
-      padding: 0.3rem 0.75rem;
-      border-radius: 100px;
-      background: var(--linen-dark);
-      color: var(--soil);
-      border: 1px solid var(--border);
       opacity: 0;
       transition: opacity 0.4s;
     }
-    .offline-pill.visible { opacity: 1; }
+    .offline-pill.show { opacity: 1; }
+    .offline-pill::before { content: '●'; font-size: 0.55rem; }
 
-    /* ── PROGRESS STRIP ── */
-    .progress-strip {
-      background: var(--linen-dark);
-      border-bottom: 1px solid var(--border);
-      padding: 0.875rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .app-frame {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem 7rem;
     }
 
-    .step-dot {
-      width: 28px;
-      height: 28px;
+    /* ── PROGRESS ── */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .step-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      flex: 1;
+    }
+    .step-circle {
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       border: 2px solid var(--border);
       background: var(--linen);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: var(--dust);
+      transition: all 0.25s;
       flex-shrink: 0;
-      transition: all 0.25s ease;
     }
-    .step-dot.active {
-      background: var(--clay);
-      border-color: var(--clay);
-      color: #fff;
+    .step-circle.active { background: var(--clay); border-color: var(--clay); color: #fff; }
+    .step-circle.done { background: var(--bark); border-color: var(--bark); color: #fff; }
+    .step-circle.done::after { content: '✓'; }
+    .step-circle.done span { display: none; }
+    .step-name {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--dust);
+      white-space: nowrap;
+      text-align: center;
     }
-    .step-dot.done {
-      background: var(--bark);
-      border-color: var(--bark);
-      color: #fff;
-    }
-
-    .step-line {
-      flex: 1;
+    .step-name.active { color: var(--clay); }
+    .step-name.done { color: var(--bark); }
+    .step-connector {
       height: 2px;
+      flex: 1;
       background: var(--border);
+      margin: 0 0.25rem;
+      margin-bottom: 1.25rem;
       border-radius: 2px;
       transition: background 0.3s;
+      flex-shrink: 0;
+      max-width: 40px;
     }
-    .step-line.done { background: var(--bark); }
+    .step-connector.done { background: var(--bark); }
 
-    .step-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--soil);
-      margin-left: 0.25rem;
+    /* ── PANELS ── */
+    .step-panel { display: none; }
+    .step-panel.active {
+      display: block;
+      animation: panelFadeIn 0.18s ease-out both;
+    }
+    @keyframes panelFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── STEP PANELS ── */
-    .steps-container {
-      flex: 1;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .step-panel {
-      display: none;
-      flex-direction: column;
-      padding: 1.5rem 1.25rem 6rem;
-      min-height: calc(100dvh - 130px);
-    }
-    .step-panel.active { display: flex; }
-
-    .step-heading {
-      font-family: var(--font-d);
-      font-size: 1.4rem;
-      font-weight: 700;
+    .panel-heading {
+      font-family: var(--font-display);
+      font-size: 1.875rem;
       color: var(--bark);
-      margin-bottom: 0.4rem;
-      line-height: 1.25;
+      line-height: 1.15;
+      margin-bottom: 0.375rem;
     }
-    .step-sub {
-      font-size: 0.85rem;
+    .panel-sub {
+      font-size: 0.9rem;
       color: var(--soil);
+      margin-bottom: 1.75rem;
+    }
+    .country-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--linen-mid);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.35rem 0.875rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--bark);
       margin-bottom: 1.5rem;
-      line-height: 1.5;
     }
 
-    /* ── ALLERGEN GROUPS ── */
-    .allergen-group-label {
-      font-size: 0.65rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+    /* ── STEP 1: ALLERGEN PICKER ── */
+    .group-heading {
+      font-size: 0.6875rem;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: var(--dust);
       margin: 1.25rem 0 0.75rem;
     }
-    .allergen-group-label:first-of-type { margin-top: 0; }
-
     .allergen-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 0.625rem;
-      margin-bottom: 0.25rem;
     }
-
     .allergen-chip {
       background: var(--white);
       border: 1.5px solid var(--border);
-      border-radius: 14px;
+      border-radius: var(--radius-lg);
       padding: 0.875rem 1rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
       cursor: pointer;
-      transition: all 0.18s ease;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+      transition: all 0.18s;
       text-align: left;
-      min-height: 56px;
+      min-height: 64px;
+      position: relative;
     }
-    .allergen-chip:active { transform: scale(0.97); }
+    .allergen-chip:hover { border-color: var(--soil); background: var(--linen); }
     .allergen-chip.selected {
       border-color: var(--clay);
       background: var(--clay-light);
     }
-
-    .chip-icon {
-      font-size: 1.3rem;
-      flex-shrink: 0;
-      width: 28px;
-      text-align: center;
-    }
+    .chip-emoji { font-size: 1.25rem; flex-shrink: 0; width: 26px; text-align: center; }
     .chip-text { flex: 1; }
-    .chip-name {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--bark);
-      line-height: 1.2;
-    }
-    .chip-hint {
-      display: block;
-      font-size: 0.7rem;
-      color: var(--soil);
-      margin-top: 1px;
-    }
+    .chip-name { display: block; font-size: 0.875rem; font-weight: 700; color: var(--bark); line-height: 1.2; }
+    .chip-hint { display: block; font-size: 0.7rem; color: var(--soil); margin-top: 2px; }
     .chip-check {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       border: 1.5px solid var(--border);
-      flex-shrink: 0;
       background: var(--linen);
+      flex-shrink: 0;
       transition: all 0.18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: transparent;
     }
     .allergen-chip.selected .chip-check {
       background: var(--clay);
       border-color: var(--clay);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      color: #fff;
     }
-    .allergen-chip.selected .chip-check::after {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: white;
-      border-radius: 50%;
+    .allergen-chip.selected .chip-check::after { content: '✓'; }
+    .sel-count {
+      font-size: 0.8rem;
+      color: var(--soil);
+      text-align: right;
+      margin-top: 0.75rem;
+      padding-right: 0.25rem;
     }
+    .sel-count strong { color: var(--clay); }
 
     /* ── STEP 2: SEVERITY ── */
-    .severity-item {
+    .sev-card {
       background: var(--white);
       border: 1.5px solid var(--border);
-      border-radius: 16px;
+      border-radius: var(--radius-lg);
       margin-bottom: 0.75rem;
       overflow: hidden;
       transition: border-color 0.2s;
     }
-    .severity-item.sev-anaphylactic { border-color: #CC0000; }
-    .severity-item.sev-severe { border-color: var(--amber); }
-    .severity-item.sev-intolerance { border-color: var(--soil); }
+    .sev-card.sev-anaphylactic { border-color: #FFBABA; }
+    .sev-card.sev-severe { border-color: #FFD9A0; }
+    .sev-card.sev-intolerance { border-color: var(--border-dark); }
 
-    .sev-item-header {
+    .sev-card__head {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0.875rem 1rem;
     }
-    .sev-item-name {
+    .sev-card__name {
       display: flex;
       align-items: center;
       gap: 0.625rem;
+      font-size: 0.9375rem;
       font-weight: 700;
-      font-size: 0.9rem;
       color: var(--bark);
     }
-    .sev-item-emoji { font-size: 1.2rem; }
-
-    .sev-remove-btn {
+    .sev-card__remove {
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: var(--linen-dark);
-      border: none;
+      background: var(--linen-mid);
+      border: 1px solid var(--border);
       color: var(--soil);
-      font-size: 0.8rem;
-      cursor: pointer;
+      font-size: 0.75rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+      transition: all 0.15s;
     }
+    .sev-card__remove:hover { background: #FFECEC; border-color: #FFBABA; color: var(--sev-ana); }
 
     .sev-selector {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0;
       border-top: 1px solid var(--border);
     }
-
     .sev-btn {
-      padding: 0.75rem 0.25rem;
+      padding: 0.75rem 0.5rem;
       border: none;
       background: none;
       cursor: pointer;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--dust);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.2rem;
-      transition: all 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+      gap: 0.25rem;
       border-right: 1px solid var(--border);
+      transition: all 0.15s;
     }
     .sev-btn:last-child { border-right: none; }
-    .sev-btn.active-ana { background: #FFF0F0; color: #CC0000; }
-    .sev-btn.active-sev { background: #FFF8EE; color: var(--amber); }
-    .sev-btn.active-int { background: var(--linen-dark); color: var(--bark); }
-
-    .sev-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-    }
+    .sev-btn__dot { width: 8px; height: 8px; border-radius: 50%; }
+    .sev-btn__label { font-size: 0.7rem; font-weight: 700; color: var(--dust); }
+    .sev-btn__sub { font-size: 0.6rem; color: var(--dust); }
+    .sev-btn.active-ana { background: #FFF5F5; }
+    .sev-btn.active-ana .sev-btn__label { color: var(--sev-ana); }
+    .sev-btn.active-sev { background: #FFF9F0; }
+    .sev-btn.active-sev .sev-btn__label { color: var(--amber); }
+    .sev-btn.active-int { background: var(--linen-mid); }
+    .sev-btn.active-int .sev-btn__label { color: var(--bark); }
+    .sev-btn[aria-pressed="true"] { outline: 2px solid currentColor; outline-offset: -2px; }
 
     /* ── STEP 3: DETAILS ── */
-    .details-section { margin-bottom: 1.5rem; }
-    .details-label {
+    .field-label {
+      display: block;
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--soil);
       margin-bottom: 0.5rem;
-      display: block;
     }
-    .details-input {
+    .field-input {
       width: 100%;
       background: var(--white);
       border: 1.5px solid var(--border);
-      border-radius: 12px;
+      border-radius: var(--radius);
       padding: 0.875rem 1rem;
       font-size: 1rem;
-      font-family: var(--font-s);
+      font-family: var(--font-body);
       color: var(--bark);
       outline: none;
       transition: border-color 0.18s;
+      margin-bottom: 1.25rem;
     }
-    .details-input:focus { border-color: var(--clay); }
-    .details-input::placeholder { color: var(--dust); }
+    .field-input:focus { border-color: var(--clay); }
+    .field-input::placeholder { color: var(--dust); }
 
-    /* ── STEP 4: CARD ── */
-    .card-view {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+    /* ── STEP 4: CARD OUTPUT ── */
+    .card-wrap { margin-bottom: 1.5rem; }
 
     .allergy-card {
       background: var(--white);
-      border-radius: 20px;
-      overflow: hidden;
+      border-radius: var(--radius-xl);
       border: 2px solid var(--bark);
+      overflow: hidden;
     }
-
-    .card-severity-banner {
+    .card-banner {
       padding: 1rem 1.25rem;
       text-align: center;
     }
-    .card-severity-banner.ana { background: #CC0000; }
-    .card-severity-banner.sev { background: var(--amber); }
-    .card-severity-banner.int { background: var(--soil); }
-
-    .card-banner-th {
+    .card-banner.lvl-ana { background: var(--sev-ana); }
+    .card-banner.lvl-sev { background: var(--amber); }
+    .card-banner.lvl-int { background: var(--soil); }
+    .card-banner__th {
       font-size: 1.05rem;
       font-weight: 800;
       color: #fff;
-      line-height: 1.3;
+      line-height: 1.4;
     }
-    .card-banner-en {
-      font-size: 0.72rem;
+    .card-banner__en {
+      font-size: 0.65rem;
       color: rgba(255,255,255,0.82);
       margin-top: 0.2rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
-
     .card-body { padding: 1.25rem; }
-
-    .card-patient-row {
+    .card-patient {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding-bottom: 0.875rem;
-      border-bottom: 1px solid var(--border);
       margin-bottom: 0.875rem;
+      border-bottom: 1px solid var(--border);
     }
-    .card-patient-name {
-      font-weight: 800;
-      font-size: 0.9rem;
-      color: var(--bark);
-    }
-    .card-sos {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #CC0000;
-    }
-
-    .card-allergen-row {
+    .card-patient__name { font-size: 0.9rem; font-weight: 800; color: var(--bark); }
+    .card-patient__sos { font-size: 0.75rem; font-weight: 700; color: var(--sev-ana); }
+    .card-allergen {
       display: flex;
       align-items: flex-start;
       gap: 0.875rem;
       padding: 0.625rem 0;
-      border-bottom: 1px solid var(--linen-dark);
+      border-bottom: 1px solid var(--linen-mid);
     }
-    .card-allergen-row:last-child { border-bottom: none; }
-
-    .card-allergen-icon {
-      font-size: 1.4rem;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .card-allergen-th {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--bark);
-      line-height: 1.2;
-      display: block;
-    }
-    .card-allergen-en {
-      font-size: 0.75rem;
-      color: var(--soil);
-      display: block;
-      margin-top: 1px;
-    }
-    .card-allergen-roman {
-      font-size: 0.68rem;
-      color: var(--dust);
-      font-style: italic;
-      display: block;
-    }
-
-    .card-instruction {
-      background: var(--linen-dark);
+    .card-allergen:last-of-type { border-bottom: none; }
+    .card-allergen__icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .card-allergen__th { font-size: 1.3rem; font-weight: 800; color: var(--bark); display: block; line-height: 1.2; }
+    .card-allergen__rom { font-size: 0.65rem; color: var(--dust); font-style: italic; font-family: var(--font-mono); display: block; }
+    .card-allergen__en { font-size: 0.72rem; color: var(--soil); display: block; margin-top: 1px; }
+    .card-instr {
+      background: var(--linen-mid);
       border-radius: 10px;
-      padding: 0.875rem 1rem;
+      padding: 0.875rem;
       margin-top: 1rem;
     }
-    .card-instruction-th {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--bark);
-      line-height: 1.4;
-    }
-    .card-instruction-en {
-      font-size: 0.7rem;
-      color: var(--soil);
-      margin-top: 0.25rem;
-    }
-
-    .card-cross-contact {
-      font-size: 0.72rem;
-      color: var(--amber);
-      font-weight: 700;
-      margin-top: 0.5rem;
-    }
-
+    .card-instr__th { font-size: 0.875rem; font-weight: 800; color: var(--bark); line-height: 1.5; }
+    .card-instr__en { font-size: 0.7rem; color: var(--soil); margin-top: 0.25rem; }
+    .card-cross { font-size: 0.7rem; color: var(--amber); font-weight: 700; margin-top: 0.5rem; }
+    .card-hotel { font-size: 0.7rem; color: var(--soil); margin-top: 0.625rem; }
     .card-footer {
       border-top: 1px solid var(--border);
       padding: 0.75rem 1.25rem;
@@ -449,413 +378,352 @@
       align-items: center;
       justify-content: space-between;
     }
-    .card-footer-verified {
-      font-size: 0.68rem;
-      color: var(--soil);
-      font-weight: 600;
-    }
-    .card-footer-brand {
-      font-family: var(--font-d);
-      font-size: 0.75rem;
-      color: var(--clay);
-      font-weight: 700;
-    }
+    .card-footer__v { font-size: 0.65rem; color: var(--soil); }
+    .card-footer__b { font-family: var(--font-display); font-size: 0.8rem; color: var(--clay); }
 
-    /* ── SHOW CARD FULLSCREEN ── */
-    #restaurant-overlay {
-      position: fixed;
-      inset: 0;
-      background: #fff;
-      z-index: 999;
-      display: none;
-      flex-direction: column;
-      overflow-y: auto;
-    }
-    #restaurant-overlay.open { display: flex; }
-
-    .restaurant-close {
-      position: sticky;
-      top: 0;
-      background: var(--bark);
-      color: #fff;
-      padding: 1rem 1.25rem;
-      font-size: 0.85rem;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      width: 100%;
-    }
-
-    .restaurant-card {
-      flex: 1;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .rc-banner {
-      background: #CC0000;
-      border-radius: 16px;
-      padding: 1.25rem;
-      text-align: center;
-    }
-    .rc-banner.sev { background: #D4860A; }
-    .rc-banner.int { background: #4A3728; }
-
-    .rc-banner-th {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #fff;
-      line-height: 1.3;
-    }
-    .rc-banner-en {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.85);
-      margin-top: 0.25rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .rc-allergen {
-      border: 3px solid #000;
-      border-radius: 16px;
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .rc-allergen-icon { font-size: 2rem; flex-shrink: 0; }
-    .rc-allergen-th {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #000;
-      line-height: 1.2;
-      display: block;
-    }
-    .rc-allergen-roman {
-      font-size: 0.9rem;
-      color: #555;
-      display: block;
-      font-style: italic;
-    }
-    .rc-allergen-en {
-      font-size: 0.85rem;
-      color: #333;
-      display: block;
-      margin-top: 0.125rem;
-    }
-
-    .rc-instruction {
-      border: 3px solid #000;
-      border-radius: 16px;
-      padding: 1.25rem 1.5rem;
-    }
-    .rc-instruction-th {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #000;
-      line-height: 1.5;
-    }
-    .rc-instruction-en {
-      font-size: 0.85rem;
-      color: #333;
-      margin-top: 0.375rem;
-    }
-
-    .rc-sos {
-      background: #CC0000;
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 800;
-    }
-
-    /* ── STICKY BOTTOM ACTION ── */
-    .bottom-action {
+    /* ── BOTTOM NAV ── */
+    .app-bottom {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 1rem 1.25rem;
-      background: rgba(250,246,241,0.96);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      padding: 0.875rem 1.5rem;
+      background: rgba(250,247,242,0.96);
+      backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
       z-index: 100;
       display: flex;
       gap: 0.75rem;
+      max-width: 520px;
+      margin: 0 auto;
     }
-
-    .btn-back {
-      background: var(--linen-dark);
+    .btn-app-back {
+      background: var(--linen-mid);
       color: var(--bark);
       border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      padding: 0.875rem 1.125rem;
       font-size: 0.9rem;
       font-weight: 700;
-      font-family: var(--font-s);
       cursor: pointer;
       flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+      transition: all 0.15s;
     }
-
-    .btn-next {
+    .btn-app-back:hover { border-color: var(--bark); }
+    .btn-app-next {
+      flex: 1;
       background: var(--clay);
       color: #fff;
       border: none;
-      border-radius: 14px;
-      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      padding: 0.875rem 1.25rem;
       font-size: 1rem;
-      font-weight: 800;
-      font-family: var(--font-s);
+      font-weight: 700;
       cursor: pointer;
-      flex: 1;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      transition: background 0.15s, transform 0.1s;
+      transition: all 0.15s;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
     }
-    .btn-next:active { transform: scale(0.98); background: var(--clay-dark); }
-    .btn-next:disabled { background: var(--border); color: var(--dust); cursor: not-allowed; }
-
-    .btn-show-card {
+    .btn-app-next:hover:not(:disabled) { background: var(--clay-dark); }
+    .btn-app-next:disabled {
+      background: var(--border);
+      color: var(--dust);
+      cursor: not-allowed;
+    }
+    .btn-app-chef {
+      flex: 1;
       background: var(--bark);
       color: #fff;
       border: none;
-      border-radius: 14px;
-      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      padding: 0.875rem 1.25rem;
       font-size: 1rem;
-      font-weight: 800;
-      font-family: var(--font-s);
-      cursor: pointer;
-      flex: 1;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      transition: background 0.15s;
-    }
-
-    .btn-edit {
-      background: var(--linen-dark);
-      color: var(--bark);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 1rem 1.25rem;
-      font-size: 0.9rem;
       font-weight: 700;
-      font-family: var(--font-s);
       cursor: pointer;
-      flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
+      transition: all 0.15s;
     }
-
-    /* ── HIDDEN INGREDIENT TAGS ── */
-    .hidden-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.375rem;
-      margin-top: 0.5rem;
-    }
-    .hidden-tag {
-      background: var(--linen-dark);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 0.2rem 0.6rem;
-      font-size: 0.65rem;
-      color: var(--soil);
-      font-weight: 600;
-    }
-
-    /* ── PAYWALL ── */
-    #paywall-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(44,31,20,0.6);
-      z-index: 300;
-      display: flex;
-      align-items: flex-end;
-      padding: 0;
-    }
-    #paywall-overlay[hidden] { display: none; }
-
-    .paywall-sheet {
-      background: var(--linen);
-      border-radius: 24px 24px 0 0;
-      padding: 2rem 1.5rem 3rem;
-      width: 100%;
-    }
-    .paywall-sheet h3 {
-      font-family: var(--font-d);
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-    .paywall-sheet p { font-size: 0.9rem; color: var(--soil); margin-bottom: 1.25rem; }
-    .paywall-features { list-style: none; margin-bottom: 1.5rem; }
-    .paywall-features li { font-size: 0.85rem; padding: 0.375rem 0; color: var(--bark); }
-
-    /* ── EMPTY STATE ── */
-    .empty-severity {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      color: var(--dust);
-    }
-    .empty-severity p { font-size: 0.9rem; }
-
-    /* ── MISC ── */
-    .country-badge {
+    .btn-app-chef:hover { background: var(--soil); }
+    .btn-app-save {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.4rem;
-      background: var(--linen-dark);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 0.3rem 0.75rem;
-      font-size: 0.8rem;
-      font-weight: 700;
+      background: var(--linen-mid);
       color: var(--bark);
-      margin-bottom: 1.25rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.875rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s;
+      position: relative;
+    }
+    .btn-app-save:hover { border-color: var(--bark); }
+    .btn-app-save.saving { opacity: 0.6; pointer-events: none; }
+
+    /* Save toast */
+    #saveToast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: var(--bark);
+      color: #fff;
+      padding: 0.6rem 1.25rem;
+      border-radius: 100px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 300;
+    }
+    #saveToast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
-    .selection-count {
+    .btn-app-edit {
+      background: var(--linen-mid);
+      color: var(--bark);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.875rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .btn-app-edit:hover { border-color: var(--bark); }
+
+    /* ── CHEF OVERLAY ── */
+    #chef-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: #fff;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    #chef-overlay.open { display: flex; }
+    .chef-close {
+      position: sticky;
+      top: 0;
+      background: var(--bark);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+    .chef-inner {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .chef-banner {
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .chef-banner.lvl-ana { background: var(--sev-ana); }
+    .chef-banner.lvl-sev { background: var(--amber); }
+    .chef-banner.lvl-int { background: var(--soil); }
+    .chef-banner__th { font-size: 1.625rem; font-weight: 800; color: #fff; line-height: 1.3; }
+    .chef-banner__en {
       font-size: 0.8rem;
-      color: var(--soil);
-      text-align: right;
-      margin-top: 0.5rem;
+      color: rgba(255,255,255,0.85);
+      margin-top: 0.375rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
-    .selection-count span { color: var(--clay); font-weight: 700; }
-  </style>
-</head>
-<body class="app-body">
+    .chef-allergen {
+      border: 3px solid #000;
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .chef-allergen__icon { font-size: 2.25rem; flex-shrink: 0; }
+    .chef-allergen__th { font-size: 2rem; font-weight: 800; color: #000; display: block; line-height: 1.2; }
+    .chef-allergen__rom { font-size: 0.875rem; color: #555; font-style: italic; display: block; }
+    .chef-allergen__en { font-size: 0.875rem; color: #333; display: block; margin-top: 2px; }
+    .chef-instr {
+      border: 3px solid #000;
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+    }
+    .chef-instr__th { font-size: 1.25rem; font-weight: 800; color: #000; line-height: 1.5; }
+    .chef-instr__en { font-size: 0.9rem; color: #333; margin-top: 0.375rem; }
 
-  <!-- TOP BAR -->
-  <nav class="app-topbar" aria-label="App navigation">
-    <a href="index.html" class="logo">AllergyPass</a>
-    <div id="offline-pill" class="offline-pill" aria-live="polite">Offline Ready</div>
+    @media (max-width: 540px) {
+      .app-bottom { max-width: 100%; left: 0; right: 0; }
+    }
+  </style>
+  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <link rel="canonical" href="https://allergypass.app/app.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Build Your Allergy Card — AllergyPass" />
+  <meta property="og:description" content="Free bilingual Thai-English food allergy card builder. Offline-ready, no sign-up required." />
+  <meta property="og:url" content="https://allergypass.app/app.html" />
+  <meta property="og:image" content="https://allergypass.app/icon-512.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Build Your Allergy Card — AllergyPass" />
+  <meta name="twitter:description" content="Free bilingual Thai-English food allergy card builder. Offline-ready, no sign-up required." />
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
+      <div class="nav-links">
+        <a href="/tools/">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="/recommendations/">Recommendations</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about.html">About</a>
+      </div>
+      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
+      <a href="/app.html" class="nav-cta" aria-current="page">Build My Card</a>
+    </div>
   </nav>
 
-  <!-- PROGRESS STRIP -->
-  <div class="progress-strip" role="progressbar" aria-label="Step progress" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" id="progress-bar">
-    <div class="step-dot active" id="dot-1" aria-label="Step 1: Allergens">1</div>
-    <div class="step-line" id="line-1"></div>
-    <div class="step-dot" id="dot-2" aria-label="Step 2: Severity">2</div>
-    <div class="step-line" id="line-2"></div>
-    <div class="step-dot" id="dot-3" aria-label="Step 3: Details">3</div>
-    <div class="step-line" id="line-3"></div>
-    <div class="step-dot" id="dot-4" aria-label="Step 4: Your Card">4</div>
-    <div class="step-label" id="step-label-text">Pick your allergens</div>
-  </div>
-
-  <!-- STEPS CONTAINER -->
-  <div class="steps-container">
-
-    <!-- STEP 1: ALLERGENS -->
-    <section class="step-panel active" id="step-1" aria-label="Step 1: Select allergens">
-      <h1 class="step-heading">What can't you eat?</h1>
-      <p class="step-sub">Select everything that applies. You'll set severity on the next step.</p>
-
-      <div class="country-badge">
-        <span>🇹🇭</span> Thailand
-      </div>
-
-      <p class="allergen-group-label">High risk in Thai food</p>
-      <div class="allergen-grid" id="grid-high-risk"></div>
-
-      <p class="allergen-group-label">Other allergens</p>
-      <div class="allergen-grid" id="grid-common"></div>
-
-      <div class="selection-count" aria-live="polite">
-        <span id="selection-count-num">0</span> selected
-      </div>
-    </section>
-
-    <!-- STEP 2: SEVERITY -->
-    <section class="step-panel" id="step-2" aria-label="Step 2: Set severity">
-      <h1 class="step-heading">How serious is each one?</h1>
-      <p class="step-sub">This determines what the card communicates to a chef. Be honest.</p>
-      <div id="severity-list"></div>
-    </section>
-
-    <!-- STEP 3: DETAILS -->
-    <section class="step-panel" id="step-3" aria-label="Step 3: Add your details">
-      <h1 class="step-heading">Add your details</h1>
-      <p class="step-sub">Optional but useful if you need emergency help and can't speak.</p>
-
-      <div class="details-section">
-        <label for="user-name" class="details-label">Your name</label>
-        <input type="text" id="user-name" class="details-input" placeholder="e.g. Sarah" autocomplete="given-name" />
-      </div>
-
-      <div class="details-section">
-        <label for="emergency-contact" class="details-label">Emergency contact number</label>
-        <input type="tel" id="emergency-contact" class="details-input" placeholder="+66 9 0000 0000" autocomplete="tel" />
-      </div>
-
-      <div class="details-section">
-        <label for="hotel-name" class="details-label">Hotel / address in Thailand (optional)</label>
-        <input type="text" id="hotel-name" class="details-input" placeholder="Hotel name or area" />
-      </div>
-    </section>
-
-    <!-- STEP 4: CARD -->
-    <section class="step-panel" id="step-4" aria-label="Step 4: Your allergy card">
-      <h1 class="step-heading">Your card</h1>
-      <p class="step-sub">Show this to any chef, vendor, or restaurant in Thailand.</p>
-      <div class="card-view">
-        <div id="generated-card"></div>
-      </div>
-    </section>
-
-  </div>
-
-  <!-- STICKY BOTTOM ACTIONS -->
-  <div class="bottom-action" id="bottom-action">
-    <button class="btn-back" id="btn-back" aria-label="Go back" hidden>Back</button>
-    <button class="btn-next" id="btn-next" disabled>
-      <span id="btn-next-label">Next</span>
-      <span aria-hidden="true">→</span>
-    </button>
-  </div>
-
-  <!-- CARD ACTION BAR (step 4 only) -->
-  <div class="bottom-action" id="card-action" style="display:none;">
-    <button class="btn-edit" id="btn-edit-card" aria-label="Edit card">Edit</button>
-    <button class="btn-show-card" id="btn-show-restaurant" aria-label="Show card to restaurant">Show to Chef →</button>
-  </div>
-
-  <!-- RESTAURANT OVERLAY -->
-  <div id="restaurant-overlay" aria-modal="true" role="dialog" aria-label="Full-screen allergy card for restaurant">
-    <button class="restaurant-close" id="btn-close-restaurant" aria-label="Close restaurant view">
-      ✕ Tap here to close
-    </button>
-    <div class="restaurant-card" id="restaurant-card-inner"></div>
-  </div>
-
-  <!-- PAYWALL -->
-  <div id="paywall-overlay" hidden>
-    <div class="paywall-sheet">
-      <button id="btn-paywall-dismiss" style="float:right; background:none; border:none; font-size:1.25rem; cursor:pointer; color:var(--soil);" aria-label="Close paywall">✕</button>
-      <h3>Unlock Multi-Country</h3>
-      <p>Build cards for all 14 Asian destinations in one profile. One trip, one card set.</p>
-      <ul class="paywall-features">
-        <li>✓ All 14 countries</li>
-        <li>✓ Pro clinical translation depth</li>
-        <li>✓ Lifetime access for this trip</li>
-      </ul>
-      <button class="btn-next" style="border-radius:14px; width:100%; justify-content:center;" id="btn-paywall-cta">Unlock for $4.99</button>
+  <!-- Mobile nav drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-drawer__head">
+      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
+      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
     </div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/guides/">Guides</a>
+    <a href="/thailand-essentials/">Thailand Essentials</a>
+    <a href="/recommendations/">Recommendations</a>
+    <a href="/blog/">Blog</a>
+    <a href="/about.html">About</a>
+    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+  </div>
+  <script>
+    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
+    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+  </script>
+
+  <div class="app-topbar">
+    <span class="app-topbar__loc">🇹🇭 Thailand · Allergy Card Builder</span>
+    <span class="offline-pill" id="offlinePill">Offline Ready</span>
   </div>
 
-  <script src="app.js"></script>
+  <div class="app-frame">
+
+    <!-- PROGRESS -->
+    <div class="progress-bar" role="progressbar" aria-label="Card builder progress">
+      <div class="step-node">
+        <div class="step-circle active" id="dot1"><span>1</span></div>
+        <div class="step-name active" id="name1">Allergens</div>
+      </div>
+      <div class="step-connector" id="line1"></div>
+      <div class="step-node">
+        <div class="step-circle" id="dot2"><span>2</span></div>
+        <div class="step-name" id="name2">Severity</div>
+      </div>
+      <div class="step-connector" id="line2"></div>
+      <div class="step-node">
+        <div class="step-circle" id="dot3"><span>3</span></div>
+        <div class="step-name" id="name3">Details</div>
+      </div>
+      <div class="step-connector" id="line3"></div>
+      <div class="step-node">
+        <div class="step-circle" id="dot4"><span>4</span></div>
+        <div class="step-name" id="name4">Your Card</div>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step-panel active" id="step1">
+      <h1 class="panel-heading">What can't<br>you eat?</h1>
+      <p class="panel-sub">Select everything that applies. Severity comes next.</p>
+      <div class="country-pill">🇹🇭 Thailand</div>
+      <p class="group-heading">High risk in Thai food</p>
+      <div class="allergen-grid" id="grid-high"></div>
+      <p class="group-heading">Other common allergens</p>
+      <div class="allergen-grid" id="grid-other"></div>
+      <p class="sel-count"><strong id="selCount">0</strong> selected</p>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-panel" id="step2">
+      <h1 class="panel-heading">How serious<br>is each one?</h1>
+      <p class="panel-sub">This tells the chef exactly how to treat your request.</p>
+      <div id="sevList"></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-panel" id="step3">
+      <h1 class="panel-heading">Your details</h1>
+      <p class="panel-sub">Optional — useful if you need help and can't communicate.</p>
+      <label class="field-label" for="inpName">Your name</label>
+      <input type="text" id="inpName" class="field-input" placeholder="e.g. Sarah" autocomplete="given-name" maxlength="80" />
+      <label class="field-label" for="inpSos">Emergency contact number</label>
+      <input type="tel" id="inpSos" class="field-input" placeholder="+66 9 0000 0000" autocomplete="tel" maxlength="30" />
+      <label class="field-label" for="inpHotel">Hotel / address in Thailand</label>
+      <input type="text" id="inpHotel" class="field-input" placeholder="Hotel name or area" autocomplete="street-address" maxlength="80" />
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-panel" id="step4">
+      <h1 class="panel-heading">Your card</h1>
+      <p class="panel-sub">Show this to any chef, vendor, or restaurant in Thailand.</p>
+      <div class="card-wrap" id="cardWrap"></div>
+    </div>
+
+  </div><!-- /app-frame -->
+
+  <!-- BOTTOM NAV: steps 1-3 -->
+  <div class="app-bottom" id="navSteps">
+    <button class="btn-app-back" id="btnBack" style="display:none" onclick="goBack()">← Back</button>
+    <button class="btn-app-next" id="btnNext" disabled onclick="goNext()">
+      <span id="nextLabel">Set Severity</span> →
+    </button>
+  </div>
+
+  <!-- BOTTOM NAV: step 4 -->
+  <div class="app-bottom" id="navCard" style="display:none">
+    <button class="btn-app-edit" onclick="goTo(1)">← Edit</button>
+    <button class="btn-app-save" id="btnSave" onclick="saveCardToGallery()">⬇ Save</button>
+    <button class="btn-app-chef" onclick="openChef()">Show to Chef →</button>
+  </div>
+
+  <!-- Save toast -->
+  <div id="saveToast" role="status" aria-live="polite"></div>
+
+  <!-- CHEF OVERLAY -->
+  <div id="chef-overlay" role="dialog" aria-label="Chef mode — large print allergen card">
+    <button class="chef-close" onclick="closeChef()">✕ &nbsp;Tap to close · ปิด</button>
+    <div class="chef-inner" id="chefInner"></div>
+  </div>
+
+<script src="/app.js" defer></script>
 </body>
 </html>

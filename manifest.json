@@ -2,37 +2,63 @@
   "id": "/app.html",
   "name": "AllergyPass",
   "short_name": "AllergyPass",
-  "description": "Communicate your food allergies clearly in any country. Generate bilingual allergy cards instantly. Works offline.",
+  "description": "Bilingual Thai-English food allergy cards for Thailand. Free, offline-ready, clinically verified.",
   "start_url": "/app.html",
   "display": "standalone",
-  "background_color": "#0F0F0F",
-  "theme_color": "#B91C1C",
+  "background_color": "#FAF7F2",
+  "theme_color": "#1E1209",
   "orientation": "portrait",
   "lang": "en",
   "scope": "/",
-  "categories": ["health", "travel", "utilities"],
+  "categories": [
+    "health",
+    "travel",
+    "utilities"
+  ],
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
-    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" }
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
   ],
   "shortcuts": [
     {
       "name": "Build Allergy Card",
       "short_name": "Build Card",
-      "description": "Generate your allergy card",
+      "description": "Generate your personalised allergy card for Thailand",
       "url": "/app.html",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ],
   "screenshots": [
     {
-      "src": "icon-512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "AllergyPass card builder"
+      "label": "AllergyPass card builder \u2014 replace with real screenshot"
     }
   ]
 }

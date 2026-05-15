@@ -2,146 +2,540 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>AllergyPass — Travel Safely with Food Allergies</title>
-  
-  <meta name="description" content="The only food allergy card verified by healthcare professionals. Bilingual support with hidden ingredient protection. Works 100% offline." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AllergyPass — Eat Safely in Thailand</title>
+  <meta name="description" content="The bilingual food allergy card for Thailand. Built by a healthcare professional in Bangkok. Free, offline-ready, clinically verified." />
   <meta name="theme-color" content="#2C1F14" />
-
   <link rel="manifest" href="/manifest.json" />
   <link rel="apple-touch-icon" href="/icon-180.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    /* ── HOME-SPECIFIC ── */
+    .home-hero {
+      padding: 7rem 0 5rem;
+      text-align: center;
+    }
+    .home-hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--clay-light);
+      color: var(--clay);
+      border: 1px solid var(--clay-mid);
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.75rem;
+    }
+    .home-hero__title {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      line-height: 1.06;
+      color: var(--bark);
+      margin-bottom: 1.5rem;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .home-hero__title em { font-family: var(--font-serif); font-style: italic; color: var(--clay); }
+    .home-hero__lead {
+      font-size: 1.125rem;
+      color: var(--soil);
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+    }
+    .home-hero__actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.875rem;
+      flex-wrap: wrap;
+    }
+    .home-hero__sub {
+      font-size: 0.8rem;
+      color: var(--dust);
+      margin-top: 1rem;
+    }
+    .hero-text-link {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--soil);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--border-dark);
+      transition: color 0.15s;
+    }
+    .hero-text-link:hover { color: var(--bark); }
 
-  <link rel="stylesheet" href="style.css" />
+    /* Card mockup */
+    .card-preview {
+      max-width: 380px;
+      margin: 4rem auto 0;
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      border: 2px solid var(--bark);
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(30, 18, 9, 0.14);
+    }
+    .cp-banner {
+      background: var(--sev-ana);
+      padding: 1rem 1.25rem;
+      text-align: center;
+    }
+    .cp-banner-th {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+    }
+    .cp-banner-en {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.82);
+      margin-top: 0.2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .cp-body { padding: 1.25rem; }
+    .cp-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--linen-mid);
+    }
+    .cp-row:last-of-type { border-bottom: none; }
+    .cp-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .cp-th { font-size: 1.2rem; font-weight: 800; color: var(--bark); display: block; line-height: 1.2; }
+    .cp-rom { font-size: 0.65rem; color: var(--dust); font-style: italic; display: block; }
+    .cp-en { font-size: 0.72rem; color: var(--soil); display: block; }
+    .cp-instr {
+      background: var(--linen-mid);
+      border-radius: 10px;
+      padding: 0.875rem;
+      margin-top: 0.75rem;
+    }
+    .cp-instr-th { font-size: 0.82rem; font-weight: 700; color: var(--bark); }
+    .cp-instr-en { font-size: 0.65rem; color: var(--soil); margin-top: 0.2rem; }
+    .cp-footer {
+      border-top: 1px solid var(--border);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cp-footer-v { font-size: 0.65rem; color: var(--soil); }
+    .cp-footer-b { font-family: var(--font-display); font-size: 0.8rem; color: var(--clay); }
+
+    /* Trust bar */
+    .trust-bar {
+      background: var(--linen-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 0;
+      text-align: center;
+    }
+    .trust-bar__label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--dust);
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+    .trust-bar__items {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--bark);
+    }
+
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .feature-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      transition: all 0.2s var(--ease);
+    }
+    .feature-card:hover {
+      border-color: var(--clay);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(196,89,58,0.09);
+    }
+    .feature-card__icon { font-size: 1.875rem; margin-bottom: 1rem; }
+    .feature-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--bark);
+    }
+    .feature-card p { font-size: 0.875rem; color: var(--soil); line-height: 1.7; }
+
+    /* Sections preview grid */
+    .sections-preview {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .section-preview-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      transition: all 0.2s var(--ease);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .section-preview-card:hover {
+      border-color: var(--clay);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(196,89,58,0.09);
+    }
+    .section-preview-card__icon { font-size: 2rem; margin-bottom: 1rem; }
+    .section-preview-card__tag {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--clay);
+      margin-bottom: 0.4rem;
+    }
+    .section-preview-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--bark);
+      margin-bottom: 0.625rem;
+    }
+    .section-preview-card p {
+      font-size: 0.875rem;
+      color: var(--soil);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .section-preview-card__link {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--clay);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* CTA block */
+    .cta-block {
+      background: var(--bark);
+      border-radius: 24px;
+      padding: 4.5rem 3rem;
+      text-align: center;
+    }
+    .cta-block h2 {
+      font-family: var(--font-display);
+      font-size: 2.75rem;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+    .cta-block p {
+      font-size: 1.0625rem;
+      color: rgba(250,247,242,0.65);
+      max-width: 460px;
+      margin: 0 auto 2.25rem;
+      line-height: 1.7;
+    }
+    .cta-block__sub {
+      font-size: 0.8rem;
+      color: rgba(250,247,242,0.35);
+      margin-top: 0.875rem;
+      display: block;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      line-height: 1.1;
+      color: var(--bark);
+    }
+    .section-header h2 em { font-family: var(--font-serif); font-style: italic; color: var(--clay); }
+    .section-header p {
+      font-size: 1.0625rem;
+      color: var(--soil);
+      margin-top: 0.875rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 900px) {
+      .home-hero__title { font-size: 2.75rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .sections-preview { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .home-hero { padding: 4rem 0 3rem; }
+      .home-hero__title { font-size: 2.25rem; }
+      .trust-bar__items { gap: 1.5rem; }
+      .cta-block { padding: 3rem 1.5rem; }
+      .cta-block h2 { font-size: 2rem; }
+    }
+  </style>
+  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <link rel="canonical" href="https://allergypass.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AllergyPass — Thailand, Explained Properly" />
+  <meta property="og:description" content="Free bilingual food allergy cards for Thailand. Build yours in 60 seconds. Offline-ready, clinically verified." />
+  <meta property="og:url" content="https://allergypass.app/" />
+  <meta property="og:image" content="https://allergypass.app/icon-512.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="AllergyPass — Thailand, Explained Properly" />
+  <meta name="twitter:description" content="Free bilingual food allergy cards for Thailand. Build yours in 60 seconds. Offline-ready, clinically verified." />
 </head>
-<body class="market-forward-layout">
+<body>
 
-  <nav class="nav-container" aria-label="Main Navigation">
-    <div class="container nav-flex">
-      <a href="/" class="logo">
-        <span class="logo-shield">🛡️</span> AllergyPass
-      </a>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
       <div class="nav-links">
-        <a href="/guides">Guides</a>
-        <div id="offline-status-ready" class="offline-badge">Ready Offline</div>
-        <a href="#app-section" class="btn-primary-sm">Build My Card</a>
+        <a href="/tools/">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="/recommendations/">Recommendations</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about.html">About</a>
       </div>
+      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
+      <a href="/app.html" class="nav-cta">Build My Card</a>
     </div>
   </nav>
 
+  <!-- Mobile nav drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-drawer__head">
+      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
+      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/guides/">Guides</a>
+    <a href="/thailand-essentials/">Thailand Essentials</a>
+    <a href="/recommendations/">Recommendations</a>
+    <a href="/blog/">Blog</a>
+    <a href="/about.html">About</a>
+    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+  </div>
+  <script>
+    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
+    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+  </script>
+
   <main>
-    <section class="hero-section">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div class="badge-clinical">🩺 Clinically Verified Safety</div>
-          <h1 class="display-text">Eat with confidence,<br><span class="text-clay">wherever you land.</span></h1>
-          <p class="lead-text">
-            Standard translators miss "hidden" triggers like shrimp paste or peanut oil. 
-            <strong>AllergyPass</strong> is built by healthcare experts to keep you safe at the table.
-          </p>
-          <div class="cta-group">
-            <a href="#app-section" class="btn-primary-lg">Create My Free Card</a>
-            <span class="cta-subtext">Free • No sign-up • 100% Offline</span>
-          </div>
+
+    <!-- HERO -->
+    <section class="home-hero">
+      <div class="container">
+        <div class="home-hero__badge">🩺 Clinically Verified · Built in Bangkok</div>
+        <h1 class="home-hero__title">
+          Eat with confidence,<br>
+          <em>wherever you land.</em>
+        </h1>
+        <p class="home-hero__lead">
+          Standard translators miss hidden triggers like shrimp paste or peanut oil.
+          AllergyPass is built by healthcare experts to keep you safe at the table in Thailand.
+        </p>
+        <div class="home-hero__actions">
+          <a href="/app.html" class="btn btn--primary">Create My Free Card →</a>
+          <a href="/guides/" class="hero-text-link">Read the Guides</a>
         </div>
-        
-        <div class="hero-visual">
-          <div class="mini-card">
-            <div class="mini-card-header">Thailand • Peanuts</div>
-            <div class="mini-card-body">
-              <p>🥜 ห้ามใส่ถั่วลิสง</p>
-              <p class="mini-card-sub">Includes: Peanut Oil, Satay</p>
+        <p class="home-hero__sub">Free · No sign-up · 100% Offline</p>
+
+        <!-- Live card preview -->
+        <div class="card-preview" aria-label="Sample AllergyPass card">
+          <div class="cp-banner">
+            <div class="cp-banner-th">แพ้อาหารรุนแรงมาก — อันตรายถึงชีวิต</div>
+            <div class="cp-banner-en">Life-Threatening Allergy — Do Not Ignore</div>
+          </div>
+          <div class="cp-body">
+            <div class="cp-row">
+              <span class="cp-icon">🥜</span>
+              <div>
+                <span class="cp-th">ถั่วลิสง</span>
+                <span class="cp-rom">thua lisong</span>
+                <span class="cp-en">Peanuts · includes peanut oil, satay</span>
+              </div>
+            </div>
+            <div class="cp-row">
+              <span class="cp-icon">🦐</span>
+              <div>
+                <span class="cp-th">กุ้ง / หอย / ปู</span>
+                <span class="cp-rom">kung / hoi / poo</span>
+                <span class="cp-en">Shellfish · includes shrimp paste, dried shrimp</span>
+              </div>
+            </div>
+            <div class="cp-instr">
+              <div class="cp-instr-th">กรุณาแจ้งเชฟ: ชีวิตของลูกค้าขึ้นอยู่กับสิ่งนี้</div>
+              <div class="cp-instr-en">Please inform the chef. Cross-contamination must be avoided.</div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="trust-bar">
-      <div class="container">
-        <p class="trust-label">Developed in Bangkok by Healthcare Professionals</p>
-        <div class="trust-icons">
-          <div class="trust-item"><span>🏥</span> Medical Accuracy</div>
-          <div class="trust-item"><span>📵</span> No Data Required</div>
-          <div class="trust-item"><span>🔒</span> Fully Private</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="app-section" class="builder-section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Step 1: Choose your destination</h2>
-        </div>
-        <div id="flag-selector" class="flag-grid"></div>
-
-        <div class="section-header">
-          <h2>Step 2: Select your allergens</h2>
-        </div>
-        <div id="allergen-picker-grid" class="allergen-grid"></div>
-
-        <div class="section-header">
-          <h2>Step 3: Review & Personalize</h2>
-        </div>
-        <div id="selected-allergens" class="selected-container"></div>
-        
-        <div class="output-actions">
-          <button id="btn-generate" class="btn-primary-lg" disabled>Generate My Card</button>
-          <button id="btn-restaurant-mode" class="btn-secondary">Toggle Restaurant Mode 🌓</button>
-        </div>
-
-        <div id="allergy-card" class="card-display-area">
+          <div class="cp-footer">
+            <span class="cp-footer-v">ตรวจสอบแล้วโดยบุคลากรทางการแพทย์</span>
+            <span class="cp-footer-b">AllergyPass</span>
           </div>
-      </div>
-    </section>
-
-    <section class="feature-section">
-      <div class="container">
-        <div class="grid-3col">
-          <article class="feature-card">
-            <div class="icon">🔍</div>
-            <h3>Hidden Triggers</h3>
-            <p>Our database knows if a dish contains hidden allergens that aren't listed on the menu.</p>
-          </article>
-          <article class="feature-card">
-            <div class="icon">🌓</div>
-            <h3>Chef-Ready Mode</h3>
-            <p>Switch to high-contrast mode for instant readability in dark restaurants.</p>
-          </article>
-          <article class="feature-card">
-            <div class="icon">✈️</div>
-            <h3>Always Offline</h3>
-            <p>Once installed, AllergyPass works in airplane mode—no roaming fees, ever.</p>
-          </article>
         </div>
       </div>
     </section>
+
+    <!-- TRUST BAR -->
+    <div class="trust-bar">
+      <div class="container">
+        <p class="trust-bar__label">Developed in Bangkok by Healthcare Professionals</p>
+        <div class="trust-bar__items">
+          <div class="trust-item"><span>🏥</span> Medical Accuracy</div>
+          <div class="trust-item"><span>📵</span> Works Offline</div>
+          <div class="trust-item"><span>🔒</span> Fully Private</div>
+          <div class="trust-item"><span>🇹🇭</span> Thai Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">How it works</span>
+          <h2>Three steps to eating<br><em>safely in Thailand</em></h2>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-card__icon">🔍</div>
+            <h3>Hidden Trigger Detection</h3>
+            <p>Our database flags allergens not listed on menus — shrimp paste in curries, peanut oil in satay, fish sauce hidden in nearly everything.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">🌓</div>
+            <h3>Chef-Ready Mode</h3>
+            <p>Switch to full-screen, high-contrast mode with large Thai script and bold borders — instantly readable in a dark restaurant at arm's length.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">✈️</div>
+            <h3>Always Offline</h3>
+            <p>Once built, your card works in airplane mode. No roaming fees, no signal required. Ready when you need it most.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SITE SECTIONS PREVIEW -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Explore the site</span>
+          <h2>Everything you need<br><em>for Thailand</em></h2>
+        </div>
+        <div class="sections-preview">
+          <a href="/tools/" class="section-preview-card">
+            <div class="section-preview-card__icon">🛠️</div>
+            <p class="section-preview-card__tag">Tools</p>
+            <h3>Free Practical Tools</h3>
+            <p>The card builder, pharmacy phrase cards, first-week checklist, and more. No sign-up walls.</p>
+            <span class="section-preview-card__link">Explore tools →</span>
+          </a>
+          <a href="/guides/" class="section-preview-card">
+            <div class="section-preview-card__icon">📖</div>
+            <p class="section-preview-card__tag">Guides</p>
+            <h3>Practical Thailand Guides</h3>
+            <p>Food safety, hidden allergens, expat life in Bangkok. Written from the inside, not from a two-week trip.</p>
+            <span class="section-preview-card__link">Read guides →</span>
+          </a>
+          <a href="/thailand-essentials/" class="section-preview-card">
+            <div class="section-preview-card__icon">🏥</div>
+            <p class="section-preview-card__tag">Thailand Essentials</p>
+            <h3>Healthcare &amp; Logistics</h3>
+            <p>Emergency numbers, best hospitals, eSIM comparison, first-week setup. What to know before you need to know it.</p>
+            <span class="section-preview-card__link">See essentials →</span>
+          </a>
+          <a href="/recommendations/" class="section-preview-card">
+            <div class="section-preview-card__icon">⭐</div>
+            <p class="section-preview-card__tag">Recommendations</p>
+            <h3>Vetted Picks</h3>
+            <p>eSIMs, essential apps, accommodation pointers. Affiliate-supported — only things actually worth including.</p>
+            <span class="section-preview-card__link">See recommendations →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-block">
+          <h2>Build your card in under 2 minutes</h2>
+          <p>Free, private, offline-ready. Show it to any restaurant or street stall in Thailand.</p>
+          <a href="/app.html" class="btn btn--terra">Create My Free Card →</a>
+          <span class="cta-block__sub">No account needed · Works in airplane mode</span>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <div class="logo">🛡️ AllergyPass</div>
-        <p>A journey toward safer travel. Created & documented in Bangkok.</p>
-      </div>
-      <div class="footer-links">
-        <div class="link-group">
-          <h4>Resources</h4>
-          <a href="/guides">Travel Guides</a>
-          <a href="/about">Expertise</a>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <span class="footer-logo">🛡️ AllergyPass</span>
+          <p class="footer-tagline">A practical Thailand platform. Built by a healthcare professional in Bangkok.</p>
         </div>
-        <div class="link-group">
-          <h4>Community</h4>
-          <a href="https://instagram.com/bookofabe" target="_blank">Follow @bookofabe</a>
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <nav class="footer-links">
+            <a href="/app.html">Card Builder</a>
+            <a href="/tools/">All Tools</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>Content</h5>
+          <nav class="footer-links">
+            <a href="/guides/">Guides</a>
+            <a href="/thailand-essentials/">Thailand Essentials</a>
+            <a href="/recommendations/">Recommendations</a>
+            <a href="/blog/">Blog</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>About</h5>
+          <nav class="footer-links">
+            <a href="/about.html">About Abe</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+          </nav>
         </div>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 AllergyPass • Built for safety, not for profit.</p>
+      <p class="footer-copy">Built in Thailand. © 2026 AllergyPass. All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="app.js"></script>
 </body>
 </html>

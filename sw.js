@@ -1,4 +1,5 @@
-const CACHE = 'allergypass-v2';
+const CACHE = 'allergypass-v4';
+
 const ASSETS = [
   '/',
   '/index.html',
@@ -10,6 +11,10 @@ const ASSETS = [
   '/icon-512.png',
   '/icon-180.png',
   '/about.html',
+  '/allergy-card/',
+  '/allergy-card/index.html',
+  '/tools/',
+  '/tools/index.html',
   '/guides/',
   '/guides/index.html',
   '/guides/food-allergy-survival-guide.html',
@@ -17,27 +22,26 @@ const ASSETS = [
   '/thailand-essentials/',
   '/thailand-essentials/index.html',
   '/thailand-essentials/emergency-healthcare.html',
-  '/blog/',
-  '/blog/index.html',
   '/recommendations/',
   '/recommendations/index.html',
   '/recommendations/best-esims-thailand.html',
-  '/allergy-card/',
-  '/allergy-card/index.html',
-  '/tools/',
-  '/tools/index.html',
-  'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,600;1,400;1,600&display=swap'
+  '/blog/',
+  '/blog/index.html',
+  '/blog/food/',
+  '/blog/food/thailand-street-food-allergy.html',
+  '/blog/Expat-life/',
+  '/blog/Expat-life/index.html',
+  '/blog/things-to-do/',
+  '/blog/things-to-do/index.html',
+  'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap'
 ];
 
-// Install: cache all critical assets
+// Install: pre-cache all critical assets
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(cache => {
-      // Cache what we can, don't fail install if some assets are missing
-      return Promise.allSettled(
-        ASSETS.map(url => cache.add(url).catch(() => {}))
-      );
-    })
+    caches.open(CACHE).then(cache =>
+      Promise.allSettled(ASSETS.map(url => cache.add(url).catch(() => {})))
+    )
   );
   self.skipWaiting();
 });
@@ -46,47 +50,47 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(k => k !== CACHE).map(k => caches.delete(k))
-      )
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
     )
   );
   self.clients.claim();
 });
 
-// Fetch: cache-first for assets, network-first for navigation
+// Fetch strategy:
+// - HTML pages: network-first (fresh content), fall back to cache
+// - Assets (CSS, JS, fonts, images): cache-first (performance)
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
-  // Skip non-GET and cross-origin (except fonts)
+  // Skip non-GET and cross-origin except Google Fonts
   if (e.request.method !== 'GET') return;
-  if (url.origin !== location.origin && !url.hostname.includes('fonts.')) return;
+  if (url.origin !== self.location.origin && !url.hostname.includes('fonts.g')) return;
 
-  // For navigation requests: network-first with cache fallback
-  if (e.request.mode === 'navigate') {
+  const isNavigation = e.request.mode === 'navigate';
+  const isAsset = /\.(css|js|png|jpg|svg|woff2?|ico)$/.test(url.pathname);
+
+  if (isNavigation) {
+    // Network-first for HTML pages
     e.respondWith(
       fetch(e.request)
-        .then(response => {
-          const clone = response.clone();
+        .then(res => {
+          const clone = res.clone();
           caches.open(CACHE).then(cache => cache.put(e.request, clone));
-          return response;
+          return res;
         })
         .catch(() => caches.match(e.request).then(cached => cached || caches.match('/index.html')))
     );
-    return;
-  }
-
-  // For static assets: cache-first
-  e.respondWith(
-    caches.match(e.request).then(cached => {
-      if (cached) return cached;
-      return fetch(e.request).then(response => {
-        if (response && response.status === 200) {
-          const clone = response.clone();
+  } else if (isAsset || url.hostname.includes('fonts.g')) {
+    // Cache-first for assets
+    e.respondWith(
+      caches.match(e.request).then(cached => {
+        if (cached) return cached;
+        return fetch(e.request).then(res => {
+          const clone = res.clone();
           caches.open(CACHE).then(cache => cache.put(e.request, clone));
-        }
-        return response;
-      }).catch(() => null);
-    })
-  );
+          return res;
+        });
+      })
+    );
+  }
 });

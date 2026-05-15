@@ -3,20 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About — AllergyPass by The Book of Abe</title>
-  <meta name="description" content="AllergyPass is a multilingual food allergy safety tool built by a healthcare professional in Bangkok. About the creator and the project." />
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#2C1F14" />
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#2C1F14" />
-  <link rel="apple-touch-icon" href="/icon-180.png" />
+  <title>About — AllergyPass</title>
+  <meta name="description" content="AllergyPass is built by a healthcare professional living in Bangkok. Practical tools and guides for navigating Thailand." />
   <link rel="stylesheet" href="/style.css" />
+  <style>
+    .about-layout { display: grid; grid-template-columns: 1fr 320px; gap: 5rem; align-items: start; }
+    .about-prose h2 { font-family: var(--font-display); font-size: 1.5rem; color: var(--bark); margin: 2.5rem 0 0.875rem; }
+    .about-prose h2:first-child { margin-top: 0; }
+    .about-prose p { font-size: 0.9375rem; color: var(--soil); line-height: 1.8; margin-bottom: 1rem; }
+    .about-prose p:last-child { margin-bottom: 0; }
+    .about-prose hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+    .about-aside { position: sticky; top: calc(var(--nav-h) + 2rem); }
+    .social-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; }
+    .social-card__header { background: var(--bark); padding: 1.25rem 1.5rem; }
+    .social-card__title { font-family: var(--font-display); font-size: 1.1rem; color: #fff; }
+    .social-card__sub { font-size: 0.8rem; color: rgba(250,247,242,0.6); margin-top: 0.2rem; }
+    .social-card__body { padding: 1.25rem 1.5rem; }
+    .social-card__desc { font-size: 0.875rem; color: var(--soil); line-height: 1.7; margin-bottom: 1.25rem; }
+    .social-btn {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.75rem 1rem; border-radius: var(--radius); font-size: 0.9rem; font-weight: 600;
+      color: #fff; margin-bottom: 0.625rem; transition: opacity 0.15s;
+    }
+    .social-btn:last-child { margin-bottom: 0; }
+    .social-btn:hover { opacity: 0.9; }
+    .social-btn--ig { background: linear-gradient(135deg, #f9ed32 0%, #ee2a7b 50%, #002aff 100%); }
+    .social-btn--tt { background: #010101; }
+    .site-summary { background: var(--linen-mid); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 1.5rem; margin-top: 1.25rem; }
+    .site-summary h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dust); margin-bottom: 1rem; }
+    .site-summary a { display: flex; align-items: center; gap: 0.625rem; font-size: 0.875rem; font-weight: 600; color: var(--bark); padding: 0.5rem 0; border-bottom: 1px solid var(--border); transition: color 0.15s; }
+    .site-summary a:last-child { border-bottom: none; }
+    .site-summary a:hover { color: var(--clay); }
+    @media (max-width: 900px) { .about-layout { grid-template-columns: 1fr; } .about-aside { position: static; } }
+  </style>
+  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <link rel="canonical" href="https://allergypass.app/about.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="About — AllergyPass" />
+  <meta property="og:description" content="AllergyPass is built by Abe, a healthcare professional living in Bangkok. A real tool, built for real use." />
+  <meta property="og:url" content="https://allergypass.app/about.html" />
+  <meta property="og:image" content="https://allergypass.app/icon-512.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="About — AllergyPass" />
+  <meta name="twitter:description" content="AllergyPass is built by Abe, a healthcare professional living in Bangkok. A real tool, built for real use." />
 </head>
 <body>
 
-    <nav class="site-nav" aria-label="Main navigation">
+  <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
-      <a href="/" class="nav-logo">AllergyPass</a>
+      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
       <div class="nav-links">
         <a href="/tools/">Tools</a>
         <a href="/guides/">Guides</a>
@@ -24,100 +59,109 @@
         <a href="/recommendations/">Recommendations</a>
         <a href="/about.html" aria-current="page">About</a>
       </div>
+      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
       <a href="/app.html" class="nav-cta">Build My Card</a>
     </div>
   </nav>
 
-  <section class="hero" style="text-align:left;">
+  <!-- Mobile nav drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-drawer__head">
+      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
+      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/guides/">Guides</a>
+    <a href="/thailand-essentials/">Thailand Essentials</a>
+    <a href="/recommendations/">Recommendations</a>
+    <a href="/blog/">Blog</a>
+    <a href="/about.html">About</a>
+    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+  </div>
+  <script>
+    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
+    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+  </script>
+
+  <section class="hero" style="text-align:left;padding-bottom:2rem;">
     <div class="container">
-      <p class="eyebrow">About</p>
-      <h1 class="mt-1">I'm Abe.<br><em>A healthcare professional living in Thailand.</em></h1>
-      <p class="lead mt-2" style="max-width:100%;">
-        I write about Thailand — and build tools for it — because most of what's out there
-        isn't built for people who actually deal with the place.
+      <span class="eyebrow">About</span>
+      <h1 class="mt-1">I'm Abe. A healthcare professional<br><em>living in Bangkok.</em></h1>
+      <p class="lead mt-2" style="margin-left:0;">
+        I write about Thailand and build tools for it — because most of what's out there isn't built for people who actually deal with the place.
       </p>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <div style="max-width:560px;">
+      <div class="about-layout">
 
-        <h2 class="mb-2">Why this exists</h2>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75;">
-          Thailand is not a difficult country. But there are specific things — food ingredients, healthcare systems,
-          practical logistics — that are harder to navigate than they appear, especially for people
-          arriving with health considerations or longer-term plans.
-        </p>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75; margin-top:1.25rem;">
-          Most content about Thailand is written by people who visited for two weeks.
-          The advice reflects that. It covers the easy surface, not the situations that actually
-          catch people out.
-        </p>
+        <div class="about-prose">
+          <h2>Why this exists</h2>
+          <p>Thailand is not a difficult country. But there are specific things — food ingredients, healthcare systems, practical logistics — that are harder to navigate than they appear, especially for people arriving with health considerations or longer-term plans.</p>
+          <p>Most content about Thailand is written by people who visited for two weeks. The advice reflects that. It covers the easy surface, not the situations that actually catch people out.</p>
 
-        <h2 class="mb-2 mt-4">How it started</h2>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75;">
-          A friend had a serious allergic reaction at a street stall in Bangkok. She couldn't explain
-          what she needed to avoid. The vendor couldn't understand what she was asking.
-          That problem has a fix — a written card in Thai that names specific allergens clearly.
-          So I built one.
-        </p>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75; margin-top:1.25rem;">
-          That became AllergyPass TH. Then I kept writing about everything else I was figuring out.
-        </p>
+          <h2>How it started</h2>
+          <p>A friend had a serious allergic reaction at a street stall in Bangkok. She couldn't explain what she needed to avoid. The vendor couldn't understand what she was asking. That problem has a fix — a written card in Thai that names specific allergens clearly. So I built one.</p>
+          <p>That became AllergyPass TH. Then I kept writing about everything else I was figuring out.</p>
 
-        <h2 class="mb-2 mt-4">What this site is</h2>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75;">
-          A practical Thailand platform. Tools that solve specific problems. Guides based on
-          real experience, not research done from somewhere else. Recommendations that I've
-          actually used or investigated in enough depth to stand behind.
-        </p>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75; margin-top:1rem;">
-          The scope is Thailand-wide — Bangkok is where I'm based, but the tools and guides are
-          designed to work across the country.
-        </p>
+          <h2>What this site is</h2>
+          <p>A practical Thailand platform. Tools that solve specific problems. Guides based on real experience, not research done from somewhere else. Recommendations that I've actually used or investigated in enough depth to stand behind.</p>
 
-        <!-- FOLLOW CARD -->
-        <div style="background:var(--linen-dark); border:1px solid var(--border); border-radius:14px; padding:2rem 1.75rem; margin-top:2rem; text-align:center;">
-          <p class="eyebrow" style="margin-bottom:0.75rem;">Follow along</p>
-          <p style="color:var(--soil); font-size:1rem; line-height:1.65; margin-bottom:1.5rem;">
-            Shorter observations, food finds, and day-to-day Thailand — on Instagram and TikTok.
-          </p>
-          <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
-            <a href="https://www.instagram.com/bookofabe/" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.65rem 1.25rem; border-radius:999px; font-size:0.95rem; font-weight:600; text-decoration:none; color:#fff; background:radial-gradient(circle at 30% 110%, #f9ed32 0%, #ee2a7b 40%, #002aff 100%);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5.5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="white"/></svg>
-              Instagram
-            </a>
-            <a href="https://www.tiktok.com/@bookofabe" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.65rem 1.25rem; border-radius:999px; font-size:0.95rem; font-weight:600; text-decoration:none; color:#fff; background:#010101;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/></svg>
-              TikTok
-            </a>
-          </div>
+          <hr />
+
+          <h2>What's here</h2>
+          <p><strong>Free tools.</strong> Starting with AllergyPass TH — a bilingual food allergy card generator for Thailand. More tools in progress.</p>
+          <p><strong>Food and safety guides.</strong> What's in Thai food, what's hidden, how to eat safely, how to communicate with staff.</p>
+          <p><strong>Thailand essentials.</strong> Healthcare, SIM cards, emergency numbers, practical logistics.</p>
+          <p><strong>Recommendations.</strong> eSIMs, apps, accommodation pointers. Affiliate-supported — I only include things worth including.</p>
         </div>
 
-        <hr style="border:none; border-top:1px solid var(--border); margin:2.5rem 0;" />
+        <aside class="about-aside">
+          <div class="social-card">
+            <div class="social-card__header">
+              <div class="social-card__title">@bookofabe</div>
+              <div class="social-card__sub">Shorter observations and day-to-day Thailand</div>
+            </div>
+            <div class="social-card__body">
+              <p class="social-card__desc">Food finds, neighbourhood notes, and things I notice living in Bangkok — on Instagram and TikTok.</p>
+              <a class="social-btn social-btn--ig" href="https://instagram.com/bookofabe" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5.5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="white"/></svg>
+                Instagram
+              </a>
+              <a class="social-btn social-btn--tt" href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/></svg>
+                TikTok
+              </a>
+            </div>
+          </div>
 
-        <h2 class="mb-2">What's here</h2>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75;"><strong>Free tools.</strong> Starting with AllergyPass TH — a bilingual food allergy card generator for Thailand. More tools planned.</p>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75; margin-top:1rem;"><strong>Food and safety guides.</strong> What's in Thai food, what's hidden, how to eat safely, how to communicate with staff.</p>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75; margin-top:1rem;"><strong>Thailand essentials.</strong> Healthcare, SIM cards, emergency numbers, practical logistics for newcomers and long-term visitors.</p>
-        <p style="color:var(--soil); font-size:1rem; line-height:1.75; margin-top:1rem;"><strong>Recommendations.</strong> eSIMs, apps, accommodation pointers. Affiliate-supported — I only include things worth including.</p>
+          <div class="site-summary">
+            <h4>Explore the site</h4>
+            <a href="/app.html">🚫 Card Builder</a>
+            <a href="/tools/">🛠️ All Tools</a>
+            <a href="/guides/">📖 Guides</a>
+            <a href="/thailand-essentials/">🏥 Thailand Essentials</a>
+            <a href="/recommendations/">⭐ Recommendations</a>
+          </div>
+        </aside>
 
       </div>
     </div>
   </section>
 
-    <footer class="site-footer">
+  <footer class="site-footer">
     <div class="container">
-      <span class="footer-logo">AllergyPass</span>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="/tools/">Tools</a>
-        <a href="/guides/">Guides</a>
-        <a href="/thailand-essentials/">Thailand Essentials</a>
-        <a href="/recommendations/">Recommendations</a>
-        <a href="/about.html">About</a>
-      </nav>
-      <p class="footer-copy mt-2">Built in Thailand. &copy; 2025 AllergyPass. All rights reserved.</p>
+      <div class="footer-inner">
+        <div><span class="footer-logo">🛡️ AllergyPass</span><p class="footer-tagline">A practical Thailand platform. Built by a healthcare professional in Bangkok.</p></div>
+        <div class="footer-col"><h5>Tools</h5><nav class="footer-links"><a href="/app.html">Card Builder</a><a href="/tools/">All Tools</a></nav></div>
+        <div class="footer-col"><h5>Content</h5><nav class="footer-links"><a href="/guides/">Guides</a><a href="/thailand-essentials/">Thailand Essentials</a><a href="/recommendations/">Recommendations</a><a href="/blog/">Blog</a></nav></div>
+        <div class="footer-col"><h5>About</h5><nav class="footer-links"><a href="/about.html">About Abe</a><a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a><a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a></nav></div>
+      </div>
+      <p class="footer-copy">Built in Thailand. © 2026 AllergyPass. All rights reserved.</p>
     </div>
   </footer>
 
