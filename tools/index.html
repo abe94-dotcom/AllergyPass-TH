@@ -3,78 +3,169 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thailand Tools — AllergyPass</title>
-  <meta name="description" content="Free practical tools for navigating Thailand safely. AllergyPass TH generates a bilingual Thai-English food allergy card. More tools coming." />
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="AllergyPass" />
-  <link rel="apple-touch-icon" href="/icon-180.png" />
+  <title>Free Tools — AllergyPass</title>
+  <meta name="description" content="Free practical tools for navigating Thailand. Allergy card generator, pharmacy phrase cards, first-week checklist, and more." />
   <link rel="stylesheet" href="/style.css" />
+  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <link rel="canonical" href="https://allergypass.app/tools/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Tools — AllergyPass" />
+  <meta property="og:description" content="Free tools for navigating Thailand safely. Start with the bilingual food allergy card." />
+  <meta property="og:url" content="https://allergypass.app/tools/" />
+  <meta property="og:image" content="https://allergypass.app/icon-512.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Tools — AllergyPass" />
+  <meta name="twitter:description" content="Free tools for navigating Thailand safely. Start with the bilingual food allergy card." />
 </head>
 <body>
-    <nav class="site-nav" aria-label="Main navigation">
+
+  <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
-      <a href="/" class="nav-logo">AllergyPass</a>
+      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
       <div class="nav-links">
         <a href="/tools/" aria-current="page">Tools</a>
         <a href="/guides/">Guides</a>
         <a href="/thailand-essentials/">Thailand Essentials</a>
         <a href="/recommendations/">Recommendations</a>
+        <a href="/blog/">Blog</a>
         <a href="/about.html">About</a>
       </div>
+      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
       <a href="/app.html" class="nav-cta">Build My Card</a>
     </div>
   </nav>
 
-  <section class="hero" style="text-align:left; padding-bottom:2.5rem;">
+  <!-- Mobile nav drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-drawer__head">
+      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
+      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/guides/">Guides</a>
+    <a href="/thailand-essentials/">Thailand Essentials</a>
+    <a href="/recommendations/">Recommendations</a>
+    <a href="/blog/">Blog</a>
+    <a href="/about.html">About</a>
+    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+  </div>
+  <script>
+    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
+    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+  </script>
+
+  <section class="hero">
     <div class="container">
-      <p class="eyebrow">Free Tools</p>
-      <h1 class="mt-1">Tools for navigating<br><em>Thailand properly.</em></h1>
-      <p class="lead mt-2" style="margin-left:0; max-width:480px;">
-        Practical utilities for real situations. No fluff, no sign-up walls.
-      </p>
+      <span class="eyebrow">Free Tools</span>
+      <h1>Tools for navigating<br><em>Thailand properly.</em></h1>
+      <p class="lead mt-2">Practical utilities for real situations. No sign-up walls, no accounts.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="pillar-grid">
+
+        <a href="/app.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+          <div class="pillar-icon">🚫</div>
+          <div class="tool-badge">AllergyPass TH · Live</div>
+          <h3>Food Allergy Card Generator</h3>
+          <p>Build a bilingual Thai-English allergy card to show at any restaurant or street stall. Severity levels, hidden ingredient warnings, chef mode. Free and offline-ready.</p>
+          <span class="pillar-link">Build my card →</span>
+        </a>
+
+        <a href="/allergy-card/" class="pillar-card" style="text-decoration:none;color:inherit;">
+          <div class="pillar-icon">📋</div>
+          <div class="tool-badge">AllergyPass TH · Info</div>
+          <h3>About the Allergy Card</h3>
+          <p>How the card works, why Thai food is high risk, hidden ingredients, and installation instructions. Read before your first trip.</p>
+          <span class="pillar-link">Read more →</span>
+        </a>
+
+        <div class="pillar-card" style="opacity:0.55;cursor:default;">
+          <div class="pillar-icon">✅</div>
+          <div class="tool-badge">Coming soon</div>
+          <h3>Thailand First-Week Checklist</h3>
+          <p>An interactive checklist for your first week in Thailand. SIM card, insurance, Grab, healthcare registration, banking, and everything that matters in order.</p>
+          <span class="pillar-link" style="color:var(--dust);">Coming soon</span>
+        </div>
+
+        <div class="pillar-card" style="opacity:0.55;cursor:default;">
+          <div class="pillar-icon">💊</div>
+          <div class="tool-badge">Coming soon</div>
+          <h3>Pharmacy Phrase Card</h3>
+          <p>A printable and phone-friendly card for communicating medical needs at Thai pharmacies — medication types, symptoms, and dosage queries in Thai.</p>
+          <span class="pillar-link" style="color:var(--dust);">Coming soon</span>
+        </div>
+
+        <div class="pillar-card" style="opacity:0.55;cursor:default;">
+          <div class="pillar-icon">🏥</div>
+          <div class="tool-badge">Coming soon</div>
+          <h3>Hospital Emergency Card</h3>
+          <p>A card for emergency room situations — blood type, medical conditions, medications, and emergency contacts in Thai and English.</p>
+          <span class="pillar-link" style="color:var(--dust);">Coming soon</span>
+        </div>
+
+      </div>
     </div>
   </section>
 
   <section class="section section--alt">
-    <div class="container">
-      <div class="pillar-grid">
-        <a href="/app.html" class="pillar-card" style="text-decoration:none;">
-          <div class="pillar-icon">🚫</div>
-          <span class="tool-badge" style="margin-bottom:0.75rem;">AllergyPass TH</span>
-          <h3>Food Allergy Card Generator</h3>
-          <p>Build a bilingual Thai-English allergy card to show at any restaurant or street stall in Thailand. Severity levels, hidden ingredient warnings, offline-ready.</p>
-          <span class="pillar-link">Build my card →</span>
-        </a>
-        <div class="pillar-card" style="opacity:0.6;">
-          <div class="pillar-icon">✈️</div>
-          <h3>Thailand First-Week Checklist</h3>
-          <p>Interactive checklist for your first week in Thailand. SIM card, insurance, apps, healthcare setup. Coming soon.</p>
-          <span style="display:block; margin-top:0.875rem; font-size:0.8125rem; color:var(--text-muted);">Coming soon</span>
+    <div class="container" style="max-width:560px;">
+      <div class="tool-bubble">
+        <div class="tool-bubble__header">
+          <span class="tool-bubble__title">AllergyPass TH</span>
+          <span class="tool-bubble__badge">Free · Works offline</span>
         </div>
-        <div class="pillar-card" style="opacity:0.6;">
-          <div class="pillar-icon">💊</div>
-          <h3>Pharmacy Phrase Card</h3>
-          <p>Communicate medical needs at Thai pharmacies without a shared language. Coming soon.</p>
-          <span style="display:block; margin-top:0.875rem; font-size:0.8125rem; color:var(--text-muted);">Coming soon</span>
+        <div class="tool-bubble__body">
+          <p class="tool-bubble__desc">
+            Generate a bilingual Thai-English allergy card designed for restaurants,
+            street food stalls, and everyday dining across Thailand.
+            No sign-up required. Works in airplane mode once built.
+          </p>
+          <a href="/app.html" class="tool-bubble__cta">Build my card →</a>
         </div>
       </div>
     </div>
   </section>
 
-    <footer class="site-footer">
+  <footer class="site-footer">
     <div class="container">
-      <span class="footer-logo">AllergyPass</span>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="/tools/">Tools</a>
-        <a href="/guides/">Guides</a>
-        <a href="/thailand-essentials/">Thailand Essentials</a>
-        <a href="/recommendations/">Recommendations</a>
-        <a href="/about.html">About</a>
-      </nav>
-      <p class="footer-copy mt-2">Built in Thailand. &copy; 2025 AllergyPass. All rights reserved.</p>
+      <div class="footer-inner">
+        <div>
+          <span class="footer-logo">🛡️ AllergyPass</span>
+          <p class="footer-tagline">A practical Thailand platform. Built by a healthcare professional in Bangkok.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <nav class="footer-links">
+            <a href="/app.html">Card Builder</a>
+            <a href="/tools/">All Tools</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>Content</h5>
+          <nav class="footer-links">
+            <a href="/guides/">Guides</a>
+            <a href="/thailand-essentials/">Thailand Essentials</a>
+            <a href="/recommendations/">Recommendations</a>
+            <a href="/blog/">Blog</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>About</h5>
+          <nav class="footer-links">
+            <a href="/about.html">About Abe</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+          </nav>
+        </div>
+      </div>
+      <p class="footer-copy">Built in Thailand. © 2026 AllergyPass. All rights reserved.</p>
     </div>
   </footer>
+
 </body>
 </html>
