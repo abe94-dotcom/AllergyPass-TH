@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recommendations — AllergyPass</title>
-  <meta name="description" content="Vetted recommendations for Thailand travel: eSIMs, apps, accommodation, and gear." />
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="AllergyPass" />
-  <link rel="apple-touch-icon" href="/icon-180.png" />
+  <meta name="description" content="Vetted picks for navigating Thailand. eSIMs, apps, accommodation. Affiliate-supported — only things worth including." />
   <link rel="stylesheet" href="/style.css" />
+  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <link rel="canonical" href="https://allergypass.app/recommendations/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Recommendations — AllergyPass" />
+  <meta property="og:description" content="Vetted picks for navigating Thailand. eSIMs, apps, accommodation. Affiliate-supported — only things worth including." />
+  <meta property="og:url" content="https://allergypass.app/recommendations/" />
+  <meta property="og:image" content="https://allergypass.app/icon-512.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Recommendations — AllergyPass" />
+  <meta name="twitter:description" content="Vetted picks for navigating Thailand. eSIMs, apps, accommodation. Affiliate-supported — only things worth including." />
 </head>
 <body>
-    <nav class="site-nav" aria-label="Main navigation">
+
+  <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
-      <a href="/" class="nav-logo">AllergyPass</a>
+      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
       <div class="nav-links">
         <a href="/tools/">Tools</a>
         <a href="/guides/">Guides</a>
@@ -22,46 +29,92 @@
         <a href="/recommendations/" aria-current="page">Recommendations</a>
         <a href="/about.html">About</a>
       </div>
+      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
       <a href="/app.html" class="nav-cta">Build My Card</a>
     </div>
   </nav>
-  <section class="hero" style="text-align:left; padding-bottom:2.5rem;">
+
+  <!-- Mobile nav drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-drawer__head">
+      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
+      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/guides/">Guides</a>
+    <a href="/thailand-essentials/">Thailand Essentials</a>
+    <a href="/recommendations/">Recommendations</a>
+    <a href="/blog/">Blog</a>
+    <a href="/about.html">About</a>
+    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+  </div>
+  <script>
+    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
+    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+  </script>
+
+  <section class="hero">
     <div class="container">
-      <p class="eyebrow">Recommendations</p>
-      <h1 class="mt-1">Vetted picks for<br><em>navigating Thailand.</em></h1>
-      <p class="lead mt-2" style="margin-left:0; max-width:480px;">Affiliate-supported. Only things worth including.</p>
+      <span class="eyebrow">Recommendations</span>
+      <h1>Vetted picks for<br><em>navigating Thailand.</em></h1>
+      <p class="lead mt-2">Affiliate-supported. Only things I've tested or researched in enough detail to stand behind.</p>
+      <p class="mt-2" style="font-size:0.875rem;color:var(--dust,#888);">This page contains affiliate links. If you buy through them, I earn a small commission at no extra cost to you. I only recommend things I've actually used or researched properly.</p>
     </div>
   </section>
-  <section class="section section--alt">
+
+  <section class="section">
     <div class="container">
       <div class="pillar-grid">
-        <a href="/recommendations/best-esims-thailand.html" class="pillar-card" style="text-decoration:none;">
+
+        <a href="/recommendations/best-esims-thailand.html" class="pillar-card" style="text-decoration:none;color:inherit;">
           <div class="pillar-icon">📶</div>
+          <span class="eyebrow" style="margin-bottom:0.25rem;">Connectivity</span>
           <h3>Best eSIMs for Thailand</h3>
-          <p>Airalo vs Holafly vs local AIS SIM — which works best and for how long.</p>
+          <p>Airalo vs Holafly vs local AIS SIM — which works best, and for how long. Includes island coverage notes. Updated for 2026.</p>
           <span class="pillar-link">Read guide →</span>
         </a>
-        <div class="pillar-card" style="opacity:0.6;">
+
+        <div class="pillar-card" style="opacity:0.55;cursor:default;">
           <div class="pillar-icon">📱</div>
+          <span class="eyebrow" style="color:var(--dust);margin-bottom:0.25rem;">Apps</span>
           <h3>Essential Thailand Apps</h3>
-          <p>Grab, LINE, and the apps that make daily life in Thailand actually work. Coming soon.</p>
-          <span style="display:block; margin-top:0.875rem; font-size:0.8125rem; color:var(--text-muted);">Coming soon</span>
+          <p>Grab, LINE, and the apps that make daily life in Thailand work. What you actually need versus what you can skip.</p>
+          <span class="pillar-link" style="color:var(--dust);">Coming soon</span>
         </div>
+
+        <div class="pillar-card" style="opacity:0.55;cursor:default;">
+          <div class="pillar-icon">🏨</div>
+          <span class="eyebrow" style="color:var(--dust);margin-bottom:0.25rem;">Accommodation</span>
+          <h3>Accommodation Guide</h3>
+          <p>Where to stay in Bangkok and beyond. Neighbourhoods, price bands, what to watch for on booking platforms.</p>
+          <span class="pillar-link" style="color:var(--dust);">Coming soon</span>
+        </div>
+
+        <div class="pillar-card" style="opacity:0.55;cursor:default;">
+          <div class="pillar-icon">🛡️</div>
+          <span class="eyebrow" style="color:var(--dust);margin-bottom:0.25rem;">Insurance</span>
+          <h3>Travel Insurance for Thailand</h3>
+          <p>What coverage matters, which providers work with Thai private hospitals, and what's typically excluded.</p>
+          <span class="pillar-link" style="color:var(--dust);">Coming soon</span>
+        </div>
+
       </div>
     </div>
   </section>
-    <footer class="site-footer">
+
+  <footer class="site-footer">
     <div class="container">
-      <span class="footer-logo">AllergyPass</span>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="/tools/">Tools</a>
-        <a href="/guides/">Guides</a>
-        <a href="/thailand-essentials/">Thailand Essentials</a>
-        <a href="/recommendations/">Recommendations</a>
-        <a href="/about.html">About</a>
-      </nav>
-      <p class="footer-copy mt-2">Built in Thailand. &copy; 2025 AllergyPass. All rights reserved.</p>
+      <div class="footer-inner">
+        <div><span class="footer-logo">🛡️ AllergyPass</span><p class="footer-tagline">A practical Thailand platform. Built by a healthcare professional in Bangkok.</p></div>
+        <div class="footer-col"><h5>Tools</h5><nav class="footer-links"><a href="/app.html">Card Builder</a><a href="/tools/">All Tools</a></nav></div>
+        <div class="footer-col"><h5>Content</h5><nav class="footer-links"><a href="/guides/">Guides</a><a href="/thailand-essentials/">Thailand Essentials</a><a href="/recommendations/">Recommendations</a><a href="/blog/">Blog</a></nav></div>
+        <div class="footer-col"><h5>About</h5><nav class="footer-links"><a href="/about.html">About Abe</a><a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a><a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a></nav></div>
+      </div>
+      <p class="footer-copy">Built in Thailand. © 2026 AllergyPass. All rights reserved.</p>
     </div>
   </footer>
+
 </body>
 </html>
