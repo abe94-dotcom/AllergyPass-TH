@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AllergyPass — Eat Safely in Thailand</title>
-  <meta name="description" content="The bilingual food allergy card for Thailand. Built by a healthcare professional in Bangkok. Free, offline-ready, clinically verified." />
+  <title>AllergyPass — Food Allergy Communication for Travel</title>
+  <meta name="description" content="A bilingual food allergy card for safer travel. Built by a healthcare professional in Bangkok. Works offline. No sign-up required." />
   <meta name="theme-color" content="#2C1F14" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="apple-touch-icon" href="/icon-180.png" />
@@ -190,13 +190,47 @@
     }
     .feature-card p { font-size: 0.875rem; color: var(--soil); line-height: 1.7; }
 
-    /* Sections preview grid */
-    .sections-preview {
+    /* Founder section */
+    .founder-strip {
+      background: var(--linen-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 0;
+    }
+    .founder-strip__inner {
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .founder-strip__eyebrow {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--dust);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .founder-strip__text {
+      font-size: 1.0625rem;
+      color: var(--soil);
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+    .founder-strip__link {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--clay);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Blog preview */
+    .blog-preview-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1.25rem;
     }
-    .section-preview-card {
+    .blog-preview-card {
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--radius-xl);
@@ -206,39 +240,36 @@
       color: inherit;
       display: block;
     }
-    .section-preview-card:hover {
+    .blog-preview-card:hover {
       border-color: var(--clay);
       transform: translateY(-3px);
       box-shadow: 0 8px 32px rgba(196,89,58,0.09);
     }
-    .section-preview-card__icon { font-size: 2rem; margin-bottom: 1rem; }
-    .section-preview-card__tag {
+    .blog-preview-card__tag {
       font-size: 0.6875rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--clay);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
     }
-    .section-preview-card h3 {
+    .blog-preview-card h3 {
       font-family: var(--font-display);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       color: var(--bark);
       margin-bottom: 0.625rem;
+      line-height: 1.25;
     }
-    .section-preview-card p {
+    .blog-preview-card p {
       font-size: 0.875rem;
       color: var(--soil);
       line-height: 1.7;
       margin-bottom: 1rem;
     }
-    .section-preview-card__link {
+    .blog-preview-card__link {
       font-size: 0.875rem;
       font-weight: 600;
       color: var(--clay);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
     }
 
     /* CTA block */
@@ -291,7 +322,7 @@
     @media (max-width: 900px) {
       .home-hero__title { font-size: 2.75rem; }
       .features-grid { grid-template-columns: 1fr; }
-      .sections-preview { grid-template-columns: 1fr; }
+      .blog-preview-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       .home-hero { padding: 4rem 0 3rem; }
@@ -304,13 +335,13 @@
   <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
   <link rel="canonical" href="https://allergypass.app/" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="AllergyPass — Thailand, Explained Properly" />
-  <meta property="og:description" content="Free bilingual food allergy cards for Thailand. Build yours in 60 seconds. Offline-ready, clinically verified." />
+  <meta property="og:title" content="AllergyPass — Practical Food Allergy Communication for Travel" />
+  <meta property="og:description" content="A bilingual food allergy card for safer travel. Built by a healthcare professional in Bangkok. Works offline. No sign-up required." />
   <meta property="og:url" content="https://allergypass.app/" />
   <meta property="og:image" content="https://allergypass.app/icon-512.png" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="AllergyPass — Thailand, Explained Properly" />
-  <meta name="twitter:description" content="Free bilingual food allergy cards for Thailand. Build yours in 60 seconds. Offline-ready, clinically verified." />
+  <meta name="twitter:title" content="AllergyPass — Practical Food Allergy Communication for Travel" />
+  <meta name="twitter:description" content="A bilingual food allergy card for safer travel. Built by a healthcare professional in Bangkok. Works offline. No sign-up required." />
 </head>
 <body>
 
@@ -318,10 +349,6 @@
     <div class="container">
       <a href="/" class="nav-logo">🛡️ AllergyPass</a>
       <div class="nav-links">
-        <a href="/tools/">Tools</a>
-        <a href="/guides/">Guides</a>
-        <a href="/thailand-essentials/">Thailand Essentials</a>
-        <a href="/recommendations/">Recommendations</a>
         <a href="/blog/">Blog</a>
         <a href="/about.html">About</a>
       </div>
@@ -337,10 +364,6 @@
       <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
     </div>
     <a href="/">Home</a>
-    <a href="/tools/">Tools</a>
-    <a href="/guides/">Guides</a>
-    <a href="/thailand-essentials/">Thailand Essentials</a>
-    <a href="/recommendations/">Recommendations</a>
     <a href="/blog/">Blog</a>
     <a href="/about.html">About</a>
     <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
@@ -363,19 +386,20 @@
         </h1>
         <p class="home-hero__lead">
           Standard translators miss hidden triggers like shrimp paste or peanut oil.
-          AllergyPass is built by healthcare experts to keep you safe at the table in Thailand.
+          AllergyPass is built by healthcare experts to communicate your allergies
+          clearly at any restaurant or street stall.
         </p>
         <div class="home-hero__actions">
-          <a href="/app.html" class="btn btn--primary">Create My Free Card →</a>
-          <a href="/guides/" class="hero-text-link">Read the Guides</a>
+          <a href="/app.html" class="btn btn--primary">Build My Card →</a>
+          <a href="/blog/" class="hero-text-link">Read the blog</a>
         </div>
-        <p class="home-hero__sub">Free · No sign-up · 100% Offline</p>
+        <p class="home-hero__sub">No sign-up · 100% Offline · Takes under 2 minutes</p>
 
         <!-- Live card preview -->
         <div class="card-preview" aria-label="Sample AllergyPass card">
           <div class="cp-banner">
-            <div class="cp-banner-th">แพ้อาหารรุนแรงมาก — อันตรายถึงชีวิต</div>
-            <div class="cp-banner-en">Life-Threatening Allergy — Do Not Ignore</div>
+            <div class="cp-banner-th">แพ้อาหารรุนแรงมาก อันตรายถึงชีวิต</div>
+            <div class="cp-banner-en">Life-Threatening Allergy · Do Not Ignore</div>
           </div>
           <div class="cp-body">
             <div class="cp-row">
@@ -425,18 +449,18 @@
       <div class="container">
         <div class="section-header">
           <span class="eyebrow">How it works</span>
-          <h2>Three steps to eating<br><em>safely in Thailand</em></h2>
+          <h2>Built for situations where<br><em>clarity actually matters</em></h2>
         </div>
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-card__icon">🔍</div>
             <h3>Hidden Trigger Detection</h3>
-            <p>Our database flags allergens not listed on menus — shrimp paste in curries, peanut oil in satay, fish sauce hidden in nearly everything.</p>
+            <p>The card flags allergens that don't appear on menus: shrimp paste in curries, peanut oil in satay, fish sauce in nearly everything. What you need to know, in the language that matters.</p>
           </div>
           <div class="feature-card">
             <div class="feature-card__icon">🌓</div>
             <h3>Chef-Ready Mode</h3>
-            <p>Switch to full-screen, high-contrast mode with large Thai script and bold borders — instantly readable in a dark restaurant at arm's length.</p>
+            <p>Switch to full-screen, high-contrast mode with large Thai script and bold borders. Instantly readable at arm's length in a busy kitchen or dim restaurant.</p>
           </div>
           <div class="feature-card">
             <div class="feature-card__icon">✈️</div>
@@ -447,42 +471,58 @@
       </div>
     </section>
 
-    <!-- SITE SECTIONS PREVIEW -->
+    <!-- FOUNDER STRIP -->
+    <div class="founder-strip">
+      <div class="container">
+        <div class="founder-strip__inner">
+          <p class="founder-strip__eyebrow">From the founder</p>
+          <p class="founder-strip__text">
+            I'm Abe, a healthcare professional living in Bangkok. AllergyPass started after a friend had a
+            serious reaction at a street food stall here. The vendor was trying to help. She was trying to be
+            careful. It still went wrong. I built a card that might have prevented it, and this site grew
+            from there.
+          </p>
+          <a href="/about.html" class="founder-strip__link">Read the full story →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURED BLOG POSTS -->
     <section class="section section--alt">
       <div class="container">
         <div class="section-header">
-          <span class="eyebrow">Explore the site</span>
-          <h2>Everything you need<br><em>for Thailand</em></h2>
+          <span class="eyebrow">From the blog</span>
+          <h2>Practical guides and<br><em>real experience</em></h2>
+          <p>Food safety, healthcare, travel logistics, and living abroad. Written from the inside.</p>
         </div>
-        <div class="sections-preview">
-          <a href="/tools/" class="section-preview-card">
-            <div class="section-preview-card__icon">🛠️</div>
-            <p class="section-preview-card__tag">Tools</p>
-            <h3>Free Practical Tools</h3>
-            <p>The card builder, pharmacy phrase cards, first-week checklist, and more. No sign-up walls.</p>
-            <span class="section-preview-card__link">Explore tools →</span>
+        <div class="blog-preview-grid">
+          <a href="/guides/food-allergy-survival-guide.html" class="blog-preview-card">
+            <p class="blog-preview-card__tag">Food Safety</p>
+            <h3>Thailand Food Allergy Survival Guide</h3>
+            <p>Hidden allergens, high-risk dishes, how to communicate with staff, and when to get to a hospital. The main reference.</p>
+            <span class="blog-preview-card__link">Read guide →</span>
           </a>
-          <a href="/guides/" class="section-preview-card">
-            <div class="section-preview-card__icon">📖</div>
-            <p class="section-preview-card__tag">Guides</p>
-            <h3>Practical Thailand Guides</h3>
-            <p>Food safety, hidden allergens, expat life in Bangkok. Written from the inside, not from a two-week trip.</p>
-            <span class="section-preview-card__link">Read guides →</span>
+          <a href="/guides/hidden-allergens-thai-food.html" class="blog-preview-card">
+            <p class="blog-preview-card__tag">Food Safety</p>
+            <h3>Hidden Allergens in Thai Food</h3>
+            <p>Fish sauce, shrimp paste, peanut oil, dried shrimp. What they're in, where they hide, and how to avoid them.</p>
+            <span class="blog-preview-card__link">Read guide →</span>
           </a>
-          <a href="/thailand-essentials/" class="section-preview-card">
-            <div class="section-preview-card__icon">🏥</div>
-            <p class="section-preview-card__tag">Thailand Essentials</p>
-            <h3>Healthcare &amp; Logistics</h3>
-            <p>Emergency numbers, best hospitals, eSIM comparison, first-week setup. What to know before you need to know it.</p>
-            <span class="section-preview-card__link">See essentials →</span>
+          <a href="/thailand-essentials/emergency-healthcare.html" class="blog-preview-card">
+            <p class="blog-preview-card__tag">Healthcare</p>
+            <h3>Emergency Healthcare in Thailand</h3>
+            <p>Emergency numbers, best hospitals by city, what to expect from the system, and travel insurance advice. Written by a healthcare professional.</p>
+            <span class="blog-preview-card__link">Read guide →</span>
           </a>
-          <a href="/recommendations/" class="section-preview-card">
-            <div class="section-preview-card__icon">⭐</div>
-            <p class="section-preview-card__tag">Recommendations</p>
-            <h3>Vetted Picks</h3>
-            <p>eSIMs, essential apps, accommodation pointers. Affiliate-supported — only things actually worth including.</p>
-            <span class="section-preview-card__link">See recommendations →</span>
+          <a href="/recommendations/best-esims-thailand.html" class="blog-preview-card">
+            <p class="blog-preview-card__tag">Recommendations</p>
+            <h3>Best eSIMs for Thailand</h3>
+            <p>Airalo vs Holafly vs local AIS. What works across the country, including islands and rural areas. Updated for 2026.</p>
+            <span class="blog-preview-card__link">Read guide →</span>
           </a>
+        </div>
+        <div style="text-align:center;margin-top:2.5rem;">
+          <a href="/blog/" class="btn btn--dark">Browse all posts →</a>
         </div>
       </div>
     </section>
@@ -492,8 +532,8 @@
       <div class="container">
         <div class="cta-block">
           <h2>Build your card in under 2 minutes</h2>
-          <p>Free, private, offline-ready. Show it to any restaurant or street stall in Thailand.</p>
-          <a href="/app.html" class="btn btn--terra">Create My Free Card →</a>
+          <p>No account needed. Works offline once built. Show it at any restaurant, street stall, or market.</p>
+          <a href="/app.html" class="btn btn--terra">Build My Card →</a>
           <span class="cta-block__sub">No account needed · Works in airplane mode</span>
         </div>
       </div>
@@ -506,22 +546,20 @@
       <div class="footer-inner">
         <div>
           <span class="footer-logo">🛡️ AllergyPass</span>
-          <p class="footer-tagline">A practical Thailand platform. Built by a healthcare professional in Bangkok.</p>
+          <p class="footer-tagline">Practical tools and guides for safer travel and living abroad.</p>
         </div>
         <div class="footer-col">
-          <h5>Tools</h5>
+          <h5>AllergyPass</h5>
           <nav class="footer-links">
-            <a href="/app.html">Card Builder</a>
-            <a href="/tools/">All Tools</a>
+            <a href="/app.html">Build My Card</a>
+            <a href="/allergy-card/">About the Card</a>
           </nav>
         </div>
         <div class="footer-col">
-          <h5>Content</h5>
+          <h5>Blog</h5>
           <nav class="footer-links">
-            <a href="/guides/">Guides</a>
-            <a href="/thailand-essentials/">Thailand Essentials</a>
-            <a href="/recommendations/">Recommendations</a>
-            <a href="/blog/">Blog</a>
+            <a href="/blog/">All Posts</a>
+            <a href="/guides/">Food Safety Guides</a>
           </nav>
         </div>
         <div class="footer-col">

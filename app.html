@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Your Allergy Card — AllergyPass</title>
+  <title>Build Your Allergy Card: AllergyPass</title>
   <meta name="description" content="Build a free bilingual Thai-English food allergy card. Works offline. No sign-up required." />
   <meta name="theme-color" content="#2C1F14" />
   <link rel="manifest" href="/manifest.json" />
@@ -583,12 +583,12 @@
   <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
   <link rel="canonical" href="https://allergypass.app/app.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Build Your Allergy Card — AllergyPass" />
+  <meta property="og:title" content="Build Your Allergy Card: AllergyPass" />
   <meta property="og:description" content="Free bilingual Thai-English food allergy card builder. Offline-ready, no sign-up required." />
   <meta property="og:url" content="https://allergypass.app/app.html" />
   <meta property="og:image" content="https://allergypass.app/icon-512.png" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Build Your Allergy Card — AllergyPass" />
+  <meta name="twitter:title" content="Build Your Allergy Card: AllergyPass" />
   <meta name="twitter:description" content="Free bilingual Thai-English food allergy card builder. Offline-ready, no sign-up required." />
 </head>
 <body>
@@ -596,11 +596,7 @@
   <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
       <a href="/" class="nav-logo">🛡️ AllergyPass</a>
-      <div class="nav-links">
-        <a href="/tools/">Tools</a>
-        <a href="/guides/">Guides</a>
-        <a href="/thailand-essentials/">Thailand Essentials</a>
-        <a href="/recommendations/">Recommendations</a>
+            <div class="nav-links">
         <a href="/blog/">Blog</a>
         <a href="/about.html">About</a>
       </div>
@@ -616,13 +612,10 @@
       <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
     </div>
     <a href="/">Home</a>
-    <a href="/tools/">Tools</a>
-    <a href="/guides/">Guides</a>
-    <a href="/thailand-essentials/">Thailand Essentials</a>
-    <a href="/recommendations/">Recommendations</a>
     <a href="/blog/">Blog</a>
     <a href="/about.html">About</a>
     <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+
   </div>
   <script>
     function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
@@ -682,7 +675,7 @@
     <!-- STEP 3 -->
     <div class="step-panel" id="step3">
       <h1 class="panel-heading">Your details</h1>
-      <p class="panel-sub">Optional — useful if you need help and can't communicate.</p>
+      <p class="panel-sub">Optional: useful if you need help and can't communicate.</p>
       <label class="field-label" for="inpName">Your name</label>
       <input type="text" id="inpName" class="field-input" placeholder="e.g. Sarah" autocomplete="given-name" maxlength="80" />
       <label class="field-label" for="inpSos">Emergency contact number</label>
@@ -719,7 +712,7 @@
   <div id="saveToast" role="status" aria-live="polite"></div>
 
   <!-- CHEF OVERLAY -->
-  <div id="chef-overlay" role="dialog" aria-label="Chef mode — large print allergen card">
+  <div id="chef-overlay" role="dialog" aria-label="Chef mode: large print allergen card">
     <button class="chef-close" onclick="closeChef()">✕ &nbsp;Tap to close · ปิด</button>
     <div class="chef-inner" id="chefInner"></div>
   </div>
