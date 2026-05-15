@@ -6,164 +6,224 @@
   <title>Thailand Allergy Card Generator — AllergyPass</title>
   <meta name="description" content="Build a free bilingual Thai and English food allergy card. Show it to any restaurant or street vendor in Thailand. Works offline, no sign-up required." />
   <meta name="keywords" content="allergy card Thailand, food allergy Thai translation, peanut allergy Bangkok, shellfish allergy Thailand" />
-
-  <!-- Open Graph -->
   <meta property="og:title" content="Thailand Allergy Card Generator — Free Tool" />
   <meta property="og:description" content="Bilingual Thai and English allergy card. Show it to any restaurant or vendor. Free, offline, no sign-up." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://bookofabe.com/app.html" />
-
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#2C1F14" />
   <link rel="stylesheet" href="/style.css" />
+  <style>
+    /* Steps list */
+    .steps-list { display: flex; flex-direction: column; gap: 1.25rem; max-width: 520px; margin: 0 auto; }
+    .step-row { display: flex; gap: 1.125rem; align-items: flex-start; }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--bark); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.875rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .step-row h3 { font-size: 1rem; font-weight: 600; color: var(--bark); margin-bottom: 0.25rem; }
+    .step-row p  { font-size: 0.875rem; color: var(--soil); margin: 0; line-height: 1.7; }
+
+    /* Hidden ingredients grid */
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .ingredient-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.375rem;
+      transition: all 0.2s var(--ease);
+    }
+    .ingredient-card:hover { border-color: var(--clay); transform: translateY(-2px); }
+    .ingredient-card .ic-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+    .ingredient-card h3 { font-size: 0.9375rem; font-weight: 700; color: var(--bark); margin-bottom: 0.375rem; }
+    .ingredient-card p  { font-size: 0.8125rem; color: var(--soil); line-height: 1.65; margin: 0; }
+
+    /* Install card */
+    .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.5rem; }
+    .install-item { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.125rem 1.25rem; }
+    .install-item strong { font-size: 0.875rem; color: var(--bark); display: block; margin-bottom: 0.375rem; }
+    .install-item p { font-size: 0.8125rem; color: var(--soil); margin: 0; line-height: 1.6; }
+
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-header h2 { font-family: var(--font-display); font-size: 2rem; color: var(--bark); }
+    .section-header h2 em { font-style: italic; color: var(--clay); }
+
+    @media (max-width: 700px) {
+      .ingredients-grid { grid-template-columns: 1fr 1fr; }
+      .install-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .ingredients-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <link rel="canonical" href="https://allergypass.app/allergy-card/" />
 </head>
 <body>
 
-  <!-- NAV -->
-    <nav class="site-nav" aria-label="Main navigation">
+  <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
-      <a href="/" class="nav-logo">AllergyPass</a>
+      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
       <div class="nav-links">
-        <a href="/tools/">Tools</a>
+        <a href="/tools/" aria-current="page">Tools</a>
         <a href="/guides/">Guides</a>
         <a href="/thailand-essentials/">Thailand Essentials</a>
         <a href="/recommendations/">Recommendations</a>
+        <a href="/blog/">Blog</a>
         <a href="/about.html">About</a>
       </div>
+      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
       <a href="/app.html" class="nav-cta">Build My Card</a>
     </div>
   </nav>
 
+  <!-- Mobile nav drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-drawer__head">
+      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
+      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/guides/">Guides</a>
+    <a href="/thailand-essentials/">Thailand Essentials</a>
+    <a href="/recommendations/">Recommendations</a>
+    <a href="/blog/">Blog</a>
+    <a href="/about.html">About</a>
+    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+  </div>
+  <script>
+    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
+    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+  </script>
 
   <!-- HERO -->
-  <section class="hero" style="padding-bottom:2rem;">
+  <section class="hero">
     <div class="container">
-      <p class="eyebrow">Free Tool · No sign-up</p>
+      <span class="eyebrow">Free Tool · No sign-up required</span>
       <h1 class="mt-1">Thailand Allergy Card<br><em>Generator</em></h1>
-      <p class="lead mt-2" style="max-width:520px; margin-left:auto; margin-right:auto;">
+      <p class="lead mt-2">
         Build a bilingual Thai and English food allergy card in under two minutes.
         Show it directly to restaurant staff or street vendors anywhere in Thailand.
       </p>
-      <div class="btn-row mt-3">
-        <a href="/app.html" class="btn btn--terra">Build my card now →</a>
+      <div style="display:flex;justify-content:center;gap:0.875rem;flex-wrap:wrap;margin-top:2rem;">
+        <a href="/app.html" class="btn btn--primary">Build my card now →</a>
+        <a href="/guides/food-allergy-survival-guide.html" class="btn btn--outline">Read the safety guide</a>
       </div>
+      <p style="font-size:0.8rem;color:var(--dust);margin-top:0.875rem;">Free · No sign-up · Works offline</p>
     </div>
   </section>
-
 
   <!-- WHY THIS EXISTS -->
   <section class="section section--alt">
-    <div class="container">
-      <div style="max-width:560px; margin:0 auto;">
-        <p class="eyebrow">Why this exists</p>
-        <h2 class="mt-1 mb-2">Thai food is full of hidden ingredients.<br>Menus don't tell you.</h2>
-        <p style="color:var(--soil); line-height:1.75;">
-          Fish sauce is in almost everything. Shrimp paste hides inside curry bases.
-          Peanut oil shows up in stir-fries with no warning. And even if you speak
-          some Thai, explaining a serious food allergy in the middle of a busy restaurant
-          is hard — and the consequences of getting it wrong are serious.
-        </p>
-        <p style="color:var(--soil); line-height:1.75; margin-top:1rem;">
-          Translation apps aren't reliable for this. A mistranslated allergy is dangerous.
-          A printed card in correct Thai, shown directly to the chef, works.
-        </p>
-      </div>
+    <div class="container" style="max-width:580px;">
+      <span class="eyebrow" style="text-align:left;display:block;">Why this exists</span>
+      <h2 style="font-family:var(--font-display);font-size:1.75rem;line-height:1.15;margin:0.75rem 0 1.25rem;">
+        Thai food is full of hidden ingredients.<br>Menus don't tell you.
+      </h2>
+      <p style="font-size:0.9375rem;color:var(--soil);line-height:1.8;margin-bottom:1rem;">
+        Fish sauce is in almost everything. Shrimp paste hides inside curry bases.
+        Peanut oil shows up in stir-fries with no warning. And even if you speak
+        some Thai, explaining a serious food allergy in the middle of a busy restaurant
+        is hard — and the consequences of getting it wrong are serious.
+      </p>
+      <p style="font-size:0.9375rem;color:var(--soil);line-height:1.8;">
+        Translation apps aren't built for this. A mistranslated allergy is dangerous.
+        A written card in correct Thai, shown directly to the chef, works.
+      </p>
     </div>
   </section>
 
-
-  <!-- HIDDEN INGREDIENTS GRID -->
+  <!-- HIDDEN INGREDIENTS -->
   <section class="section">
     <div class="container">
-      <p class="eyebrow">What to watch for</p>
-      <h2 class="mt-1 mb-3">Common hidden allergens in Thai food</h2>
-      <div class="pillar-grid">
-
-        <div class="pillar-card">
-          <div class="pillar-icon">🦐</div>
+      <div class="section-header">
+        <span class="eyebrow">What to watch for</span>
+        <h2>Common hidden allergens<br><em>in Thai food</em></h2>
+      </div>
+      <div class="ingredients-grid">
+        <div class="ingredient-card">
+          <div class="ic-icon">🐟</div>
           <h3>น้ำปลา — Fish Sauce</h3>
-          <p>In nearly every Thai dish. Rarely listed on menus. A core flavouring, not a garnish.</p>
+          <p>In nearly every Thai dish. Rarely listed on menus. Functions as salt in Thai cooking.</p>
         </div>
-
-        <div class="pillar-card">
-          <div class="pillar-icon">🌶️</div>
+        <div class="ingredient-card">
+          <div class="ic-icon">🦐</div>
           <h3>กะปิ — Shrimp Paste</h3>
           <p>Base ingredient in most curry pastes. Present even when "seafood" isn't on the menu.</p>
         </div>
-
-        <div class="pillar-card">
-          <div class="pillar-icon">🥜</div>
-          <h3>น้ำมันถั่วลิสง — Peanut Oil</h3>
-          <p>Common cooking oil. Street food stalls reuse it across multiple dishes.</p>
+        <div class="ingredient-card">
+          <div class="ic-icon">🥜</div>
+          <h3>ถั่วลิสง — Peanuts</h3>
+          <p>Common cooking fat and garnish. Street food stalls reuse shared woks across dishes.</p>
         </div>
-
-        <div class="pillar-card">
-          <div class="pillar-icon">🦪</div>
+        <div class="ingredient-card">
+          <div class="ic-icon">🦪</div>
           <h3>ซอสหอยนางรม — Oyster Sauce</h3>
           <p>Standard in stir-fries and noodle dishes. Contains both shellfish and gluten.</p>
         </div>
-
-        <div class="pillar-card">
-          <div class="pillar-icon">🌾</div>
+        <div class="ingredient-card">
+          <div class="ic-icon">🌾</div>
           <h3>ซีอิ๊ว — Soy Sauce</h3>
-          <p>Contains wheat. Used in almost all noodle dishes and many rice dishes.</p>
+          <p>Contains wheat and soy. Used in almost all noodle dishes and many stir-fries.</p>
         </div>
-
-        <div class="pillar-card">
-          <div class="pillar-icon">⚠️</div>
+        <div class="ingredient-card">
+          <div class="ic-icon">⚠️</div>
           <h3>Cross-contamination</h3>
-          <p>Shared woks and oil at street stalls. Common even when the dish itself is "safe."</p>
+          <p>Shared woks and cooking oil at street stalls. Common even in dishes that seem safe.</p>
         </div>
-
+      </div>
+      <div style="text-align:center;margin-top:2.5rem;">
+        <a href="/guides/hidden-allergens-thai-food.html" class="btn btn--outline">
+          Read the full hidden allergens guide →
+        </a>
       </div>
     </div>
   </section>
-
 
   <!-- HOW IT WORKS -->
   <section class="section section--alt">
-    <div class="container" style="max-width:560px;">
-      <p class="eyebrow">How it works</p>
-      <h2 class="mt-1 mb-3">Three steps. Two minutes.</h2>
-
-      <div style="display:flex; flex-direction:column; gap:1.25rem;">
-
-        <div style="display:flex; gap:1rem; align-items:flex-start;">
-          <div style="width:32px; height:32px; border-radius:50%; background:var(--midnight); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.875rem; font-weight:500; flex-shrink:0;">1</div>
-          <div>
-            <h3 style="font-family:var(--font-body); font-size:1rem; font-weight:500; color:var(--midnight); margin-bottom:0.25rem;">Enter your allergens</h3>
-            <p style="font-size:0.875rem; color:var(--soil); margin:0;">Name, severity level, and specific triggers. The card handles the Thai translation automatically.</p>
-          </div>
-        </div>
-
-        <div style="display:flex; gap:1rem; align-items:flex-start;">
-          <div style="width:32px; height:32px; border-radius:50%; background:var(--midnight); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.875rem; font-weight:500; flex-shrink:0;">2</div>
-          <div>
-            <h3 style="font-family:var(--font-body); font-size:1rem; font-weight:500; color:var(--midnight); margin-bottom:0.25rem;">Generate your card</h3>
-            <p style="font-size:0.875rem; color:var(--soil); margin:0;">A clean bilingual card is generated instantly. Large Thai text first — designed to be read at arm's length.</p>
-          </div>
-        </div>
-
-        <div style="display:flex; gap:1rem; align-items:flex-start;">
-          <div style="width:32px; height:32px; border-radius:50%; background:var(--midnight); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.875rem; font-weight:500; flex-shrink:0;">3</div>
-          <div>
-            <h3 style="font-family:var(--font-body); font-size:1rem; font-weight:500; color:var(--midnight); margin-bottom:0.25rem;">Show it anywhere</h3>
-            <p style="font-size:0.875rem; color:var(--soil); margin:0;">One tap shows the card fullscreen. Hand it to the waiter, vendor, or chef. No internet needed.</p>
-          </div>
-        </div>
-
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">How it works</span>
+        <h2>Three steps.<br><em>Two minutes.</em></h2>
       </div>
-
-      <div class="btn-row mt-3" style="justify-content:flex-start;">
-        <a href="/app.html" class="btn btn--terra">Build my card →</a>
-        <a href="/about.html" class="btn btn--secondary">Why I built this</a>
+      <div class="steps-list">
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div>
+            <h3>Choose your allergens &amp; severity</h3>
+            <p>Select from common Thai food allergens. Set severity — life-threatening, severe, or intolerance — which determines how the card communicates with kitchen staff.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div>
+            <h3>Add optional details</h3>
+            <p>Your name, an emergency contact number, and hotel address. Optional but useful if you need help and can't communicate.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div>
+            <h3>Show it anywhere</h3>
+            <p>One tap opens chef mode — large Thai text, high contrast, designed to be read at arm's length in a busy kitchen. No internet needed once built.</p>
+          </div>
+        </div>
       </div>
-
+      <div style="text-align:center;margin-top:2.5rem;">
+        <a href="/app.html" class="btn btn--primary">Build my card →</a>
+      </div>
     </div>
   </section>
 
-
-  <!-- INSTALL PROMPT -->
+  <!-- PWA INSTALL -->
   <section class="section">
     <div class="container" style="max-width:560px;">
       <div class="tool-bubble">
@@ -171,19 +231,19 @@
           <span class="tool-bubble__title">Install on your phone</span>
           <span class="tool-bubble__badge">Works offline</span>
         </div>
-        <div class="tool-bubble__body" style="flex-direction:column; gap:0.75rem;">
+        <div class="tool-bubble__body">
           <p class="tool-bubble__desc">
-            Add the card to your home screen and it works completely offline.
-            No app store needed. No account required. Your profile saves automatically.
+            Add AllergyPass to your home screen and it works completely offline —
+            no app store, no account, no roaming needed. Your card saves automatically.
           </p>
-          <div style="display:flex; gap:1.5rem; font-size:0.8125rem; color:var(--soil);">
-            <div>
-              <strong style="color:var(--midnight); display:block; margin-bottom:0.2rem;">iPhone</strong>
-              Safari → Share → Add to Home Screen
+          <div class="install-grid">
+            <div class="install-item">
+              <strong>iPhone (Safari)</strong>
+              <p>Tap the Share icon → Add to Home Screen</p>
             </div>
-            <div>
-              <strong style="color:var(--midnight); display:block; margin-bottom:0.2rem;">Android</strong>
-              Chrome → three-dot menu → Add to Home Screen
+            <div class="install-item">
+              <strong>Android (Chrome)</strong>
+              <p>Tap the three-dot menu → Add to Home Screen</p>
             </div>
           </div>
         </div>
@@ -191,19 +251,39 @@
     </div>
   </section>
 
-
-  <!-- FOOTER -->
-    <footer class="site-footer">
+  <footer class="site-footer">
     <div class="container">
-      <span class="footer-logo">AllergyPass</span>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="/tools/">Tools</a>
-        <a href="/guides/">Guides</a>
-        <a href="/thailand-essentials/">Thailand Essentials</a>
-        <a href="/recommendations/">Recommendations</a>
-        <a href="/about.html">About</a>
-      </nav>
-      <p class="footer-copy mt-2">Built in Thailand. &copy; 2025 AllergyPass. All rights reserved.</p>
+      <div class="footer-inner">
+        <div>
+          <span class="footer-logo">🛡️ AllergyPass</span>
+          <p class="footer-tagline">A practical Thailand platform. Built by a healthcare professional in Bangkok.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <nav class="footer-links">
+            <a href="/app.html">Card Builder</a>
+            <a href="/tools/">All Tools</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>Content</h5>
+          <nav class="footer-links">
+            <a href="/guides/">Guides</a>
+            <a href="/thailand-essentials/">Thailand Essentials</a>
+            <a href="/recommendations/">Recommendations</a>
+            <a href="/blog/">Blog</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>About</h5>
+          <nav class="footer-links">
+            <a href="/about.html">About Abe</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+          </nav>
+        </div>
+      </div>
+      <p class="footer-copy">Built in Thailand. © 2026 AllergyPass. All rights reserved.</p>
     </div>
   </footer>
 
