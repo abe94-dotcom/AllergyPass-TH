@@ -1,6 +1,6 @@
 /* ================================================================
-   ALLERGYPASS — style.css
-   Palette: Warm earthy — bark, clay, linen, amber
+   ALLERGYPASS - style.css
+   Palette: Warm earthy - bark, clay, linen, amber
    Typography: Plus Jakarta Sans (display) + Lora (serif accent) + Courier New (mono)
    ================================================================ */
 
@@ -24,7 +24,7 @@
   --white:        #FFFFFF;
   --text-muted:   #9C8070;
 
-  /* Severity tokens — load-bearing, do not change */
+  /* Severity tokens - load-bearing, do not change */
   --red:          #B91C1C;
   --gold:         #F59E0B;
   --sev-ana:      #CC0000;

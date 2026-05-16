@@ -44,9 +44,9 @@ const TH_ALLERGENS = {
 };
 
 const BANNER = {
-  anaphylactic: { th:'แพ้อาหารรุนแรงมาก — อันตรายถึงชีวิต', en:'LIFE-THREATENING ALLERGY — DO NOT IGNORE' },
-  severe:       { th:'แพ้อาหาร — อาจเป็นอันตรายร้ายแรง',     en:'SEVERE FOOD ALLERGY — TAKE SERIOUSLY' },
-  intolerance:  { th:'แพ้อาหาร — ไม่สบาย',                   en:'FOOD INTOLERANCE — CAUSES DISCOMFORT' },
+  anaphylactic: { th:'แพ้อาหารรุนแรงมาก อันตรายถึงชีวิต', en:'LIFE-THREATENING ALLERGY: DO NOT IGNORE' },
+  severe:       { th:'แพ้อาหาร อาจเป็นอันตรายร้ายแรง',     en:'SEVERE FOOD ALLERGY: TAKE SERIOUSLY' },
+  intolerance:  { th:'แพ้อาหาร ไม่สบาย',                   en:'FOOD INTOLERANCE: CAUSES DISCOMFORT' },
 };
 const INSTR_TH = 'กรุณาแจ้งเชฟ: ชีวิตของลูกค้าขึ้นอยู่กับสิ่งนี้\nโปรดระวังการปนเปื้อนข้ามทุกชนิด';
 const INSTR_EN = 'Please inform the chef. Cross-contamination must be avoided.';
@@ -176,6 +176,7 @@ function renderSevList() {
   }
   S.allergens.forEach(entry => {
     const def = ALL_A.find(a => a.key === entry.key);
+    if (!def) return; /* skip unknown keys (corrupted localStorage) */
     const card = document.createElement('div');
     card.className = `sev-card sev-${entry.sev}`;
     card.id = 'sc-' + entry.key;
@@ -242,6 +243,7 @@ function buildCard() {
       ${S.allergens.map(e => {
         const def = ALL_A.find(a => a.key === e.key);
         const t   = TH_ALLERGENS[e.key];
+        if (!def || !t) return ''; /* skip unknown keys */
         return `<div class="card-allergen">
           <span class="card-allergen__icon">${def.emoji}</span>
           <div>
@@ -281,6 +283,7 @@ function openChef() {
   S.allergens.forEach(e => {
     const def = ALL_A.find(a => a.key === e.key);
     const t   = TH_ALLERGENS[e.key];
+    if (!def || !t) return; /* skip unknown keys */
     const row = document.createElement('div');
     row.className = 'chef-allergen';
     row.innerHTML = `
@@ -341,6 +344,8 @@ async function saveCardToGallery() {
       await new Promise((resolve, reject) => {
         const s = document.createElement('script');
         s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        s.integrity = 'sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGE2Abi0/wCQBeRLUh7bpwIFaQCU5khQ==';
+        s.crossOrigin = 'anonymous';
         s.onload = resolve;
         s.onerror = reject;
         document.head.appendChild(s);
@@ -369,12 +374,12 @@ async function saveCardToGallery() {
       }
     }
 
-    /* Desktop fallback — trigger download */
+    /* Desktop fallback - trigger download */
     const a = document.createElement('a');
     a.href = dataUrl;
     a.download = 'allergypass-card.png';
     a.click();
-    showToast('Card downloaded — open it to save to your gallery', 3200);
+    showToast('Card downloaded - open it in your gallery to save', 3200);
 
   } catch (err) {
     /* If share was cancelled by user, don't show error */
@@ -383,7 +388,7 @@ async function saveCardToGallery() {
       btn.textContent = '⬇ Save';
       return;
     }
-    /* Last resort — open image in new tab with instructions */
+    /* Last resort - open image in new tab with instructions */
     showToast('Press and hold the image to save it', 3500);
   }
 
