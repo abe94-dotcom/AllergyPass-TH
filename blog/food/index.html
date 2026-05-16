@@ -4,23 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food in Thailand: AllergyPass</title>
-  <meta name="description" content="What's actually in Thai food. Hidden ingredients, allergy risks, how ordering works, and what menus don't tell you. Written by a dentist living in Bangkok." />
+  <meta name="description" content="What's actually in Thai food. Hidden ingredients, allergy risks, how ordering works, and what menus don't tell you. Written by a healthcare professional living in Bangkok." />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#2C1F14" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
 
-    <nav class="site-nav" aria-label="Main navigation">
+  <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
-      <a href="/" class="nav-logo">AllergyPass</a>
-            <div class="nav-links">
+      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
+      <div class="nav-links">
         <a href="/blog/" aria-current="page">Blog</a>
         <a href="/about.html">About</a>
       </div>
+      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
       <a href="/app.html" class="nav-cta">Build My Card</a>
     </div>
   </nav>
+
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-drawer__head">
+      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
+      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/blog/">Blog</a>
+    <a href="/about.html">About</a>
+    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+  </div>
+  <script>
+    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
+    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+  </script>
 
   <section class="hero" style="padding-bottom:2rem;">
     <div class="container">
@@ -51,7 +68,7 @@
 
         <div class="pillar-card" style="border-style:dashed; opacity:0.6;">
           <p style="font-size:0.6875rem; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:var(--terra); margin-bottom:0.5rem;">Ingredients</p>
-          <h3 style="font-family:var(--font-display); font-size:1rem; margin-bottom:0.4rem;">Fish sauce, shrimp paste, and oyster sauce: a field guide</h3>
+          <h3 style="font-family:var(--font-display); font-size:1rem; margin-bottom:0.4rem;">Fish sauce, shrimp paste, and oyster sauce - a field guide</h3>
           <p style="font-size:0.875rem; color:var(--text-muted);">The three ingredients that hide in almost everything. What they are, where they show up, and what to ask.</p>
           <span style="display:block; margin-top:0.875rem; font-size:0.75rem; color:var(--text-muted);">Coming soon</span>
         </div>
@@ -78,7 +95,7 @@
         </div>
         <div class="tool-bubble__body">
           <p class="tool-bubble__desc">
-            Build a bilingual Thai and English card to show restaurant staff anywhere in Thailand.
+            Build a bilingual Thai-English card to show restaurant staff anywhere in Thailand.
             No sign-up, works offline, saves to your phone.
           </p>
           <a href="/app.html" class="tool-bubble__cta">Build my card &rarr;</a>
@@ -87,17 +104,37 @@
     </div>
   </section>
 
-    <footer class="site-footer">
+  <footer class="site-footer">
     <div class="container">
-      <span class="footer-logo">AllergyPass</span>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="/tools/">Tools</a>
-        <a href="/guides/">Guides</a>
-        <a href="/thailand-essentials/">Thailand Essentials</a>
-        <a href="/recommendations/">Recommendations</a>
-        <a href="/about.html">About</a>
-      </nav>
-      <p class="footer-copy mt-2">Built in Thailand. &copy; 2025 AllergyPass. All rights reserved.</p>
+      <div class="footer-inner">
+        <div>
+          <span class="footer-logo">🛡️ AllergyPass</span>
+          <p class="footer-tagline">Practical tools and guides for safer travel and living abroad.</p>
+        </div>
+        <div class="footer-col">
+          <h5>AllergyPass</h5>
+          <nav class="footer-links">
+            <a href="/app.html">Build My Card</a>
+            <a href="/allergy-card/">About the Card</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>Blog</h5>
+          <nav class="footer-links">
+            <a href="/blog/">All Posts</a>
+            <a href="/guides/">Food Safety Guides</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>About</h5>
+          <nav class="footer-links">
+            <a href="/about.html">About Abe</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+          </nav>
+        </div>
+      </div>
+      <p class="footer-copy">&copy; 2026 AllergyPass. All rights reserved.</p>
     </div>
   </footer>
 
