@@ -579,6 +579,162 @@
     @media (max-width: 540px) {
       .app-bottom { max-width: 100%; left: 0; right: 0; }
     }
+
+    /* ── CHEF MODE FONT FIX (Fix 5) ── */
+    .chef-allergen__th {
+      font-size: 2rem;
+      font-weight: 700 !important;
+      min-font-size: 28px;
+    }
+
+    /* ── LIVE PREVIEW PANEL (Fix 1) ── */
+    .preview-sidebar {
+      display: none;
+    }
+
+    /* Desktop: fixed sidebar */
+    @media (min-width: 900px) {
+      body { overflow-x: hidden; }
+      .app-frame { margin-right: calc(50% - 260px + 300px + 32px); }
+
+      .preview-sidebar {
+        display: block;
+        position: fixed;
+        top: 120px;
+        right: max(16px, calc(50% - 260px - 300px - 16px));
+        width: 280px;
+        max-height: calc(100vh - 140px);
+        overflow-y: auto;
+        background: var(--white);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-xl);
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        z-index: 50;
+        padding: 1rem;
+      }
+      .preview-sidebar__label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--dust);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .preview-sidebar__label::before { content: '●'; color: var(--clay); font-size: 0.5rem; }
+    }
+
+    /* Mobile: collapsible panel below step content */
+    @media (max-width: 899px) {
+      .preview-mobile-wrap {
+        margin-top: 1.5rem;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--white);
+      }
+      .preview-toggle-btn {
+        width: 100%;
+        background: var(--linen-mid);
+        border: none;
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        color: var(--bark);
+        cursor: pointer;
+        text-align: left;
+      }
+      .preview-toggle-btn__chevron {
+        transition: transform 0.2s;
+        font-size: 0.75rem;
+        color: var(--soil);
+      }
+      .preview-mobile-wrap.open .preview-toggle-btn__chevron {
+        transform: rotate(180deg);
+      }
+      .preview-mobile-body {
+        display: none;
+        padding: 0.875rem;
+      }
+      .preview-mobile-wrap.open .preview-mobile-body {
+        display: block;
+      }
+    }
+
+    /* Preview card scale wrapper */
+    .preview-card-scaler {
+      transform-origin: top left;
+    }
+    .preview-card-outer {
+      overflow: hidden;
+    }
+
+    /* Empty preview state */
+    .preview-empty {
+      text-align: center;
+      padding: 1.5rem 0.5rem;
+      color: var(--dust);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+    .preview-empty__icon { font-size: 1.75rem; display: block; margin-bottom: 0.5rem; }
+
+    /* ── SEVERITY DESCRIPTIONS (Fix 3) ── */
+    .sev-desc-toggle {
+      font-size: 0.7rem;
+      color: var(--clay);
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0.25rem 0;
+      margin-top: 0.35rem;
+      display: block;
+      font-weight: 600;
+    }
+    .sev-desc-body {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.75rem;
+      background: var(--linen-mid);
+      border-radius: 8px;
+      font-size: 0.72rem;
+      color: var(--soil);
+      line-height: 1.55;
+    }
+    .sev-desc-body.open { display: block; }
+    .sev-desc-phrase {
+      font-style: italic;
+      color: var(--bark);
+      font-weight: 600;
+      margin-top: 0.35rem;
+      display: block;
+    }
+
+    /* ── SAVE CONFIRMATION (Fix 2) ── */
+    #saveConfirm {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #2E7D32;
+      background: #EEF7EE;
+      border: 1px solid #C8E6C9;
+      border-radius: var(--radius);
+      padding: 0.55rem 0.875rem;
+      margin-top: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    #saveConfirm.show { opacity: 1; }
+    #saveConfirm__icon { font-size: 1rem; }
   </style>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
   <link rel="canonical" href="https://allergypass.app/app.html" />
@@ -628,6 +784,12 @@
     <span class="offline-pill" id="offlinePill">Offline Ready</span>
   </div>
 
+  <!-- DESKTOP LIVE PREVIEW SIDEBAR -->
+  <aside class="preview-sidebar" id="previewSidebar" aria-label="Live card preview">
+    <div class="preview-sidebar__label">Live Preview</div>
+    <div id="previewSidebarInner"></div>
+  </aside>
+
   <div class="app-frame">
 
     <!-- PROGRESS -->
@@ -663,6 +825,17 @@
       <p class="group-heading">Other common allergens</p>
       <div class="allergen-grid" id="grid-other"></div>
       <p class="sel-count"><strong id="selCount">0</strong> selected</p>
+
+      <!-- Mobile preview (Fix 1) -->
+      <div class="preview-mobile-wrap" id="previewMobile1">
+        <button class="preview-toggle-btn" onclick="toggleMobilePreview('previewMobile1')" aria-expanded="false" aria-controls="previewMobile1Body">
+          Preview card
+          <span class="preview-toggle-btn__chevron">▼</span>
+        </button>
+        <div class="preview-mobile-body" id="previewMobile1Body">
+          <div id="previewMobile1Inner"></div>
+        </div>
+      </div>
     </div>
 
     <!-- STEP 2 -->
@@ -670,18 +843,40 @@
       <h1 class="panel-heading">How serious<br>is each one?</h1>
       <p class="panel-sub">This tells the chef exactly how to treat your request.</p>
       <div id="sevList"></div>
+
+      <!-- Mobile preview (Fix 1) -->
+      <div class="preview-mobile-wrap" id="previewMobile2">
+        <button class="preview-toggle-btn" onclick="toggleMobilePreview('previewMobile2')" aria-expanded="false" aria-controls="previewMobile2Body">
+          Preview card
+          <span class="preview-toggle-btn__chevron">▼</span>
+        </button>
+        <div class="preview-mobile-body" id="previewMobile2Body">
+          <div id="previewMobile2Inner"></div>
+        </div>
+      </div>
     </div>
 
     <!-- STEP 3 -->
     <div class="step-panel" id="step3">
       <h1 class="panel-heading">Your details</h1>
-      <p class="panel-sub">Optional: useful if you need help and can't communicate.</p>
+      <p class="panel-sub">If you can't speak after a reaction, this helps bystanders call for help and reach your emergency contact. Takes 30 seconds.</p>
       <label class="field-label" for="inpName">Your name</label>
       <input type="text" id="inpName" class="field-input" placeholder="e.g. Sarah" autocomplete="given-name" maxlength="80" />
       <label class="field-label" for="inpSos">Emergency contact number</label>
       <input type="tel" id="inpSos" class="field-input" placeholder="+66 9 0000 0000" autocomplete="tel" maxlength="30" />
       <label class="field-label" for="inpHotel">Hotel / address in Thailand</label>
       <input type="text" id="inpHotel" class="field-input" placeholder="Hotel name or area" autocomplete="street-address" maxlength="80" />
+
+      <!-- Mobile preview (Fix 1) -->
+      <div class="preview-mobile-wrap" id="previewMobile3">
+        <button class="preview-toggle-btn" onclick="toggleMobilePreview('previewMobile3')" aria-expanded="false" aria-controls="previewMobile3Body">
+          Preview card
+          <span class="preview-toggle-btn__chevron">▼</span>
+        </button>
+        <div class="preview-mobile-body" id="previewMobile3Body">
+          <div id="previewMobile3Inner"></div>
+        </div>
+      </div>
     </div>
 
     <!-- STEP 4 -->
@@ -702,10 +897,16 @@
   </div>
 
   <!-- BOTTOM NAV: step 4 -->
-  <div class="app-bottom" id="navCard" style="display:none">
-    <button class="btn-app-edit" onclick="goTo(1)">← Edit</button>
-    <button class="btn-app-save" id="btnSave" onclick="saveCardToGallery()">⬇ Save</button>
-    <button class="btn-app-chef" onclick="openChef()">Show to Chef →</button>
+  <div class="app-bottom" id="navCard" style="display:none; flex-wrap: wrap;">
+    <div style="display:flex;gap:0.75rem;width:100%;">
+      <button class="btn-app-edit" onclick="goTo(1)">← Edit</button>
+      <button class="btn-app-save" id="btnSave" onclick="saveCardToGallery()">⬇ Save</button>
+      <button class="btn-app-chef" onclick="openChef()">Show to Chef →</button>
+    </div>
+    <div id="saveConfirm" role="status" aria-live="polite">
+      <span id="saveConfirm__icon">✅</span>
+      Saved to your device — works in airplane mode
+    </div>
   </div>
 
   <!-- Save toast -->
@@ -713,7 +914,7 @@
 
   <!-- CHEF OVERLAY -->
   <div id="chef-overlay" role="dialog" aria-label="Chef mode: large print allergen card">
-    <button class="chef-close" onclick="closeChef()">✕ &nbsp;Tap to close · ปิด</button>
+    <button class="chef-close" onclick="closeChef()" aria-label="Close card">✕ &nbsp;Tap to close · ปิด</button>
     <div class="chef-inner" id="chefInner"></div>
   </div>
 

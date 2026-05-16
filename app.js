@@ -30,6 +30,25 @@ const SEV_OPTS = [
   { id:'intolerance',  label:'Intolerance',      sub:'Discomfort only',  dot:'var(--soil)', cls:'active-int' },
 ];
 
+/* Fix 3: Severity descriptions with actual Thai/English phrases shown on card */
+const SEV_DESC = {
+  anaphylactic: {
+    summary: 'Card displays the most urgent warning. Used when contact may be fatal.',
+    thPhrase: 'แพ้อาหารรุนแรงมาก อันตรายถึงชีวิต',
+    enPhrase: 'Life-threatening allergy. Do not ignore.',
+  },
+  severe: {
+    summary: 'Card displays a serious allergy warning. Used when exposure causes a strong reaction.',
+    thPhrase: 'แพ้อาหาร อาจเป็นอันตรายร้ายแรง',
+    enPhrase: 'Severe food allergy. Take seriously.',
+  },
+  intolerance: {
+    summary: 'Card displays a discomfort notice. Used when you feel unwell but are not in danger.',
+    thPhrase: 'แพ้อาหาร ไม่สบาย',
+    enPhrase: 'Food intolerance. Causes discomfort.',
+  },
+};
+
 const TH_ALLERGENS = {
   shellfish: { th:'กุ้ง / หอย / ปู',       rom:'kung / hoi / poo' },
   fish:      { th:'ปลา / น้ำปลา',           rom:'pla / nam pla' },
@@ -60,7 +79,7 @@ const S = {
   has(k)     { return this.allergens.some(a => a.key === k); },
   toggle(k)  { this.has(k) ? this.allergens = this.allergens.filter(a => a.key !== k) : this.allergens.push({ key: k, sev: 'anaphylactic' }); this.persist(); },
   setSev(k,v){ const a = this.allergens.find(a => a.key === k); if (a) { a.sev = v; this.persist(); } },
-  remove(k)  { this.allergens = this.allergens.filter(a => a.key !== k); this.persist(); renderSevList(); syncChips(); updateCount(); updateNext(); },
+  remove(k)  { this.allergens = this.allergens.filter(a => a.key !== k); this.persist(); renderSevList(); syncChips(); updateCount(); updateNext(); updatePreview(); },
   worst()    { if (this.allergens.some(a => a.sev === 'anaphylactic')) return 'anaphylactic'; if (this.allergens.some(a => a.sev === 'severe')) return 'severe'; return 'intolerance'; },
   persist()  { try { localStorage.setItem('ap26', JSON.stringify({ allergens: this.allergens, name: this.name, sos: this.sos, hotel: this.hotel })); } catch(e){} },
   load()     { try { const d = JSON.parse(localStorage.getItem('ap26')); if (!d) return; if (Array.isArray(d.allergens)) this.allergens = d.allergens.filter(a => ALL_A.some(x => x.key === a.key) && ['anaphylactic','severe','intolerance'].includes(a.sev)); this.name = String(d.name||'').slice(0,80); this.sos = String(d.sos||'').slice(0,30); this.hotel = String(d.hotel||'').slice(0,80); } catch(e){} },
@@ -75,6 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (S.name)  document.getElementById('inpName').value  = S.name;
   if (S.sos)   document.getElementById('inpSos').value   = S.sos;
   if (S.hotel) document.getElementById('inpHotel').value = S.hotel;
+
+  /* Wire live preview to details inputs */
+  ['inpName','inpSos','inpHotel'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => {
+      S.name  = document.getElementById('inpName').value.trim();
+      S.sos   = document.getElementById('inpSos').value.trim();
+      S.hotel = document.getElementById('inpHotel').value.trim();
+      updatePreview();
+    });
+  });
+
   goTo(1);
   setTimeout(() => document.getElementById('offlinePill').classList.add('show'), 800);
 });
@@ -97,7 +128,7 @@ function buildGrid(el, list) {
     btn.addEventListener('click', () => {
       S.toggle(a.key);
       btn.setAttribute('aria-pressed', S.has(a.key) ? 'true' : 'false');
-      syncChips(); updateCount(); updateNext();
+      syncChips(); updateCount(); updateNext(); updatePreview();
     });
     el.appendChild(btn);
   });
@@ -143,6 +174,7 @@ function goTo(n) {
   updateNext();
   if (n === 1) { syncChips(); updateCount(); }
   if (n === 2) renderSevList();
+  updatePreview();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -196,9 +228,38 @@ function renderSevList() {
             <span class="sev-btn__label">${s.label}</span>
             <span class="sev-btn__sub">${s.sub}</span>
           </button>`).join('')}
-      </div>`;
+      </div>
+      ${buildSevDescHTML(entry.key, entry.sev)}`;
     c.appendChild(card);
   });
+}
+
+/* Fix 3: Severity description HTML builder */
+function buildSevDescHTML(key, sevId) {
+  const d = SEV_DESC[sevId];
+  if (!d) return '';
+  const toggleId = 'sevdesc-' + key;
+  const bodyId   = 'sevdescbody-' + key;
+  return `
+    <div style="padding: 0 1rem 0.75rem;">
+      <button class="sev-desc-toggle" onclick="toggleSevDesc('${bodyId}', this)"
+        aria-expanded="false" aria-controls="${bodyId}">
+        What does this mean?
+      </button>
+      <div class="sev-desc-body" id="${bodyId}" role="region">
+        <span>${esc(d.summary)}</span>
+        <span class="sev-desc-phrase">Thai: ${esc(d.thPhrase)}</span>
+        <span class="sev-desc-phrase">English: ${esc(d.enPhrase)}</span>
+      </div>
+    </div>`;
+}
+
+function toggleSevDesc(bodyId, btn) {
+  const body = document.getElementById(bodyId);
+  if (!body) return;
+  const isOpen = body.classList.toggle('open');
+  btn.textContent = isOpen ? 'Hide description' : 'What does this mean?';
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 }
 
 function updateSev(key, val) {
@@ -213,6 +274,12 @@ function updateSev(key, val) {
     if (match && match.id === val) btn.classList.add(match.cls);
     btn.setAttribute('aria-pressed', match && match.id === val ? 'true' : 'false');
   });
+  /* Refresh severity description */
+  const oldDesc = card.querySelector('.sev-desc-body');
+  const descWrap = card.querySelector('[style*="padding: 0 1rem"]');
+  if (descWrap) descWrap.outerHTML = buildSevDescHTML(key, val);
+
+  updatePreview();
 }
 
 /* ─── CARD RENDER ─── */
@@ -267,6 +334,81 @@ function buildCard() {
   return card;
 }
 
+/* ─── LIVE PREVIEW (Fix 1) ─── */
+function buildPreviewContent() {
+  if (S.allergens.length === 0) {
+    return '<div class="preview-empty"><span class="preview-empty__icon">🛡️</span>Select allergens above<br>to preview your card</div>';
+  }
+  /* Build a scaled-down version of the card */
+  const card = buildCard();
+  const wrapper = document.createElement('div');
+  wrapper.className = 'preview-card-outer';
+  /* Scale preview to ~240px wide from a 480px card */
+  const scaler = document.createElement('div');
+  scaler.className = 'preview-card-scaler';
+  scaler.style.cssText = 'transform: scale(0.5); transform-origin: top left; width: 200%; pointer-events: none;';
+  scaler.appendChild(card);
+  wrapper.style.cssText = 'height: ' + 0 + 'px; overflow: hidden; position: relative;';
+  wrapper.appendChild(scaler);
+
+  /* We need actual height after render; use a simpler approach: just append and measure */
+  const container = document.createElement('div');
+  container.style.cssText = 'overflow: hidden;';
+  const inner = document.createElement('div');
+  inner.style.cssText = 'transform: scale(0.5); transform-origin: top left; width: 200%;  pointer-events: none;';
+  inner.appendChild(card);
+  container.appendChild(inner);
+  return container.outerHTML;
+}
+
+function updatePreview() {
+  /* Only show preview on steps 1-3 */
+  if (S.step === 4) return;
+
+  const emptyHTML = '<div class="preview-empty"><span class="preview-empty__icon">🛡️</span>Select allergens<br>to preview your card</div>';
+
+  if (S.allergens.length === 0) {
+    ['previewSidebarInner','previewMobile1Inner','previewMobile2Inner','previewMobile3Inner'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = emptyHTML;
+    });
+    return;
+  }
+
+  /* Build card HTML string via buildCard() node */
+  function renderInto(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = '';
+    const scaleWrap = document.createElement('div');
+    scaleWrap.style.cssText = 'overflow: hidden; position: relative;';
+    const inner = document.createElement('div');
+    inner.style.cssText = 'transform: scale(0.5); transform-origin: top left; width: 200%; pointer-events: none;';
+    inner.appendChild(buildCard());
+    scaleWrap.appendChild(inner);
+    container.appendChild(scaleWrap);
+    /* Set wrapper height = 50% of inner rendered height after paint */
+    requestAnimationFrame(() => {
+      const h = inner.offsetHeight;
+      if (h) scaleWrap.style.height = (h * 0.5) + 'px';
+    });
+  }
+
+  renderInto('previewSidebarInner');
+  renderInto('previewMobile1Inner');
+  renderInto('previewMobile2Inner');
+  renderInto('previewMobile3Inner');
+}
+
+/* Fix 1: Mobile preview toggle */
+function toggleMobilePreview(wrapId) {
+  const wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  const isOpen = wrap.classList.toggle('open');
+  const btn = wrap.querySelector('.preview-toggle-btn');
+  if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+
 /* ─── CHEF MODE ─── */
 function openChef() {
   const worst = S.worst();
@@ -317,6 +459,8 @@ window.goTo     = goTo;
 window.updateSev = updateSev;
 window.openChef = openChef;
 window.closeChef = closeChef;
+window.toggleMobilePreview = toggleMobilePreview;
+window.toggleSevDesc = toggleSevDesc;
 window.S = S;
 
 /* ─── SAVE TO GALLERY ─── */
@@ -326,6 +470,14 @@ function showToast(msg, duration) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), duration || 2800);
+}
+
+/* Fix 2: Save confirmation inline message */
+function showSaveConfirm() {
+  const el = document.getElementById('saveConfirm');
+  if (!el) return;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 4500);
 }
 
 async function saveCardToGallery() {
@@ -370,6 +522,7 @@ async function saveCardToGallery() {
         await navigator.share({ files: [file], title: 'My AllergyPass Card' });
         btn.classList.remove('saving');
         btn.textContent = '⬇ Save';
+        showSaveConfirm();
         return;
       }
     }
@@ -379,6 +532,7 @@ async function saveCardToGallery() {
     a.href = dataUrl;
     a.download = 'allergypass-card.png';
     a.click();
+    showSaveConfirm();
     showToast('Card downloaded - open it in your gallery to save', 3200);
 
   } catch (err) {
@@ -420,3 +574,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (progressBar) progressBar.after(banner);
   }
 });
+
