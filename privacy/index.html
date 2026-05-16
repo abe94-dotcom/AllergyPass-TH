@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | AllergyPass - Allergy Communication Tools & Travel Safety Resources</title>
+  <meta name="description" content="Privacy policy for AllergyPass allergy communication tools and travel safety resources. Learn how we handle your data — clearly and honestly." />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="canonical" href="https://allergypass.app/privacy/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Privacy Policy | AllergyPass" />
+  <meta property="og:description" content="How AllergyPass handles your data. Clear, honest, no jargon." />
+  <meta property="og:url" content="https://allergypass.app/privacy/" />
+  <meta property="og:image" content="https://allergypass.app/icon-512.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Privacy Policy | AllergyPass" />
+  <meta name="twitter:description" content="How AllergyPass handles your data. Clear, honest, no jargon." />
+  <meta name="robots" content="noindex, follow" />
+  <style>
+    .legal-layout {
+      max-width: 680px;
+    }
+    .legal-prose h2 {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--bark);
+      margin: 0 0 0.75rem;
+      line-height: 1.3;
+    }
+    .legal-prose p {
+      font-size: 0.9375rem;
+      color: var(--soil);
+      line-height: 1.85;
+      margin-bottom: 0.875rem;
+    }
+    .legal-prose p:last-child {
+      margin-bottom: 0;
+    }
+    .legal-prose ul {
+      margin: 0.5rem 0 1rem 1.25rem;
+      padding: 0;
+    }
+    .legal-prose li {
+      font-size: 0.9375rem;
+      color: var(--soil);
+      line-height: 1.8;
+      margin-bottom: 0.375rem;
+    }
+    .legal-prose li:last-child {
+      margin-bottom: 0;
+    }
+    .legal-section {
+      padding: 2.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-section:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    /* Meta row */
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+    .last-updated {
+      font-size: 0.8rem;
+      color: var(--dust);
+    }
+    .version-tag {
+      display: inline-block;
+      font-size: 0.725rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dust);
+      background: var(--linen-dark);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.2rem 0.625rem;
+    }
+
+    /* Trust badges */
+    .trust-banner {
+      display: flex;
+      gap: 0.625rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--soil);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.35rem 0.75rem;
+    }
+    .trust-badge span { font-size: 0.85rem; }
+
+    /* Table of contents */
+    .toc {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .toc h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dust);
+      margin-bottom: 0.75rem;
+    }
+    .toc ol {
+      padding-left: 1.125rem;
+      margin: 0;
+    }
+    .toc li {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      margin-bottom: 0.25rem;
+    }
+    .toc a {
+      color: var(--clay);
+      transition: color 0.15s;
+    }
+    .toc a:hover { color: var(--clay-dark); }
+
+    /* Data table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0 1rem;
+      font-size: 0.875rem;
+    }
+    .data-table th {
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--dust);
+      padding: 0.5rem 0.875rem;
+      background: var(--linen-mid);
+      border: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 0.625rem 0.875rem;
+      color: var(--soil);
+      border: 1px solid var(--border);
+      line-height: 1.6;
+      vertical-align: top;
+    }
+    .data-table tr:nth-child(even) td {
+      background: var(--linen-mid);
+    }
+    @media (max-width: 560px) {
+      .data-table, .data-table thead, .data-table tbody, .data-table th, .data-table td, .data-table tr {
+        display: block;
+      }
+      .data-table thead { display: none; }
+      .data-table td {
+        border-top: none;
+        padding: 0.5rem 0.875rem;
+      }
+      .data-table tr {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        margin-bottom: 0.625rem;
+        overflow: hidden;
+      }
+      .data-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--dust);
+        margin-bottom: 0.2rem;
+      }
+    }
+
+    /* Highlight note */
+    .note-block {
+      background: var(--linen-mid);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--clay);
+      border-radius: var(--radius-sm);
+      padding: 0.875rem 1.125rem;
+      margin: 0.875rem 0;
+    }
+    .note-block p {
+      font-size: 0.875rem;
+      color: var(--soil);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Contact block */
+    .contact-block {
+      background: var(--linen-mid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-top: 0.75rem;
+    }
+    .contact-block p {
+      font-size: 0.9rem;
+      color: var(--soil);
+      line-height: 1.75;
+      margin-bottom: 0.5rem;
+    }
+    .contact-block p:last-child { margin-bottom: 0; }
+    .contact-block a {
+      color: var(--clay);
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+    .contact-block a:hover { color: var(--clay-dark); }
+  </style>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () =>
+        navigator.serviceWorker.register("/sw.js").catch(() => {})
+      );
+    }
+  </script>
+</head>
+
+<body>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
+      <div class="nav-links">
+        <a href="/tools/">Tools</a>
+        <a href="/guides/">Guides</a>
+        <a href="/thailand-essentials/">Thailand Essentials</a>
+        <a href="/recommendations/">Recommendations</a>
+        <a href="/about.html">About</a>
+      </div>
+      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
+      <a href="/app.html" class="nav-cta">Build My Card</a>
+    </div>
+  </nav>
+
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-drawer__head">
+      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
+      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/guides/">Guides</a>
+    <a href="/thailand-essentials/">Thailand Essentials</a>
+    <a href="/recommendations/">Recommendations</a>
+    <a href="/about.html">About</a>
+    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
+  </div>
+  <script>
+    function openDrawer() { document.getElementById("mobileDrawer").classList.add("open"); document.body.style.overflow = "hidden"; }
+    function closeDrawer() { document.getElementById("mobileDrawer").classList.remove("open"); document.body.style.overflow = ""; }
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDrawer(); });
+  </script>
+
+  <!-- Hero -->
+  <section class="hero" style="text-align:left;padding-bottom:2rem;">
+    <div class="container">
+      <span class="eyebrow">Legal</span>
+      <h1 class="mt-1">Privacy <em>Policy</em></h1>
+      <p class="lead mt-2" style="margin-left:0;">
+        AllergyPass collects as little as possible, uses what it collects honestly, and doesn't sell your data. This page explains exactly what that means in practice.
+      </p>
+      <div class="meta-row">
+        <span class="last-updated">Last Updated: 16 May 2026</span>
+        <span class="version-tag">v1.0</span>
+      </div>
+      <div class="trust-banner">
+        <span class="trust-badge"><span>🚫</span> No data selling</span>
+        <span class="trust-badge"><span>📴</span> Card builder works offline</span>
+        <span class="trust-badge"><span>🔒</span> No card data stored on servers</span>
+        <span class="trust-badge"><span>✉️</span> Unsubscribe anytime</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <section class="section" style="padding-top:1rem;">
+    <div class="container">
+      <div class="legal-layout">
+
+        <!-- TOC -->
+        <div class="toc">
+          <h3>On this page</h3>
+          <ol>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#collected">Information collected</a></li>
+            <li><a href="#use">How it's used</a></li>
+            <li><a href="#cookies">Cookies and analytics</a></li>
+            <li><a href="#email">Email communications</a></li>
+            <li><a href="#third-party">Third-party services</a></li>
+            <li><a href="#security">Data security</a></li>
+            <li><a href="#rights">Your rights</a></li>
+            <li><a href="#children">Children's privacy</a></li>
+            <li><a href="#changes">Policy changes</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ol>
+        </div>
+
+        <article class="legal-prose">
+
+          <!-- 1. Intro -->
+          <div class="legal-section" id="intro">
+            <h2>Introduction</h2>
+            <p>
+              This Privacy Policy explains how AllergyPass collects, uses, and protects information when you use this website, its tools, or its resources. It applies to all pages under allergypass.app.
+            </p>
+            <p>
+              The short version: AllergyPass collects minimal data, uses it only for what's described here, and doesn't sell or share it with advertisers. The allergy card builder stores all card data locally on your device — nothing is sent to or stored on a server.
+            </p>
+            <p>
+              If you have questions after reading this, the contact details at the bottom of this page are the right place to start.
+            </p>
+          </div>
+
+          <!-- 2. Information collected -->
+          <div class="legal-section" id="collected">
+            <h2>Information collected</h2>
+            <p>
+              What gets collected depends on how you use the site. Here's a plain-language breakdown:
+            </p>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>What</th>
+                  <th>When</th>
+                  <th>Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="What">Email address</td>
+                  <td data-label="When">You sign up for updates or a newsletter</td>
+                  <td data-label="Why">To send the content you asked for</td>
+                </tr>
+                <tr>
+                  <td data-label="What">Browser and device type</td>
+                  <td data-label="When">You visit any page</td>
+                  <td data-label="Why">Anonymous analytics to improve the site</td>
+                </tr>
+                <tr>
+                  <td data-label="What">Pages visited, time on site</td>
+                  <td data-label="When">You browse the site</td>
+                  <td data-label="Why">Understanding which content is useful</td>
+                </tr>
+                <tr>
+                  <td data-label="What">Message content</td>
+                  <td data-label="When">You contact via email or a form</td>
+                  <td data-label="Why">To respond to your inquiry</td>
+                </tr>
+                <tr>
+                  <td data-label="What">Payment details</td>
+                  <td data-label="When">You make a purchase</td>
+                  <td data-label="Why">Handled entirely by third-party processors — not stored here</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="note-block">
+              <p><strong>Card builder data stays on your device.</strong> AllergyPass TH stores allergy card information in your browser's local storage only. It is never transmitted to or stored on any server. If you clear your browser data, it is gone — intentionally.</p>
+            </div>
+          </div>
+
+          <!-- 3. How it's used -->
+          <div class="legal-section" id="use">
+            <h2>How information is used</h2>
+            <p>Information collected through this site is used for the following purposes only:</p>
+            <ul>
+              <li>Delivering digital products or resources you've purchased or requested</li>
+              <li>Sending newsletters or updates you've opted into</li>
+              <li>Responding to questions or support requests</li>
+              <li>Understanding which guides and tools are most useful (via anonymous analytics)</li>
+              <li>Improving the overall site experience</li>
+              <li>Detecting and preventing spam or abuse</li>
+            </ul>
+            <p>
+              Your information is not used for advertising profiling, sold to third parties, or shared with anyone who doesn't need it to deliver a service you've specifically requested.
+            </p>
+          </div>
+
+          <!-- 4. Cookies -->
+          <div class="legal-section" id="cookies">
+            <h2>Cookies and analytics</h2>
+            <p>
+              AllergyPass may use cookies and similar technologies to understand how people use the site. This includes analytics tools that track things like page visits, session duration, and which guides or tools are accessed most.
+            </p>
+            <p>
+              Analytics data is aggregated and anonymous — it tells us that a page was visited, not who visited it. Services that may be used for this include Google Analytics or similar platforms. These services have their own privacy practices.
+            </p>
+            <p>
+              You can disable cookies in your browser settings at any time. Doing so may affect some site functionality but will not prevent you from using the allergy card builder, which operates offline without any tracking.
+            </p>
+          </div>
+
+          <!-- 5. Email -->
+          <div class="legal-section" id="email">
+            <h2>Email communications</h2>
+            <p>
+              If you sign up for updates, a newsletter, or any email resource from AllergyPass, you will only receive what you signed up for.
+            </p>
+            <p>
+              Every marketing email includes an unsubscribe link. You can opt out at any time, immediately, without needing to contact anyone. Transactional emails (such as purchase receipts) are not marketing and are sent only when necessary.
+            </p>
+            <p>
+              Email addresses are never shared with other mailing lists or used for anything outside the purpose you provided them for.
+            </p>
+          </div>
+
+          <!-- 6. Third party -->
+          <div class="legal-section" id="third-party">
+            <h2>Third-party services</h2>
+            <p>
+              AllergyPass uses a small number of third-party services to operate. Depending on how you use the site, these may include:
+            </p>
+            <ul>
+              <li><strong>Payment processors</strong> (such as Stripe or Lemon Squeezy) — handle all purchase transactions. Payment card information is processed directly by them and is never seen or stored by AllergyPass.</li>
+              <li><strong>Email platforms</strong> (such as ConvertKit, Beehiiv, or Mailchimp) — manage newsletter delivery and email signups.</li>
+              <li><strong>Analytics services</strong> (such as Google Analytics) — provide anonymous site usage data.</li>
+              <li><strong>Content delivery and hosting</strong> — may log basic request data as part of standard server operation.</li>
+            </ul>
+            <p>
+              Each of these services operates under its own privacy policy. AllergyPass selects providers that meet a reasonable standard for data handling, but is not responsible for their independent practices. Links to their policies are available on their respective websites.
+            </p>
+          </div>
+
+          <!-- 7. Security -->
+          <div class="legal-section" id="security">
+            <h2>Data security</h2>
+            <p>
+              Reasonable technical and operational measures are in place to protect the information that passes through this site. This includes using HTTPS, working with providers that maintain their own security standards, and keeping data collection minimal by design.
+            </p>
+            <p>
+              No system connected to the internet can guarantee perfect security. What can be controlled is kept as tight as possible. If you have reason to believe your information has been compromised in connection with this site, please get in touch immediately.
+            </p>
+          </div>
+
+          <!-- 8. Rights -->
+          <div class="legal-section" id="rights">
+            <h2>Your rights</h2>
+            <p>
+              Depending on where you are located, you may have rights regarding your personal data. In plain terms, you can:
+            </p>
+            <ul>
+              <li><strong>Unsubscribe</strong> from any email list at any time using the link in any email</li>
+              <li><strong>Request deletion</strong> of any personal data held about you</li>
+              <li><strong>Ask what data is held</strong> and receive a straightforward answer</li>
+              <li><strong>Correct</strong> any inaccurate information</li>
+            </ul>
+            <p>
+              To exercise any of these, email <a href="mailto:hello@allergypass.app">hello@allergypass.app</a>. Requests are handled personally and promptly.
+            </p>
+          </div>
+
+          <!-- 9. Children -->
+          <div class="legal-section" id="children">
+            <h2>Children's privacy</h2>
+            <p>
+              AllergyPass is not directed at children under the age of 13, and does not knowingly collect personal information from children. If you believe a child has submitted personal information through this site, please contact us and it will be removed promptly.
+            </p>
+          </div>
+
+          <!-- 10. Changes -->
+          <div class="legal-section" id="changes">
+            <h2>Policy changes</h2>
+            <p>
+              This policy may be updated occasionally — to reflect changes in how the site operates, new services added, or evolving legal requirements. When changes are made, the "Last Updated" date at the top of this page is revised.
+            </p>
+            <p>
+              Continued use of the site after an update constitutes acceptance of the revised policy. If the changes are significant, a notice will be placed prominently on the site.
+            </p>
+          </div>
+
+          <!-- 11. Contact -->
+          <div class="legal-section" id="contact">
+            <h2>Contact</h2>
+            <p>
+              Questions, data requests, or corrections — all handled through the same channel. There's a real person on the other end.
+            </p>
+            <div class="contact-block">
+              <p>
+                <strong>Email:</strong>
+                <a href="mailto:hello@allergypass.app">hello@allergypass.app</a>
+              </p>
+              <p>
+                For general feedback you can also reach out via
+                <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram (@bookofabe)</a>.
+              </p>
+            </div>
+          </div>
+
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <span class="footer-logo">🛡️ AllergyPass</span>
+          <p class="footer-tagline">Practical tools and guides for safer travel and living abroad.</p>
+        </div>
+        <div class="footer-col">
+          <h5>AllergyPass</h5>
+          <nav class="footer-links">
+            <a href="/app.html">Build My Card</a>
+            <a href="/allergy-card/">About the Card</a>
+            <a href="/tools/">All Tools</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <nav class="footer-links">
+            <a href="/guides/">Food Safety Guides</a>
+            <a href="/thailand-essentials/">Thailand Essentials</a>
+            <a href="/recommendations/">Recommendations</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h5>About</h5>
+          <nav class="footer-links">
+            <a href="/about.html">About Abe</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer-legal" style="border-top:1px solid var(--border);margin-top:2rem;padding-top:1.25rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;">
+        <p class="footer-copy" style="margin:0;">© 2026 AllergyPass. All rights reserved.</p>
+        <nav style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+          <a href="/disclaimer/" style="font-size:0.8rem;color:var(--dust);transition:color 0.15s;" onmouseover="this.style.color='var(--soil)'" onmouseout="this.style.color='var(--dust)'">Disclaimer</a>
+          <a href="/privacy/" style="font-size:0.8rem;color:var(--dust);transition:color 0.15s;" onmouseover="this.style.color='var(--soil)'" onmouseout="this.style.color='var(--dust)'">Privacy Policy</a>
+          <a href="/terms/" style="font-size:0.8rem;color:var(--dust);transition:color 0.15s;" onmouseover="this.style.color='var(--soil)'" onmouseout="this.style.color='var(--dust)'">Terms & Conditions</a>
+          <a href="/refunds/" style="font-size:0.8rem;color:var(--dust);transition:color 0.15s;" onmouseover="this.style.color='var(--soil)'" onmouseout="this.style.color='var(--dust)'">Refund Policy</a>
+          <a href="mailto:hello@allergypass.app" style="font-size:0.8rem;color:var(--dust);transition:color 0.15s;" onmouseover="this.style.color='var(--soil)'" onmouseout="this.style.color='var(--dust)'">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
