@@ -1,4 +1,4 @@
-const CACHE = 'allergypass-v4';
+const CACHE = 'allergypass-v5';
 
 const ASSETS = [
   '/',
@@ -33,6 +33,16 @@ const ASSETS = [
   '/blog/Expat-life/index.html',
   '/blog/things-to-do/',
   '/blog/things-to-do/index.html',
+  '/blog/food/index.html',
+  '/disclaimer/',
+  '/disclaimer/index.html',
+  '/privacy/',
+  '/privacy/index.html',
+  '/terms/',
+  '/terms/index.html',
+  '/refunds/',
+  '/refunds/index.html',
+  '/404.html',
   'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap'
 ];
 
@@ -78,7 +88,7 @@ self.addEventListener('fetch', e => {
           caches.open(CACHE).then(cache => cache.put(e.request, clone));
           return res;
         })
-        .catch(() => caches.match(e.request).then(cached => cached || caches.match('/index.html')))
+        .catch(() => caches.match(e.request).then(cached => cached || caches.match('/404.html')))
     );
   } else if (isAsset || url.hostname.includes('fonts.g')) {
     // Cache-first for assets

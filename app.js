@@ -78,11 +78,11 @@ const S = {
   name: '', sos: '', hotel: '',
   has(k)     { return this.allergens.some(a => a.key === k); },
   toggle(k)  { this.has(k) ? this.allergens = this.allergens.filter(a => a.key !== k) : this.allergens.push({ key: k, sev: 'anaphylactic' }); this.persist(); },
-  setSev(k,v){ const a = this.allergens.find(a => a.key === k); if (a) { a.sev = v; this.persist(); } },
+  setSev(k,v){ const VALID_SEV = ['anaphylactic','severe','intolerance']; if (!VALID_SEV.includes(v)) return; const a = this.allergens.find(a => a.key === k); if (a) { a.sev = v; this.persist(); } },
   remove(k)  { this.allergens = this.allergens.filter(a => a.key !== k); this.persist(); renderSevList(); syncChips(); updateCount(); updateNext(); updatePreview(); },
   worst()    { if (this.allergens.some(a => a.sev === 'anaphylactic')) return 'anaphylactic'; if (this.allergens.some(a => a.sev === 'severe')) return 'severe'; return 'intolerance'; },
-  persist()  { try { localStorage.setItem('ap26', JSON.stringify({ allergens: this.allergens, name: this.name, sos: this.sos, hotel: this.hotel })); } catch(e){} },
-  load()     { try { const d = JSON.parse(localStorage.getItem('ap26')); if (!d) return; if (Array.isArray(d.allergens)) this.allergens = d.allergens.filter(a => ALL_A.some(x => x.key === a.key) && ['anaphylactic','severe','intolerance'].includes(a.sev)); this.name = String(d.name||'').slice(0,80); this.sos = String(d.sos||'').slice(0,30); this.hotel = String(d.hotel||'').slice(0,80); } catch(e){} },
+  persist()  { try { localStorage.setItem('ap26', JSON.stringify({ v: 1, allergens: this.allergens, name: this.name, sos: this.sos, hotel: this.hotel })); } catch(e){} },
+  load()     { try { const d = JSON.parse(localStorage.getItem('ap26')); if (!d) return; if (d.v !== 1) { localStorage.removeItem('ap26'); return; } /* stale schema — discard */ if (Array.isArray(d.allergens)) this.allergens = d.allergens.filter(a => ALL_A.some(x => x.key === a.key) && ['anaphylactic','severe','intolerance'].includes(a.sev)); this.name = String(d.name||'').slice(0,80); this.sos = String(d.sos||'').slice(0,30); this.hotel = String(d.hotel||'').slice(0,80); } catch(e){ try { localStorage.removeItem('ap26'); } catch(e2){} } },
 };
 
 /* ─── INIT ─── */
@@ -151,6 +151,12 @@ function goTo(n) {
   if (n < 1 || n > 4) return;
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('step' + n).classList.add('active');
+  const progressBar = document.querySelector('[role="progressbar"]');
+  if (progressBar) {
+    progressBar.setAttribute('aria-valuenow', n);
+    const stepNames = { 1: 'Allergens', 2: 'Severity', 3: 'Details', 4: 'Your Card' };
+    progressBar.setAttribute('aria-valuetext', 'Step ' + n + ' of 4: ' + (stepNames[n] || ''));
+  }
 
   for (let i = 1; i <= 4; i++) {
     const dot  = document.getElementById('dot'  + i);
@@ -176,6 +182,11 @@ function goTo(n) {
   if (n === 2) renderSevList();
   updatePreview();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  /* Remove return banner once user navigates — it's served its purpose */
+  if (n !== 1) {
+    const rb = document.getElementById('returnBanner');
+    if (rb) rb.remove();
+  }
 }
 
 function goNext() {
@@ -188,6 +199,19 @@ function goNext() {
   goTo(S.step + 1);
 }
 function goBack() { goTo(S.step - 1); }
+
+function startOver() {
+  S.allergens = [];
+  S.name = ''; S.sos = ''; S.hotel = '';
+  S.persist();
+  const inpName = document.getElementById('inpName');
+  const inpSos  = document.getElementById('inpSos');
+  const inpHotel= document.getElementById('inpHotel');
+  if (inpName)  inpName.value  = '';
+  if (inpSos)   inpSos.value   = '';
+  if (inpHotel) inpHotel.value = '';
+  goTo(1);
+}
 
 function updateNext() {
   const btn = document.getElementById('btnNext');
@@ -203,7 +227,7 @@ function renderSevList() {
   const c = document.getElementById('sevList');
   c.innerHTML = '';
   if (S.allergens.length === 0) {
-    c.innerHTML = '<p style="color:var(--dust);font-size:0.9rem;padding:2rem 0;">No allergens selected. Go back and pick some.</p>';
+    c.innerHTML = '<div style="text-align:center;padding:2.5rem 1rem;color:var(--dust);"><span style="font-size:2rem;display:block;margin-bottom:0.75rem;">🌿</span><p style="font-size:0.9375rem;font-weight:600;margin-bottom:0.375rem;color:var(--soil);">Nothing to rate yet</p><p style="font-size:0.8125rem;line-height:1.6;">Go back to step 1 and select at least one allergen.</p></div>';
     return;
   }
   S.allergens.forEach(entry => {
@@ -452,16 +476,17 @@ function closeChef() {
   document.body.style.overflow = '';
 }
 
-/* expose for inline onclick */
-window.goNext   = goNext;
-window.goBack   = goBack;
-window.goTo     = goTo;
-window.updateSev = updateSev;
-window.openChef = openChef;
-window.closeChef = closeChef;
-window.toggleMobilePreview = toggleMobilePreview;
-window.toggleSevDesc = toggleSevDesc;
-window.S = S;
+/* ── Global surface: only what inline onclick handlers need ── */
+window.S                    = { toggle: (...a) => S.toggle(...a), remove: (...a) => S.remove(...a) };
+window.goTo                 = goTo;
+window.goBack               = goBack;
+window.startOver            = startOver;
+window.updateSev            = updateSev;
+window.openChef             = openChef;
+window.closeChef            = closeChef;
+window.toggleMobilePreview  = toggleMobilePreview;
+window.toggleSevDesc        = toggleSevDesc;
+window.saveCardToGallery    = saveCardToGallery;
 
 /* ─── SAVE TO GALLERY ─── */
 function showToast(msg, duration) {
@@ -472,10 +497,19 @@ function showToast(msg, duration) {
   setTimeout(() => t.classList.remove('show'), duration || 2800);
 }
 
-/* Fix 2: Save confirmation inline message */
-function showSaveConfirm() {
+/* Fix 2+13: Save confirmation inline message — context-aware */
+function showSaveConfirm(mode) {
   const el = document.getElementById('saveConfirm');
   if (!el) return;
+  const icon = document.getElementById('saveConfirm__icon');
+  const textSpan = document.getElementById('saveConfirm__text');
+  if (mode === 'download') {
+    if (icon) icon.textContent = '⬇️';
+    if (textSpan) textSpan.textContent = ' Card downloaded to your device';
+  } else {
+    if (icon) icon.textContent = '✅';
+    if (textSpan) textSpan.textContent = ' Saved to your device — works in airplane mode';
+  }
   el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), 4500);
 }
@@ -496,10 +530,10 @@ async function saveCardToGallery() {
       await new Promise((resolve, reject) => {
         const s = document.createElement('script');
         s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-        s.integrity = 'sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGE2Abi0/wCQBeRLUh7bpwIFaQCU5khQ==';
+        s.integrity = 'sha512-hG6tLc9q8bFM5OQASDTJTJJg/wn8PP0PcayE3I2H1972/F7ktiSvWutAuQIkt4QUTIhiaFEnkrKea7XHUv1ugg==';
         s.crossOrigin = 'anonymous';
         s.onload = resolve;
-        s.onerror = reject;
+        s.onerror = () => reject(new Error('CDN_LOAD_FAILED'));
         document.head.appendChild(s);
       });
     }
@@ -532,25 +566,31 @@ async function saveCardToGallery() {
     a.href = dataUrl;
     a.download = 'allergypass-card.png';
     a.click();
-    showSaveConfirm();
-    showToast('Card downloaded - open it in your gallery to save', 3200);
+    showSaveConfirm('download');
+    showToast('Card downloaded to your device', 3000);
 
   } catch (err) {
-    /* If share was cancelled by user, don't show error */
+    /* User cancelled share — silent exit */
     if (err && err.name === 'AbortError') {
       btn.classList.remove('saving');
       btn.textContent = '⬇ Save';
       return;
     }
-    /* Last resort - open image in new tab with instructions */
-    showToast('Press and hold the image to save it', 3500);
+    /* CDN unreachable (offline or blocked) */
+    if (err && err.message === 'CDN_LOAD_FAILED') {
+      showToast('Save unavailable offline — screenshot your card instead', 4000);
+      btn.classList.remove('saving');
+      btn.textContent = '⬇ Save';
+      return;
+    }
+    /* Unexpected error */
+    showToast('Could not save — try screenshotting your card', 3500);
   }
 
   btn.classList.remove('saving');
   btn.textContent = '⬇ Save';
 }
 
-window.saveCardToGallery = saveCardToGallery;
 
 /* ─── RETURNING USER DETECTION ─── */
 document.addEventListener('DOMContentLoaded', () => {

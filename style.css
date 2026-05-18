@@ -43,6 +43,60 @@
   --nav-h:        64px;
 }
 
+
+/* ── SKIP TO CONTENT ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--clay);
+  color: #fff;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.15s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+
+/* ── FOCUS STYLES ── */
+:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+/* Remove default outline for mouse users, keep for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+/* Specific overrides for components with their own border/ring */
+.nav-links a:focus-visible,
+.nav-cta:focus-visible,
+.btn:focus-visible,
+.pillar-card:focus-visible,
+.blog-preview-card:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 3px;
+}
+.allergen-chip:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 2px;
+}
+.field-input:focus-visible {
+  outline: none; /* border handles this */
+  border-color: var(--clay);
+  box-shadow: 0 0 0 3px var(--clay-mid);
+}
+.footer-links a:focus-visible {
+  outline: 2px solid rgba(250,247,242,0.6);
+  outline-offset: 3px;
+}
+
 /* ── RESET ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -177,10 +231,8 @@ img { max-width: 100%; display: block; }
   transition: all 0.15s var(--ease);
   text-decoration: none;
 }
-.btn--terra {
-  background: var(--clay);
-  color: #fff;
-}
+/* btn--terra is an alias of btn--primary */
+.btn--terra { background: var(--clay); color: #fff; }
 .btn--terra:hover { background: var(--clay-dark); transform: translateY(-1px); }
 .btn--outline {
   background: transparent;
@@ -202,6 +254,7 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius-lg);
 }
 .btn--primary:hover { background: var(--clay-dark); transform: translateY(-1px); }
+/* Note: btn--terra is kept as a semantic alias for the same style */
 
 /* ── PILLAR CARDS ── */
 .pillar-grid {
@@ -491,23 +544,34 @@ img { max-width: 100%; display: block; }
 }
 .tool-bubble__cta:hover { background: var(--clay-dark); }
 
-/* ── SITE-WIDE NAV (content pages) ── */
-.site-nav-v2 {
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  height: var(--nav-h);
-  background: rgba(250, 247, 242, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-}
-.site-nav-v2 .container {
-  height: 100%;
+/* .site-nav-v2 removed — was duplicate of .site-nav */
+
+
+/* ── FOOTER LEGAL LINKS ── */
+.footer-legal-nav {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 1rem;
+  padding-top: 1.25rem;
+}
+.footer-legal-link {
+  font-size: 0.8rem;
+  color: var(--dust);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-legal-link:hover { color: rgba(250,247,242,0.85); }
+.footer-copy-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 0;
+  padding-top: 0;
 }
 
 /* ── FOOTER ── */

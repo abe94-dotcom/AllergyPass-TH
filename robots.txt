@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Legal pages — allow crawl but noindex set in HTML
+Allow: /disclaimer/
+Allow: /privacy/
+Allow: /terms/
+Allow: /refunds/
+
+# App — card builder, no SEO value
+Disallow: /app.html
+
+Sitemap: https://allergypass.app/sitemap.xml

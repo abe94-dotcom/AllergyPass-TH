@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AllergyPass | Food Allergy Communication for Travel</title>
-  <meta name="description" content="A bilingual food allergy card for safer travel. Built by a healthcare professional in Bangkok. Works offline. No sign-up required." />
+  <meta name="description" content="A bilingual food allergy card for safer travel in Thailand. Built by a healthcare professional. Works offline. No sign-up required." />
   <meta name="theme-color" content="#2C1F14" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="apple-touch-icon" href="/icon-180.png" />
@@ -336,18 +339,19 @@
   <link rel="canonical" href="https://allergypass.app/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="AllergyPass | Practical Food Allergy Communication for Travel" />
-  <meta property="og:description" content="A bilingual food allergy card for safer travel. Built by a healthcare professional in Bangkok. Works offline. No sign-up required." />
+  <meta property="og:description" content="A bilingual food allergy card for safer travel in Thailand. Built by a healthcare professional. Works offline. No sign-up required." />
   <meta property="og:url" content="https://allergypass.app/" />
   <meta property="og:image" content="https://allergypass.app/icon-512.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="AllergyPass | Practical Food Allergy Communication for Travel" />
-  <meta name="twitter:description" content="A bilingual food allergy card for safer travel. Built by a healthcare professional in Bangkok. Works offline. No sign-up required." />
+  <meta name="twitter:description" content="A bilingual food allergy card for safer travel in Thailand. Built by a healthcare professional. Works offline. No sign-up required." />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
-      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
+      <a href="/" class="nav-logo" aria-current="page">🛡️ AllergyPass</a>
       <div class="nav-links">
         <a href="/blog/">Blog</a>
         <a href="/about.html">About</a>
@@ -358,20 +362,37 @@
   </nav>
 
   <!-- Mobile nav drawer -->
-  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <div class="mobile-drawer__head">
       <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
       <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
     </div>
-    <a href="/">Home</a>
+    <a href="/" aria-current="page">Home</a>
     <a href="/blog/">Blog</a>
     <a href="/about.html">About</a>
     <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
   </div>
   <script>
-    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
-    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
-    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+    function openDrawer() {
+      document.getElementById('mobileDrawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      var bd = document.getElementById('drawerBackdrop');
+      if (!bd) {
+        bd = document.createElement('div');
+        bd.id = 'drawerBackdrop';
+        bd.style.cssText = 'position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.35);';
+        bd.addEventListener('click', closeDrawer);
+        document.body.appendChild(bd);
+      }
+      bd.style.display = 'block';
+    }
+    function closeDrawer() {
+      document.getElementById('mobileDrawer').classList.remove('open');
+      document.body.style.overflow = '';
+      var bd = document.getElementById('drawerBackdrop');
+      if (bd) bd.style.display = 'none';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
   </script>
 
   <main>
@@ -379,7 +400,7 @@
     <!-- HERO -->
     <section class="home-hero">
       <div class="container">
-        <div class="home-hero__badge">🩺 Clinically Verified · Built in Bangkok</div>
+        <div class="home-hero__badge">🩺 Clinically Verified · Built in Thailand</div>
         <h1 class="home-hero__title">
           Eat with confidence,<br>
           <em>wherever you land.</em>
@@ -396,7 +417,7 @@
         <p class="home-hero__sub">No sign-up · 100% Offline · Takes under 2 minutes</p>
 
         <!-- Live card preview -->
-        <div class="card-preview" aria-label="Sample AllergyPass card">
+        <div class="card-preview" role="img" aria-label="Sample AllergyPass allergy card showing Thai and English text for peanut and shellfish allergies">
           <div class="cp-banner">
             <div class="cp-banner-th">แพ้อาหารรุนแรงมาก อันตรายถึงชีวิต</div>
             <div class="cp-banner-en">Life-Threatening Allergy · Do Not Ignore</div>
@@ -434,13 +455,13 @@
     <!-- TRUST BAR -->
     <div class="trust-bar">
       <div class="container">
-        <p class="trust-bar__label">Made by Healthcare Professionals in Bangkok</p>
-        <div class="trust-bar__items">
-          <div class="trust-item"><span>🏥</span> Medical Accuracy</div>
-          <div class="trust-item"><span>📵</span> Works Offline</div>
-          <div class="trust-item"><span>🔒</span> Fully Private</div>
-          <div class="trust-item"><span>🇹🇭</span> Thai Verified</div>
-        </div>
+        <p class="trust-bar__label">Made by Healthcare Professionals in Thailand</p>
+        <ul class="trust-bar__items" role="list" style="list-style:none;margin:0;padding:0;">
+          <li class="trust-item"><span aria-hidden="true">🏥</span> Medical Accuracy</li>
+          <li class="trust-item"><span aria-hidden="true">✈️</span> Works Offline</li>
+          <li class="trust-item"><span aria-hidden="true">🔒</span> Fully Private</li>
+          <li class="trust-item"><span aria-hidden="true">🇹🇭</span> Thai Verified</li>
+        </ul>
       </div>
     </div>
 
@@ -566,13 +587,21 @@
           <h5>About</h5>
           <nav class="footer-links">
             <a href="/about.html">About Abe</a>
-            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener noreferrer">TikTok</a>
             <a href="/disclaimer/">Disclaimer</a>
           </nav>
         </div>
       </div>
-      <p class="footer-copy">© 2026 AllergyPass. All rights reserved. · <a href="/disclaimer/" style="color:inherit;opacity:0.6;transition:opacity 0.15s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">Disclaimer</a></p>
+      <div class="footer-copy-wrap">
+        <p class="footer-copy" style="margin:0;border:none;padding:0;">© 2026 AllergyPass. All rights reserved.</p>
+        <nav class="footer-legal-nav" style="border:none;margin:0;padding:0;" aria-label="Legal links">
+          <a href="/disclaimer/" class="footer-legal-link">Disclaimer</a>
+          <a href="/privacy/" class="footer-legal-link">Privacy</a>
+          <a href="/terms/" class="footer-legal-link">Terms</a>
+          <a href="/refunds/" class="footer-legal-link">Refunds</a>
+        </nav>
+      </div>
     </div>
   </footer>
 

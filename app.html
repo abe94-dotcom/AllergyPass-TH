@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Build Your Allergy Card: AllergyPass</title>
   <meta name="description" content="Build a free bilingual Thai-English food allergy card. Works offline. No sign-up required." />
@@ -698,16 +701,24 @@
       font-weight: 600;
     }
     .sev-desc-body {
-      display: none;
-      margin-top: 0.5rem;
-      padding: 0.75rem;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      margin-top: 0;
+      padding: 0 0.75rem;
       background: var(--linen-mid);
       border-radius: 8px;
       font-size: 0.72rem;
       color: var(--soil);
       line-height: 1.55;
+      transition: max-height 0.22s ease, opacity 0.18s ease, margin-top 0.18s ease, padding 0.18s ease;
     }
-    .sev-desc-body.open { display: block; }
+    .sev-desc-body.open {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 0.5rem;
+      padding: 0.75rem;
+    }
     .sev-desc-phrase {
       font-style: italic;
       color: var(--bark);
@@ -735,6 +746,34 @@
     }
     #saveConfirm.show { opacity: 1; }
     #saveConfirm__icon { font-size: 1rem; }
+
+    /* ── FOCUS STYLES (app) ── */
+    .allergen-chip:focus-visible {
+      outline: 2px solid var(--clay);
+      outline-offset: 2px;
+    }
+    .sev-btn:focus-visible {
+      outline: 2px solid var(--clay);
+      outline-offset: -2px;
+      z-index: 1;
+      position: relative;
+    }
+    .btn-app-next:focus-visible,
+    .btn-app-back:focus-visible,
+    .btn-app-save:focus-visible,
+    .btn-app-chef:focus-visible,
+    .btn-app-edit:focus-visible {
+      outline: 2px solid var(--clay);
+      outline-offset: 3px;
+    }
+    .preview-toggle-btn:focus-visible {
+      outline: 2px solid var(--clay);
+      outline-offset: -2px;
+    }
+    .sev-card__remove:focus-visible {
+      outline: 2px solid var(--sev-ana);
+      outline-offset: 2px;
+    }
   </style>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
   <link rel="canonical" href="https://allergypass.app/app.html" />
@@ -748,11 +787,12 @@
   <meta name="twitter:description" content="Free bilingual Thai-English food allergy card builder. Offline-ready, no sign-up required." />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
       <a href="/" class="nav-logo">🛡️ AllergyPass</a>
-            <div class="nav-links">
+      <div class="nav-links">
         <a href="/blog/">Blog</a>
         <a href="/about.html">About</a>
       </div>
@@ -762,7 +802,7 @@
   </nav>
 
   <!-- Mobile nav drawer -->
-  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <div class="mobile-drawer__head">
       <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
       <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
@@ -774,10 +814,29 @@
 
   </div>
   <script>
-    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
-    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
-    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+    function openDrawer() {
+      document.getElementById('mobileDrawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      var bd = document.getElementById('drawerBackdrop');
+      if (!bd) {
+        bd = document.createElement('div');
+        bd.id = 'drawerBackdrop';
+        bd.style.cssText = 'position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.35);';
+        bd.addEventListener('click', closeDrawer);
+        document.body.appendChild(bd);
+      }
+      bd.style.display = 'block';
+    }
+    function closeDrawer() {
+      document.getElementById('mobileDrawer').classList.remove('open');
+      document.body.style.overflow = '';
+      var bd = document.getElementById('drawerBackdrop');
+      if (bd) bd.style.display = 'none';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
   </script>
+
+  <main id="main-content">
 
   <div class="app-topbar">
     <span class="app-topbar__loc">🇹🇭 Thailand · Allergy Card Builder</span>
@@ -793,7 +852,7 @@
   <div class="app-frame">
 
     <!-- PROGRESS -->
-    <div class="progress-bar" role="progressbar" aria-label="Card builder progress">
+    <div class="progress-bar" role="progressbar" aria-label="Card builder progress" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4">
       <div class="step-node">
         <div class="step-circle active" id="dot1"><span>1</span></div>
         <div class="step-name active" id="name1">Allergens</div>
@@ -859,12 +918,12 @@
     <!-- STEP 3 -->
     <div class="step-panel" id="step3">
       <h1 class="panel-heading">Your details</h1>
-      <p class="panel-sub">If you can't speak after a reaction, this helps bystanders call for help and reach your emergency contact. Takes 30 seconds.</p>
-      <label class="field-label" for="inpName">Your name</label>
+      <p class="panel-sub">All fields are optional. If filled in, they appear on your card — useful if you can't communicate after a reaction.</p>
+      <label class="field-label" for="inpName">Your name <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--dust);font-size:0.7rem;">(optional)</span></label>
       <input type="text" id="inpName" class="field-input" placeholder="e.g. Sarah" autocomplete="given-name" maxlength="80" />
-      <label class="field-label" for="inpSos">Emergency contact number</label>
+      <label class="field-label" for="inpSos">Emergency contact <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--dust);font-size:0.7rem;">(optional)</span></label>
       <input type="tel" id="inpSos" class="field-input" placeholder="+66 9 0000 0000" autocomplete="tel" maxlength="30" />
-      <label class="field-label" for="inpHotel">Hotel / address in Thailand</label>
+      <label class="field-label" for="inpHotel">Hotel / address <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--dust);font-size:0.7rem;">(optional)</span></label>
       <input type="text" id="inpHotel" class="field-input" placeholder="Hotel name or area" autocomplete="street-address" maxlength="80" />
 
       <!-- Mobile preview (Fix 1) -->
@@ -899,21 +958,23 @@
   <!-- BOTTOM NAV: step 4 -->
   <div class="app-bottom" id="navCard" style="display:none; flex-wrap: wrap;">
     <div style="display:flex;gap:0.75rem;width:100%;">
-      <button class="btn-app-edit" onclick="goTo(1)">← Edit</button>
+      <button class="btn-app-edit" onclick="goTo(2)">← Edit severity</button>
+      <button class="btn-app-edit" onclick="startOver()" style="color:var(--soil);border-color:var(--border);" title="Clear all and start a new card">↺ New card</button>
       <button class="btn-app-save" id="btnSave" onclick="saveCardToGallery()">⬇ Save</button>
       <button class="btn-app-chef" onclick="openChef()">Show to Chef →</button>
     </div>
     <div id="saveConfirm" role="status" aria-live="polite">
-      <span id="saveConfirm__icon">✅</span>
-      Saved to your device — works in airplane mode
+      <span id="saveConfirm__icon">✅</span><span id="saveConfirm__text"> Saved to your device — works in airplane mode</span>
     </div>
   </div>
 
   <!-- Save toast -->
   <div id="saveToast" role="status" aria-live="polite"></div>
 
+  </main>
+
   <!-- CHEF OVERLAY -->
-  <div id="chef-overlay" role="dialog" aria-label="Chef mode: large print allergen card">
+  <div id="chef-overlay" role="dialog" aria-modal="true" aria-label="Chef mode: large print allergen card">
     <button class="chef-close" onclick="closeChef()" aria-label="Close card">✕ &nbsp;Tap to close · ปิด</button>
     <div class="chef-inner" id="chefInner"></div>
   </div>
