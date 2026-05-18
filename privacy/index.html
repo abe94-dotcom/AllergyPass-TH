@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy | AllergyPass - Allergy Communication Tools & Travel Safety Resources</title>
   <meta name="description" content="Privacy policy for AllergyPass allergy communication tools and travel safety resources. Learn how we handle your data — clearly and honestly." />
@@ -239,6 +242,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
@@ -252,7 +256,7 @@
     </div>
   </nav>
 
-  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <div class="mobile-drawer__head">
       <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
       <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
@@ -269,6 +273,8 @@
   </script>
 
   <!-- Hero -->
+
+  <main id="main-content">
   <section class="hero" style="text-align:left;padding-bottom:2rem;">
     <div class="container">
       <span class="eyebrow">Legal</span>
@@ -352,7 +358,7 @@
                 <tr>
                   <td data-label="What">Browser and device type</td>
                   <td data-label="When">You visit any page</td>
-                  <td data-label="Why">Anonymous analytics to improve the site</td>
+                  <td data-label="Why">No analytics currently in use</td>
                 </tr>
                 <tr>
                   <td data-label="What">Pages visited, time on site</td>
@@ -385,7 +391,7 @@
               <li>Delivering digital products or resources you've purchased or requested</li>
               <li>Sending newsletters or updates you've opted into</li>
               <li>Responding to questions or support requests</li>
-              <li>Understanding which guides and tools are most useful (via anonymous analytics)</li>
+              <li>Understanding how the tool is used — currently through direct feedback only, not automated analytics</li>
               <li>Improving the overall site experience</li>
               <li>Detecting and preventing spam or abuse</li>
             </ul>
@@ -398,13 +404,13 @@
           <div class="legal-section" id="cookies">
             <h2>Cookies and analytics</h2>
             <p>
-              AllergyPass may use cookies and similar technologies to understand how people use the site. This includes analytics tools that track things like page visits, session duration, and which guides or tools are accessed most.
+              AllergyPass currently uses no analytics scripts, tracking pixels, or third-party cookies. No page visit data, session data, or behavioural data is collected or transmitted to any external service.
             </p>
             <p>
-              Analytics data is aggregated and anonymous — it tells us that a page was visited, not who visited it. Services that may be used for this include Google Analytics or similar platforms. These services have their own privacy practices.
+              The only data stored is the allergy card state you build in the app, written to your browser's localStorage and never sent anywhere. See the "Your data" section above.
             </p>
             <p>
-              You can disable cookies in your browser settings at any time. Doing so may affect some site functionality but will not prevent you from using the allergy card builder, which operates offline without any tracking.
+              If analytics are introduced in future, this policy will be updated before they go live and a visible notice will be added to the site. Any tools used will be privacy-preserving and will not track you across other websites.
             </p>
           </div>
 
@@ -499,7 +505,7 @@
               </p>
               <p>
                 For general feedback you can also reach out via
-                <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram (@bookofabe)</a>.
+                <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram (@bookofabe)</a>.
               </p>
             </div>
           </div>
@@ -509,6 +515,7 @@
     </div>
   </section>
 
+  </main>
   <footer class="site-footer">
     <div class="container">
       <div class="footer-inner">
@@ -534,8 +541,8 @@
           <h5>About</h5>
           <nav class="footer-links">
             <a href="/about.html">About Abe</a>
-            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener noreferrer">TikTok</a>
           </nav>
         </div>
       </div>
