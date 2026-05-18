@@ -2,14 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <link rel="canonical" href="https://allergypass.app/blog/food/" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food in Thailand: AllergyPass</title>
-  <meta name="description" content="What's actually in Thai food. Hidden ingredients, allergy risks, how ordering works, and what menus don't tell you. Written by a healthcare professional living in Bangkok." />
+  <meta name="description" content="What's actually in Thai food. Hidden ingredients, allergy risks, how ordering works, and what menus don't tell you. Written by a healthcare professional in Thailand." />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#2C1F14" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
@@ -23,22 +28,41 @@
     </div>
   </nav>
 
-  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <div class="mobile-drawer__head">
       <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
       <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
     </div>
     <a href="/">Home</a>
-    <a href="/blog/">Blog</a>
+    <a href="/blog/" aria-current="page">Blog</a>
     <a href="/about.html">About</a>
     <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
   </div>
   <script>
-    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
-    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
-    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+    function openDrawer() {
+      document.getElementById('mobileDrawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      var bd = document.getElementById('drawerBackdrop');
+      if (!bd) {
+        bd = document.createElement('div');
+        bd.id = 'drawerBackdrop';
+        bd.style.cssText = 'position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.35);';
+        bd.addEventListener('click', closeDrawer);
+        document.body.appendChild(bd);
+      }
+      bd.style.display = 'block';
+    }
+    function closeDrawer() {
+      document.getElementById('mobileDrawer').classList.remove('open');
+      document.body.style.overflow = '';
+      var bd = document.getElementById('drawerBackdrop');
+      if (bd) bd.style.display = 'none';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
   </script>
 
+
+  <main id="main-content">
   <section class="hero" style="padding-bottom:2rem;">
     <div class="container">
       <p class="eyebrow">Food in Thailand</p>
@@ -104,6 +128,7 @@
     </div>
   </section>
 
+  </main>
   <footer class="site-footer">
     <div class="container">
       <div class="footer-inner">
@@ -129,13 +154,21 @@
           <h5>About</h5>
           <nav class="footer-links">
             <a href="/about.html">About Abe</a>
-            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener noreferrer">TikTok</a>
             <a href="/disclaimer/">Disclaimer</a>
           </nav>
         </div>
       </div>
-      <p class="footer-copy">&copy; 2026 AllergyPass. All rights reserved. · <a href="/disclaimer/" style="color:inherit;opacity:0.6;transition:opacity 0.15s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">Disclaimer</a></p>
+      <div class="footer-copy-wrap">
+        <p class="footer-copy" style="margin:0;border:none;padding:0;">© 2026 AllergyPass. All rights reserved.</p>
+        <nav class="footer-legal-nav" style="border:none;margin:0;padding:0;" aria-label="Legal links">
+          <a href="/disclaimer/" class="footer-legal-link">Disclaimer</a>
+          <a href="/privacy/" class="footer-legal-link">Privacy</a>
+          <a href="/terms/" class="footer-legal-link">Terms</a>
+          <a href="/refunds/" class="footer-legal-link">Refunds</a>
+        </nav>
+      </div>
     </div>
   </footer>
 
