@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Emergency Healthcare in Thailand: AllergyPass</title>
   <meta name="description" content="What to do in a medical emergency in Thailand. Emergency numbers, best hospitals by city, and what to expect from the Thai healthcare system." />
@@ -15,6 +18,33 @@
     .toc-card a:last-child { border-bottom: none; }
     .toc-card a:hover { color: var(--clay); }
     @media (max-width: 900px) { .article-layout { grid-template-columns: 1fr; } .article-sidebar { position: static; } }
+
+    .article-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--soil);
+      text-decoration: none;
+      margin-bottom: 1rem;
+      transition: color 0.15s;
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0;
+    }
+    .article-back:hover { color: var(--clay); }
+    .article-back:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--dust);
+      flex-wrap: wrap;
+    }
+    .article-meta__sep { opacity: 0.4; }
   </style>
   <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
   <link rel="canonical" href="https://allergypass.app/thailand-essentials/emergency-healthcare.html" />
@@ -28,12 +58,13 @@
   <meta name="twitter:description" content="Emergency numbers, best hospitals by city, and what to expect from the Thai healthcare system." />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <nav class="site-nav" aria-label="Main navigation">
     <div class="container">
       <a href="/" class="nav-logo">🛡️ AllergyPass</a>
             <div class="nav-links">
-        <a href="/blog/">Blog</a>
+        <a href="/blog/" aria-current="page">Blog</a>
         <a href="/about.html">About</a>
       </div>
       <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
@@ -42,31 +73,52 @@
   </nav>
 
   <!-- Mobile nav drawer -->
-  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <div class="mobile-drawer__head">
       <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
       <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
     </div>
     <a href="/">Home</a>
-    <a href="/blog/">Blog</a>
+    <a href="/blog/" aria-current="page">Blog</a>
     <a href="/about.html">About</a>
     <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
 
   </div>
   <script>
-    function openDrawer()  { document.getElementById('mobileDrawer').classList.add('open');    document.body.style.overflow='hidden'; }
-    function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.body.style.overflow=''; }
-    document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+    function openDrawer() {
+      document.getElementById('mobileDrawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      var bd = document.getElementById('drawerBackdrop');
+      if (!bd) {
+        bd = document.createElement('div');
+        bd.id = 'drawerBackdrop';
+        bd.style.cssText = 'position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.35);';
+        bd.addEventListener('click', closeDrawer);
+        document.body.appendChild(bd);
+      }
+      bd.style.display = 'block';
+    }
+    function closeDrawer() {
+      document.getElementById('mobileDrawer').classList.remove('open');
+      document.body.style.overflow = '';
+      var bd = document.getElementById('drawerBackdrop');
+      if (bd) bd.style.display = 'none';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
   </script>
 
+
+  <main id="main-content">
   <section class="hero" style="text-align:left;padding-bottom:2rem;">
     <div class="container">
+      <a href="/blog/" class="article-back">← All posts</a>
       <span class="eyebrow">Thailand Essentials · Healthcare</span>
       <h1 class="mt-1">Emergency Healthcare<br><em>in Thailand</em></h1>
       <p class="lead mt-2" style="margin-left:0;">
         What to do, where to go, and what to expect if you need medical care in Thailand.
         Written from a healthcare professional's perspective.
       </p>
+      <div class="article-meta"><span>4 min read</span><span class="article-meta__sep">·</span><span>Updated May 2026</span></div>
     </div>
   </section>
 
@@ -185,6 +237,7 @@
     </div>
   </section>
 
+  </main>
   <footer class="site-footer">
     <div class="container">
             <div class="footer-inner">
@@ -210,13 +263,21 @@
           <h5>About</h5>
           <nav class="footer-links">
             <a href="/about.html">About Abe</a>
-            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener noreferrer">TikTok</a>
             <a href="/disclaimer/">Disclaimer</a>
           </nav>
         </div>
       </div>
-      <p class="footer-copy">© 2026 AllergyPass. All rights reserved. · <a href="/disclaimer/" style="color:inherit;opacity:0.6;transition:opacity 0.15s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">Disclaimer</a></p>
+      <div class="footer-copy-wrap">
+        <p class="footer-copy" style="margin:0;border:none;padding:0;">© 2026 AllergyPass. All rights reserved.</p>
+        <nav class="footer-legal-nav" style="border:none;margin:0;padding:0;" aria-label="Legal links">
+          <a href="/disclaimer/" class="footer-legal-link">Disclaimer</a>
+          <a href="/privacy/" class="footer-legal-link">Privacy</a>
+          <a href="/terms/" class="footer-legal-link">Terms</a>
+          <a href="/refunds/" class="footer-legal-link">Refunds</a>
+        </nav>
+      </div>
     </div>
   </footer>
 
