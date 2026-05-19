@@ -18,28 +18,28 @@
           <h5>AllergyPass</h5>
           <nav class="footer-links">
             <a href="/app.html">Build My Card</a>
-            <a href="/allergy-card/">About the Card</a>
+            <a href="/tools/">Tools</a>
           </nav>
         </div>
         <div class="footer-col">
           <h5>Guides</h5>
           <nav class="footer-links">
-            <a href="/guides/">All Guides</a>
-            <a href="/guides/food-allergy-survival-guide.html">Food Allergy Survival Guide</a>
-            <a href="/guides/hidden-allergens-thai-food.html">Hidden Allergens</a>
+            <a href="/blog/guides/">All Guides</a>
+            <a href="/blog/blog/guides/food-allergy-survival-guide.html">Food Allergy Survival Guide</a>
+            <a href="/blog/blog/guides/hidden-allergens-thai-food.html">Hidden Allergens</a>
           </nav>
         </div>
         <div class="footer-col">
           <h5>Thailand Essentials</h5>
           <nav class="footer-links">
-            <a href="/thailand-essentials/">Overview</a>
-            <a href="/thailand-essentials/emergency-healthcare.html">Emergency Healthcare</a>
+            <a href="/blog/blog/guides/">Overview</a>
+            <a href="/blog/blog/blog/guides/emergency-healthcare.html">Emergency Healthcare</a>
           </nav>
         </div>
         <div class="footer-col">
           <h5>More</h5>
           <nav class="footer-links">
-            <a href="/recommendations/">Recommendations</a>
+            <a href="/blog/recommendations/">Recommendations</a>
             <a href="/blog/">Blog</a>
             <a href="/about.html">About Abe</a>
             <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram</a>
@@ -49,10 +49,10 @@
       <div class="footer-copy-wrap">
         <p class="footer-copy" style="margin:0;border:none;padding:0;">© 2026 AllergyPass. All rights reserved.</p>
         <nav class="footer-legal-nav" style="border:none;margin:0;padding:0;" aria-label="Legal links">
-          <a href="/disclaimer/" class="footer-legal-link">Disclaimer</a>
-          <a href="/privacy/" class="footer-legal-link">Privacy</a>
-          <a href="/terms/" class="footer-legal-link">Terms</a>
-          <a href="/refunds/" class="footer-legal-link">Refunds</a>
+          <a href="/legal/disclaimer/" class="footer-legal-link">Disclaimer</a>
+          <a href="/legal/privacy/" class="footer-legal-link">Privacy</a>
+          <a href="/legal/terms/" class="footer-legal-link">Terms</a>
+          <a href="/legal/refunds/" class="footer-legal-link">Refunds</a>
         </nav>
       </div>
     </div>

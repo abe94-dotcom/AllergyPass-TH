@@ -5,12 +5,9 @@
 
 (function () {
   /* ── NAV LINKS ── edit this array to add/remove/reorder links */
-  const NAV_LINKS = [
-    { label: 'Guides',               href: '/guides/' },
-    { label: 'Thailand Essentials',  href: '/thailand-essentials/' },
-    { label: 'Recommendations',      href: '/recommendations/' },
-    { label: 'Blog',                 href: '/blog/' },
-    { label: 'About',                href: '/about.html' },
+    const NAV_LINKS = [
+    { label: 'Blog',   href: '/blog/' },
+    { label: 'About',  href: '/about.html' },
   ];
 
   /* ── ACTIVE LINK DETECTION ── marks current section */

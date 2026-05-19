@@ -1,0 +1,23 @@
+# Merged pages — redirect old URLs to new locations
+/allergy-card/                                          /tools/                                         301
+/blog/food/thailand-street-food-allergy.html            /blog/thailand-street-food-allergy.html         301
+/blog/food/                                             /blog/                                          301
+/blog/Expat-life/                                       /blog/                                          301
+/blog/things-to-do/                                     /blog/                                          301
+
+# Legal pages moved to /legal/
+/disclaimer/    /legal/disclaimer/    301
+/privacy/       /legal/privacy/       301
+/refunds/       /legal/refunds/       301
+/terms/         /legal/terms/         301
+
+# Recommendations moved into /blog/
+/recommendations/                           /blog/recommendations/                  301
+/recommendations/best-esims-thailand.html   /blog/recommendations/best-esims-thailand.html  301
+
+# Guides + Thailand Essentials merged into /blog/guides/
+/guides/                                        /blog/guides/                                   301
+/guides/food-allergy-survival-guide.html        /blog/guides/food-allergy-survival-guide.html   301
+/guides/hidden-allergens-thai-food.html         /blog/guides/hidden-allergens-thai-food.html    301
+/thailand-essentials/                           /blog/guides/                                   301
+/thailand-essentials/emergency-healthcare.html  /blog/guides/emergency-healthcare.html          301

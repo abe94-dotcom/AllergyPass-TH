@@ -13,67 +13,43 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/allergy-card/</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://allergypass.app/blog/</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/blog/food/</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://allergypass.app/blog/food/thailand-street-food-allergy.html</loc>
+    <loc>https://allergypass.app/blog/guides/</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/guides/</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://allergypass.app/guides/food-allergy-survival-guide.html</loc>
+    <loc>https://allergypass.app/blog/guides/food-allergy-survival-guide.html</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/guides/hidden-allergens-thai-food.html</loc>
+    <loc>https://allergypass.app/blog/guides/hidden-allergens-thai-food.html</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/thailand-essentials/</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://allergypass.app/thailand-essentials/emergency-healthcare.html</loc>
+    <loc>https://allergypass.app/blog/guides/emergency-healthcare.html</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/recommendations/</loc>
+    <loc>https://allergypass.app/blog/recommendations/</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/recommendations/best-esims-thailand.html</loc>
+    <loc>https://allergypass.app/blog/recommendations/best-esims-thailand.html</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -85,37 +61,25 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/blog/Expat-life/</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://allergypass.app/blog/things-to-do/</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://allergypass.app/disclaimer/</loc>
+    <loc>https://allergypass.app/legal/disclaimer/</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/privacy/</loc>
+    <loc>https://allergypass.app/legal/privacy/</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/refunds/</loc>
+    <loc>https://allergypass.app/legal/refunds/</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://allergypass.app/terms/</loc>
+    <loc>https://allergypass.app/legal/terms/</loc>
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
