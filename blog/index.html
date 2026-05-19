@@ -11,6 +11,7 @@
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#2C1F14" />
   <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/inline-styles.css" />
   <link rel="canonical" href="https://allergypass.app/blog/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Blog | AllergyPass" />
@@ -20,51 +21,7 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Blog | AllergyPass" />
   <meta name="twitter:description" content="Practical guides, food safety, healthcare, and living abroad. Written from the inside." />
-  <style>
-    .blog-categories {
-      display: flex;
-      gap: 0.625rem;
-      flex-wrap: wrap;
-      margin-bottom: 3rem;
-    }
-    .cat-pill {
-      padding: 0.35rem 0.875rem;
-      border-radius: 100px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      border: 1px solid var(--border);
-      color: var(--soil);
-      background: var(--white);
-      cursor: pointer;
-      transition: all 0.15s;
-      text-decoration: none;
-    }
-    .cat-pill:hover, .cat-pill--active {
-      background: var(--bark);
-      color: #fff;
-      border-color: var(--bark);
-    }
-    .cat-pill:focus-visible {
-      outline: 2px solid var(--clay);
-      outline-offset: 3px;
-    }
-    button.cat-pill {
-      font-family: inherit;
-    }
-    .blog-section-label {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--dust);
-      margin-bottom: 1.25rem;
-      margin-top: 3rem;
-      padding-bottom: 0.625rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .blog-section-label:first-of-type { margin-top: 0; }
-  </style>
+  
 </head>
 <body>
   <script src="/nav.js"></script>
@@ -96,21 +53,21 @@
 
       <p class="blog-section-label" data-category="food-safety">Food Safety</p>
       <div class="pillar-grid" data-category="food-safety">
-        <a href="/blog/guides/food-allergy-survival-guide.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/guides/food-allergy-survival-guide.html" class="pillar-card no-decoration">
           <div class="pillar-icon">🍜</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Food Safety</span>
           <h3>Thailand Food Allergy Survival Guide</h3>
           <p>Hidden allergens, high-risk dishes, how to communicate with staff, and when to get to a hospital. The main reference.</p>
           <span class="pillar-link">Read guide →</span>
         </a>
-        <a href="/blog/guides/hidden-allergens-thai-food.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/guides/hidden-allergens-thai-food.html" class="pillar-card no-decoration">
           <div class="pillar-icon">⚠️</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Food Safety</span>
           <h3>Hidden Allergens in Thai Food</h3>
           <p>Fish sauce, shrimp paste, peanut oil, dried shrimp. What they're in, where they hide, and how to avoid them.</p>
           <span class="pillar-link">Read guide →</span>
         </a>
-        <a href="/blog/thailand-street-food-allergy.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/thailand-street-food-allergy.html" class="pillar-card no-decoration">
           <div class="pillar-icon">🥡</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Food Safety</span>
           <h3>Street Food with a Food Allergy</h3>
@@ -121,7 +78,7 @@
 
       <p class="blog-section-label" data-category="healthcare">Healthcare</p>
       <div class="pillar-grid" data-category="healthcare">
-        <a href="/blog/guides/emergency-healthcare.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/guides/emergency-healthcare.html" class="pillar-card no-decoration">
           <div class="pillar-icon">🏥</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Healthcare</span>
           <h3>Emergency Healthcare in Thailand</h3>
@@ -139,7 +96,7 @@
 
       <p class="blog-section-label" data-category="recommendations">Recommendations</p>
       <div class="pillar-grid" data-category="recommendations">
-        <a href="/blog/recommendations/best-esims-thailand.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/recommendations/best-esims-thailand.html" class="pillar-card no-decoration">
           <div class="pillar-icon">📶</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Recommendations</span>
           <h3>Best eSIMs for Thailand</h3>

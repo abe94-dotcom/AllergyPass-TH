@@ -48,47 +48,8 @@
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#2C1F14" />
   <link rel="stylesheet" href="/style.css" />
-  <style>
-    .article-layout { display: grid; grid-template-columns: 1fr 280px; gap: 4rem; align-items: start; }
-    .article-sidebar { position: sticky; top: calc(var(--nav-h) + 2rem); }
-    .toc-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
-    .toc-card h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dust); margin-bottom: 1rem; }
-    .toc-card a { display: block; font-size: 0.875rem; color: var(--soil); padding: 0.375rem 0; border-bottom: 1px solid var(--border); transition: color 0.15s; }
-    .toc-card a:last-child { border-bottom: none; }
-    .toc-card a:hover { color: var(--clay); }
-    .card-cta-sidebar { background: var(--clay-light); border: 1px solid var(--clay-mid); border-radius: var(--radius-lg); padding: 1.25rem; margin-top: 1.25rem; text-align: center; }
-    .card-cta-sidebar p { font-size: 0.875rem; color: var(--soil); margin-bottom: 0.875rem; line-height: 1.65; }
-
-    .prose-block ul, .prose-block ol { margin: 0.75rem 0 1.25rem 1.25rem; }
-    .prose-block li { font-size: 0.9375rem; color: var(--soil); line-height: 1.8; margin-bottom: 0.4rem; }
-    .prose-block li strong { color: var(--bark); }
-
-    .takeaways {
-      background: var(--linen-mid);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem 1.75rem;
-      margin-top: 2rem;
-    }
-    .takeaways h2 { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 1rem; }
-    .takeaways ul { margin: 0 0 0 1.25rem; }
-    .takeaways li { font-size: 0.875rem; color: var(--soil); line-height: 1.75; margin-bottom: 0.5rem; }
-
-    .jay-box {
-      background: #F0F7EE;
-      border: 1px solid #C8E6C9;
-      border-left: 3px solid #4CAF50;
-      border-radius: var(--radius);
-      padding: 1.125rem 1.25rem;
-      margin: 1.5rem 0;
-      font-size: 0.9rem;
-      color: var(--bark);
-      line-height: 1.7;
-    }
-    .jay-box strong { color: #2E7D32; }
-
-    @media (max-width: 900px) { .article-layout { grid-template-columns: 1fr; } .article-sidebar { position: static; } }
-  </style>
+  <link rel="stylesheet" href="/inline-styles.css" />
+  
   <meta property="og:image" content="https://allergypass.app/icon-512.png" />
 </head>
 <body>

@@ -18,87 +18,8 @@
   }
   </script>
   <link rel="stylesheet" href="/style.css" />
-  <style>
-    .article-layout {
-      display: grid;
-      grid-template-columns: 1fr 280px;
-      gap: 4rem;
-      align-items: start;
-    }
-    .article-sidebar {
-      position: sticky;
-      top: calc(var(--nav-h) + 2rem);
-    }
-    .toc-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-    }
-    .toc-card h4 {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--dust);
-      margin-bottom: 1rem;
-    }
-    .toc-card a {
-      display: block;
-      font-size: 0.875rem;
-      color: var(--soil);
-      padding: 0.375rem 0;
-      border-bottom: 1px solid var(--border);
-      transition: color 0.15s;
-    }
-    .toc-card a:last-child { border-bottom: none; }
-    .toc-card a:hover { color: var(--clay); }
-    .card-cta-sidebar {
-      background: var(--clay-light);
-      border: 1px solid var(--clay-mid);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      margin-top: 1.25rem;
-      text-align: center;
-    }
-    .card-cta-sidebar p {
-      font-size: 0.875rem;
-      color: var(--soil);
-      margin-bottom: 0.875rem;
-      line-height: 1.6;
-    }
-    @media (max-width: 900px) {
-      .article-layout { grid-template-columns: 1fr; }
-      .article-sidebar { position: static; }
-    }
-
-    .article-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--soil);
-      text-decoration: none;
-      margin-bottom: 1rem;
-      transition: color 0.15s;
-      border-radius: var(--radius-sm);
-      padding: 0.25rem 0;
-    }
-    .article-back:hover { color: var(--clay); }
-    .article-back:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
-
-    .article-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.875rem;
-      margin-top: 1rem;
-      font-size: 0.8rem;
-      color: var(--dust);
-      flex-wrap: wrap;
-    }
-    .article-meta__sep { opacity: 0.4; }
-  </style>
+  <link rel="stylesheet" href="/inline-styles.css" />
+  
   <script src="/sw-register.js" defer></script>
   <link rel="canonical" href="https://allergypass.app/blog/guides/food-allergy-survival-guide.html" />
   <meta property="og:type" content="website" />
