@@ -36,54 +36,8 @@
   <meta name="twitter:description" content="Honest comparison of Airalo, Holafly, AIS, and True Move H. What actually works and what to avoid." />
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-
-  <nav class="site-nav" aria-label="Main navigation">
-    <div class="container">
-      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
-            <div class="nav-links">
-        <a href="/blog/">Blog</a>
-        <a href="/about.html">About</a>
-      </div>
-      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
-      <a href="/app.html" class="nav-cta">Build My Card</a>
-    </div>
-  </nav>
-
-  <!-- Mobile nav drawer -->
-  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
-    <div class="mobile-drawer__head">
-      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
-      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
-    </div>
-    <a href="/">Home</a>
-    <a href="/blog/">Blog</a>
-    <a href="/about.html">About</a>
-    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
-
-  </div>
-  <script>
-    function openDrawer() {
-      document.getElementById('mobileDrawer').classList.add('open');
-      document.body.style.overflow = 'hidden';
-      var bd = document.getElementById('drawerBackdrop');
-      if (!bd) {
-        bd = document.createElement('div');
-        bd.id = 'drawerBackdrop';
-        bd.style.cssText = 'position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.35);';
-        bd.addEventListener('click', closeDrawer);
-        document.body.appendChild(bd);
-      }
-      bd.style.display = 'block';
-    }
-    function closeDrawer() {
-      document.getElementById('mobileDrawer').classList.remove('open');
-      document.body.style.overflow = '';
-      var bd = document.getElementById('drawerBackdrop');
-      if (bd) bd.style.display = 'none';
-    }
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
-  </script>
+  <script src="/nav.js"></script>
+  
 
 
   <main id="main-content">
@@ -108,6 +62,14 @@
 
           <div class="info-box">
             <strong>Quick answer:</strong> For trips under 2 weeks, Airalo's Thailand eSIM is reliable and easy to set up before you land. For trips over 2 weeks or frequent returns, a local AIS or True Move H SIM from the airport offers significantly better data value. Holafly is a reasonable backup if your phone doesn't support eSIM.
+          </div>
+
+          <div class="verdict-box" style="margin-bottom:2rem;">
+            <h4>Quick verdict</h4>
+            <div class="verdict-row"><span>Under 2 weeks</span><span class="verdict-winner">Airalo</span></div>
+            <div class="verdict-row"><span>2+ weeks</span><span class="verdict-winner">AIS local SIM</span></div>
+            <div class="verdict-row"><span>Unlimited data</span><span class="verdict-winner">Holafly</span></div>
+            <div class="verdict-row"><span>Best island coverage</span><span class="verdict-winner">AIS or True</span></div>
           </div>
 
           <h2 id="why-matters">Why connectivity matters more in Thailand than most places</h2>
@@ -208,12 +170,15 @@
             <a href="#holafly">Holafly</a>
             <a href="#islands">Island coverage</a>
           </div>
-          <div class="verdict-box">
-            <h4>Quick verdict</h4>
-            <div class="verdict-row"><span>Under 2 weeks</span><span class="verdict-winner">Airalo</span></div>
-            <div class="verdict-row"><span>2+ weeks</span><span class="verdict-winner">AIS local SIM</span></div>
-            <div class="verdict-row"><span>Unlimited data</span><span class="verdict-winner">Holafly</span></div>
-            <div class="verdict-row"><span>Best island coverage</span><span class="verdict-winner">AIS or True</span></div>
+          <div class="tool-bubble" style="margin-top:1.5rem;">
+            <div class="tool-bubble__header">
+              <span class="tool-bubble__title">🛡️ AllergyPass TH</span>
+              <span class="tool-bubble__badge">Free</span>
+            </div>
+            <div class="tool-bubble__body">
+              <p class="tool-bubble__desc">Traveling to Thailand? Build a bilingual allergy card before you land. Works offline, no account needed.</p>
+              <a href="/app.html" class="tool-bubble__cta">Build My Card →</a>
+            </div>
           </div>
         </aside>
       </div>
@@ -221,47 +186,8 @@
   </section>
 
   </main>
-  <footer class="site-footer">
-    <div class="container">
-            <div class="footer-inner">
-        <div>
-          <span class="footer-logo">🛡️ AllergyPass</span>
-          <p class="footer-tagline">Practical tools and guides for safer travel and living abroad.</p>
-        </div>
-        <div class="footer-col">
-          <h5>AllergyPass</h5>
-          <nav class="footer-links">
-            <a href="/app.html">Build My Card</a>
-            <a href="/allergy-card/">About the Card</a>
-          </nav>
-        </div>
-        <div class="footer-col">
-          <h5>Blog</h5>
-          <nav class="footer-links">
-            <a href="/blog/">All Posts</a>
-            <a href="/guides/">Food Safety Guides</a>
-          </nav>
-        </div>
-        <div class="footer-col">
-          <h5>About</h5>
-          <nav class="footer-links">
-            <a href="/about.html">About Abe</a>
-            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener noreferrer">TikTok</a>
-          </nav>
-        </div>
-      </div>
-      <div class="footer-copy-wrap">
-        <p class="footer-copy" style="margin:0;border:none;padding:0;">© 2026 AllergyPass. All rights reserved.</p>
-        <nav class="footer-legal-nav" style="border:none;margin:0;padding:0;" aria-label="Legal links">
-          <a href="/disclaimer/" class="footer-legal-link">Disclaimer</a>
-          <a href="/privacy/" class="footer-legal-link">Privacy</a>
-          <a href="/terms/" class="footer-legal-link">Terms</a>
-          <a href="/refunds/" class="footer-legal-link">Refunds</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
+  
 
+  <script src="/footer.js"></script>
 </body>
 </html>
