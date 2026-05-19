@@ -1,65 +1,14 @@
 <!-- ================================================================
-  _nav.html  : paste this <nav> block into every page
-  ================================================================ -->
+   _partials.html — REFERENCE ONLY, not a served page.
 
-<nav class="site-nav" aria-label="Main navigation">
-  <div class="container">
-    <a href="/" class="nav-logo">🛡️ AllergyPass</a>
-    <div class="nav-links">
-      <a href="/blog/">Blog</a>
-      <a href="/about.html">About</a>
-    </div>
-    <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
-    <a href="/app.html" class="nav-cta">Build My Card</a>
-  </div>
-</nav>
+   Nav and footer are now injected via JS:
+     /nav.js   → edit to change navigation links / mobile drawer
+     /footer.js → edit to change footer columns and links
 
-<!-- Mobile nav drawer -->
-<div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
-  <div class="mobile-drawer__head">
-    <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
-    <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
-  </div>
-  <a href="/">Home</a>
-  <a href="/blog/">Blog</a>
-  <a href="/about.html">About</a>
-  <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
-</div>
-
-<!-- ================================================================
-  _footer.html  : paste this <footer> block into every page
-  ================================================================ -->
-
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div>
-        <span class="footer-logo">🛡️ AllergyPass</span>
-        <p class="footer-tagline">Practical tools and guides for safer travel and living abroad.</p>
-      </div>
-      <div class="footer-col">
-        <h5>AllergyPass</h5>
-        <nav class="footer-links">
-          <a href="/app.html">Build My Card</a>
-          <a href="/allergy-card/">About the Card</a>
-        </nav>
-      </div>
-      <div class="footer-col">
-        <h5>Blog</h5>
-        <nav class="footer-links">
-          <a href="/blog/">All Posts</a>
-          <a href="/guides/">Food Safety Guides</a>
-        </nav>
-      </div>
-      <div class="footer-col">
-        <h5>About</h5>
-        <nav class="footer-links">
-          <a href="/about.html">About Abe</a>
-          <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener noreferrer">TikTok</a>
-        </nav>
-      </div>
-    </div>
-    <p class="footer-copy">© 2026 AllergyPass. All rights reserved.</p>
-  </div>
-</footer>
+   To add a new page:
+     1. Create the HTML file
+     2. Add these two tags inside <body>:
+          <script src="/nav.js"></script>    ← after <body>
+          <script src="/footer.js"></script>  ← before </body>
+     That's it. Nav and footer appear automatically.
+   ================================================================ -->

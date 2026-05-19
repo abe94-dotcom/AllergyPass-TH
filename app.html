@@ -26,54 +26,9 @@
   <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-
+  <script src="/nav.js"></script>
   <!-- ── SITE NAV (unchanged) ── -->
-  <nav class="site-nav" aria-label="Main navigation">
-    <div class="container">
-      <a href="/" class="nav-logo">🛡️ AllergyPass</a>
-      <div class="nav-links">
-        <a href="/blog/">Blog</a>
-        <a href="/about.html">About</a>
-      </div>
-      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
-      <a href="/app.html" class="nav-cta" aria-current="page">Build My Card</a>
-    </div>
-  </nav>
-
-  <!-- Mobile nav drawer (unchanged) -->
-  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
-    <div class="mobile-drawer__head">
-      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
-      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
-    </div>
-    <a href="/">Home</a>
-    <a href="/blog/">Blog</a>
-    <a href="/about.html">About</a>
-    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
-  </div>
-  <script>
-    function openDrawer() {
-      document.getElementById('mobileDrawer').classList.add('open');
-      document.body.style.overflow = 'hidden';
-      var bd = document.getElementById('drawerBackdrop');
-      if (!bd) {
-        bd = document.createElement('div');
-        bd.id = 'drawerBackdrop';
-        bd.style.cssText = 'position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.35);';
-        bd.addEventListener('click', closeDrawer);
-        document.body.appendChild(bd);
-      }
-      bd.style.display = 'block';
-    }
-    function closeDrawer() {
-      document.getElementById('mobileDrawer').classList.remove('open');
-      document.body.style.overflow = '';
-      var bd = document.getElementById('drawerBackdrop');
-      if (bd) bd.style.display = 'none';
-    }
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
-  </script>
+  
 
   <!-- ── MAIN ── -->
   <main id="main-content">
@@ -89,12 +44,6 @@
           <span class="eyebrow">Free allergy card builder</span>
           <h1>Your card, ready in<br><em>under a minute</em></h1>
           <p class="lead" style="margin:0">Show it to any restaurant. Works offline. No account needed.</p>
-        </div>
-
-        <!-- Returning user banner -->
-        <div id="returnBanner" class="return-banner" style="display:none">
-          <span>💾 You have a saved card from last time</span>
-          <button onclick="jumpToExport()">View it →</button>
         </div>
 
         <!-- Progress row -->
@@ -113,7 +62,7 @@
           </div>
           <div class="prog-step" id="ps4">
             <div class="prog-dot" id="pd4"><span class="d-n">4</span></div>
-            <div class="prog-label" id="pl4">Style</div>
+            <div class="prog-label" id="pl4">Tone</div>
           </div>
           <div class="prog-step" id="ps5">
             <div class="prog-dot" id="pd5"><span class="d-n">5</span></div>
@@ -220,7 +169,7 @@
         <div class="bsec bsec--locked" id="sec4">
           <div class="bsec-header" onclick="tryExpand(4)">
             <div class="bsec-eyebrow">Step 4 of 5</div>
-            <div class="bsec-q" id="s4q">Choose your card style</div>
+            <div class="bsec-q" id="s4q">Choose your card tone</div>
           </div>
           <div class="bsec-collapsed-row">
             <div class="bsec-sum-chips" id="s4summary"></div>
@@ -248,25 +197,33 @@
           <div id="successBanner" class="success-banner" style="display:none">
             <span>🛡️</span><span>Your card is ready. Show this to any restaurant.</span>
           </div>
+
+          <!-- Returning user banner - shown only at step 5 -->
+          <div id="returnBanner" class="return-banner" style="display:none">
+            <span>💾 You have a saved card from a previous session</span>
+            <button onclick="jumpToExport()">Load it →</button>
+          </div>
+
           <h2 class="export-headline">Your allergy card is ready ✦</h2>
-          <p class="bsec-hint" style="margin-bottom:1.5rem">Save it to your phone. It works without internet.</p>
 
           <div class="card-preview-export" id="cardPreviewLarge"></div>
+
+          <!-- Chef mode - promoted to primary action -->
+          <div class="chef-cta-block">
+            <div class="chef-cta-block__icon">👨‍🍳</div>
+            <div class="chef-cta-block__text">
+              <strong>Show to the kitchen now</strong>
+              <span>Large-text Thai view, built for restaurant staff</span>
+            </div>
+            <button class="btn btn--terra" onclick="openChefMode()">Open Chef Mode →</button>
+          </div>
 
           <div class="export-actions">
             <button class="export-btn export-btn--primary" id="btnSave" onclick="saveCard()">
               <span class="export-btn-icon">📲</span>
               <div class="export-btn-info">
                 <span class="export-btn-name">Save to phone</span>
-                <span class="export-btn-sub">Tap and hold to save to your gallery</span>
-              </div>
-              <span class="export-btn-arrow">→</span>
-            </button>
-            <button class="export-btn" onclick="openChefMode()">
-              <span class="export-btn-icon">👨‍🍳</span>
-              <div class="export-btn-info">
-                <span class="export-btn-name">Chef mode</span>
-                <span class="export-btn-sub">Large-text view to show kitchen staff right now</span>
+                <span class="export-btn-sub">Screenshot or long-press to save image</span>
               </div>
               <span class="export-btn-arrow">→</span>
             </button>
@@ -339,46 +296,7 @@
 
   <script src="/app.js" defer></script>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div>
-          <span class="footer-logo">🛡️ AllergyPass</span>
-          <p class="footer-tagline">Practical tools and guides for safer travel and living abroad.</p>
-        </div>
-        <div class="footer-col">
-          <h5>AllergyPass</h5>
-          <nav class="footer-links">
-            <a href="/app.html">Build My Card</a>
-            <a href="/allergy-card/">About the Card</a>
-          </nav>
-        </div>
-        <div class="footer-col">
-          <h5>Blog</h5>
-          <nav class="footer-links">
-            <a href="/blog/">All Posts</a>
-            <a href="/guides/">Food Safety Guides</a>
-          </nav>
-        </div>
-        <div class="footer-col">
-          <h5>About</h5>
-          <nav class="footer-links">
-            <a href="/about.html">About Abe</a>
-            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener noreferrer">TikTok</a>
-          </nav>
-        </div>
-      </div>
-      <div class="footer-copy-wrap">
-        <p class="footer-copy" style="margin:0;border:none;padding:0;">© 2026 AllergyPass. All rights reserved.</p>
-        <nav class="footer-legal-nav" style="border:none;margin:0;padding:0;" aria-label="Legal links">
-          <a href="/disclaimer/" class="footer-legal-link">Disclaimer</a>
-          <a href="/privacy/" class="footer-legal-link">Privacy</a>
-          <a href="/terms/" class="footer-legal-link">Terms</a>
-          <a href="/refunds/" class="footer-legal-link">Refunds</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
+  
+  <script src="/footer.js"></script>
 </body>
 </html>

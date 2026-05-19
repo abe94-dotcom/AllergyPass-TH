@@ -347,53 +347,8 @@
   <meta name="twitter:description" content="A bilingual food allergy card for safer travel in Thailand. Built by a healthcare professional. Works offline. No sign-up required." />
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-
-  <nav class="site-nav" aria-label="Main navigation">
-    <div class="container">
-      <a href="/" class="nav-logo" aria-current="page">🛡️ AllergyPass</a>
-      <div class="nav-links">
-        <a href="/blog/">Blog</a>
-        <a href="/about.html">About</a>
-      </div>
-      <button class="nav-hamburger" onclick="openDrawer()" aria-label="Open menu">&#9776;</button>
-      <a href="/app.html" class="nav-cta">Build My Card</a>
-    </div>
-  </nav>
-
-  <!-- Mobile nav drawer -->
-  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
-    <div class="mobile-drawer__head">
-      <span style="font-family:var(--font-display);font-size:1.2rem;">🛡️ AllergyPass</span>
-      <button class="mobile-drawer__close" onclick="closeDrawer()" aria-label="Close menu">&#10005;</button>
-    </div>
-    <a href="/" aria-current="page">Home</a>
-    <a href="/blog/">Blog</a>
-    <a href="/about.html">About</a>
-    <a href="/app.html" class="mobile-drawer__cta">Build My Card →</a>
-  </div>
-  <script>
-    function openDrawer() {
-      document.getElementById('mobileDrawer').classList.add('open');
-      document.body.style.overflow = 'hidden';
-      var bd = document.getElementById('drawerBackdrop');
-      if (!bd) {
-        bd = document.createElement('div');
-        bd.id = 'drawerBackdrop';
-        bd.style.cssText = 'position:fixed;inset:0;z-index:499;background:rgba(0,0,0,0.35);';
-        bd.addEventListener('click', closeDrawer);
-        document.body.appendChild(bd);
-      }
-      bd.style.display = 'block';
-    }
-    function closeDrawer() {
-      document.getElementById('mobileDrawer').classList.remove('open');
-      document.body.style.overflow = '';
-      var bd = document.getElementById('drawerBackdrop');
-      if (bd) bd.style.display = 'none';
-    }
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
-  </script>
+  <script src="/nav.js"></script>
+  
 
   <main>
 
@@ -414,7 +369,7 @@
           <a href="/app.html" class="btn btn--primary">Build My Card →</a>
           <a href="/blog/" class="hero-text-link">Read the blog</a>
         </div>
-        <p class="home-hero__sub">No sign-up · 100% Offline · Takes under 2 minutes</p>
+        <p class="home-hero__sub">No sign-up · Works offline · Under 2 minutes</p>
 
         <!-- Live card preview -->
         <div class="card-preview" role="img" aria-label="Sample AllergyPass allergy card showing Thai and English text for peanut and shellfish allergies">
@@ -512,9 +467,9 @@
     <section class="section section--alt">
       <div class="container">
         <div class="section-header">
-          <span class="eyebrow">From the blog</span>
-          <h2>Practical guides and<br><em>real experience</em></h2>
-          <p>Food safety, healthcare, travel logistics, and living abroad. Written from the inside.</p>
+          <span class="eyebrow">Guides &amp; Resources</span>
+          <h2>Read before you land,<br><em>not after it goes wrong</em></h2>
+          <p>Food safety, healthcare, travel logistics, and living abroad. Written from real experience.</p>
         </div>
         <div class="blog-preview-grid">
           <a href="/guides/food-allergy-survival-guide.html" class="blog-preview-card">
@@ -552,57 +507,17 @@
     <section class="section">
       <div class="container">
         <div class="cta-block">
-          <h2>Build your card in under 2 minutes</h2>
-          <p>No account needed. Works offline once built. Show it at any restaurant, street stall, or market.</p>
+          <h2>Ready to build your card?</h2>
           <a href="/app.html" class="btn btn--terra">Build My Card →</a>
-          <span class="cta-block__sub">No account needed · Works in airplane mode</span>
+          <span class="cta-block__sub">Free · No account · Works offline</span>
         </div>
       </div>
     </section>
 
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div>
-          <span class="footer-logo">🛡️ AllergyPass</span>
-          <p class="footer-tagline">Practical tools and guides for safer travel and living abroad.</p>
-        </div>
-        <div class="footer-col">
-          <h5>AllergyPass</h5>
-          <nav class="footer-links">
-            <a href="/app.html">Build My Card</a>
-            <a href="/allergy-card/">About the Card</a>
-          </nav>
-        </div>
-        <div class="footer-col">
-          <h5>Blog</h5>
-          <nav class="footer-links">
-            <a href="/blog/">All Posts</a>
-            <a href="/guides/">Food Safety Guides</a>
-          </nav>
-        </div>
-        <div class="footer-col">
-          <h5>About</h5>
-          <nav class="footer-links">
-            <a href="/about.html">About Abe</a>
-            <a href="https://instagram.com/bookofabe" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <a href="https://tiktok.com/@bookofabe" target="_blank" rel="noopener noreferrer">TikTok</a>
-          </nav>
-        </div>
-      </div>
-      <div class="footer-copy-wrap">
-        <p class="footer-copy" style="margin:0;border:none;padding:0;">© 2026 AllergyPass. All rights reserved.</p>
-        <nav class="footer-legal-nav" style="border:none;margin:0;padding:0;" aria-label="Legal links">
-          <a href="/disclaimer/" class="footer-legal-link">Disclaimer</a>
-          <a href="/privacy/" class="footer-legal-link">Privacy</a>
-          <a href="/terms/" class="footer-legal-link">Terms</a>
-          <a href="/refunds/" class="footer-legal-link">Refunds</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
+  
 
+  <script src="/footer.js"></script>
 </body>
 </html>

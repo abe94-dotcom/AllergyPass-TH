@@ -648,6 +648,24 @@
   margin-bottom: 0.25rem;
 }
 .card-preview-export { max-width: 400px; margin: 0 auto 1.75rem; }
+/* Chef mode promoted CTA block */
+.chef-cta-block {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--bark);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+.chef-cta-block__icon { font-size: 2rem; flex-shrink: 0; }
+.chef-cta-block__text { flex: 1; min-width: 160px; }
+.chef-cta-block__text strong { display: block; font-size: 0.9375rem; color: #fff; margin-bottom: 0.2rem; }
+.chef-cta-block__text span { font-size: 0.8125rem; color: rgba(250,247,242,0.6); }
+.chef-cta-block .btn--terra { flex-shrink: 0; white-space: nowrap; }
+
 .export-actions { display: flex; flex-direction: column; gap: 0.75rem; }
 .export-btn {
   display: flex;
