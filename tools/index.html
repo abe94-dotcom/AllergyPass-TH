@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Free Tools: AllergyPass</title>
   <meta name="description" content="The AllergyPass card builder and practical travel tools. Allergy card generator, pharmacy phrase cards, first-week checklist, and more." />
   <link rel="stylesheet" href="/style.css" />
-  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <script src="/sw-register.js" defer></script>
   <link rel="canonical" href="https://allergypass.app/tools/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Card Builder: AllergyPass" />
@@ -134,7 +134,7 @@
         </div>
       </div>
       <div style="text-align:center;margin-top:2.5rem;">
-        <a href="/blog/blog/guides/hidden-allergens-thai-food.html" class="btn btn--outline">Read the full hidden allergens guide →</a>
+        <a href="/blog/guides/hidden-allergens-thai-food.html" class="btn btn--outline">Read the full hidden allergens guide →</a>
       </div>
     </div>
   </section>

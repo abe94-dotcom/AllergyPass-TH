@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recommendations: AllergyPass</title>
   <meta name="description" content="Vetted picks for navigating Thailand. eSIMs, apps, accommodation. Affiliate-supported: only things worth including." />
   <link rel="stylesheet" href="/style.css" />
-  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <script src="/sw-register.js" defer></script>
   <link rel="canonical" href="https://allergypass.app/blog/recommendations/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Recommendations: AllergyPass" />
@@ -39,7 +39,7 @@
     <div class="container">
       <div class="pillar-grid">
 
-        <a href="/blog/blog/recommendations/best-esims-thailand.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/recommendations/best-esims-thailand.html" class="pillar-card" style="text-decoration:none;color:inherit;">
           <div class="pillar-icon">📶</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Connectivity</span>
           <h3>Best eSIMs for Thailand</h3>

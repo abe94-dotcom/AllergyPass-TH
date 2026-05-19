@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thailand Guides: AllergyPass</title>
   <meta name="description" content="Practical guides to food safety, hidden allergens, and safer travel. Written from the inside, not a two-week trip." />
   <link rel="stylesheet" href="/style.css" />
-  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <script src="/sw-register.js" defer></script>
   <link rel="canonical" href="https://allergypass.app/blog/guides/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Guides: AllergyPass" />
@@ -40,7 +40,7 @@
       <p class="group-heading" style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dust);margin-bottom:1rem;">Food Safety</p>
       <div class="pillar-grid" style="margin-bottom:3rem;">
 
-        <a href="/blog/blog/guides/food-allergy-survival-guide.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/guides/food-allergy-survival-guide.html" class="pillar-card" style="text-decoration:none;color:inherit;">
           <div class="pillar-icon">🍜</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Food Safety</span>
           <h3>Thailand Food Allergy Survival Guide</h3>
@@ -48,7 +48,7 @@
           <span class="pillar-link">Read guide →</span>
         </a>
 
-        <a href="/blog/blog/guides/hidden-allergens-thai-food.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/guides/hidden-allergens-thai-food.html" class="pillar-card" style="text-decoration:none;color:inherit;">
           <div class="pillar-icon">⚠️</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Food Safety</span>
           <h3>Hidden Allergens in Thai Food</h3>

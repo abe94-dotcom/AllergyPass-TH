@@ -25,15 +25,15 @@
           <h5>Guides</h5>
           <nav class="footer-links">
             <a href="/blog/guides/">All Guides</a>
-            <a href="/blog/blog/guides/food-allergy-survival-guide.html">Food Allergy Survival Guide</a>
-            <a href="/blog/blog/guides/hidden-allergens-thai-food.html">Hidden Allergens</a>
+            <a href="/blog/guides/food-allergy-survival-guide.html">Food Allergy Survival Guide</a>
+            <a href="/blog/guides/hidden-allergens-thai-food.html">Hidden Allergens</a>
           </nav>
         </div>
         <div class="footer-col">
           <h5>Thailand Essentials</h5>
           <nav class="footer-links">
-            <a href="/blog/blog/guides/">Overview</a>
-            <a href="/blog/blog/blog/guides/emergency-healthcare.html">Emergency Healthcare</a>
+            <a href="/blog/guides/">Overview</a>
+            <a href="/blog/guides/emergency-healthcare.html">Emergency Healthcare</a>
           </nav>
         </div>
         <div class="footer-col">

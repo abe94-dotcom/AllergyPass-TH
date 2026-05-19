@@ -532,11 +532,16 @@ function renderExport() {
 
 function updateMobileBar() {
   const lbl = document.getElementById('mobileBarLabel');
-  if (!lbl) return;
+  const sub = document.getElementById('mobileBarSub');
+  if (!lbl || !sub) return;
   const n = S.allergens.length;
-  lbl.textContent = n === 0
-    ? 'No allergens selected yet'
-    : `${n} allergen${n === 1 ? '' : 's'} — tap to preview`;
+  if (n === 0) {
+    lbl.textContent = 'No allergens selected yet';
+    sub.textContent = 'Add allergens to see your card preview';
+  } else {
+    lbl.textContent = `${n} allergen${n === 1 ? '' : 's'} selected`;
+    sub.textContent = 'Review the preview before saving your card';
+  }
 }
 
 /* ── SECTION FLOW ── */
@@ -725,10 +730,17 @@ async function saveCard() {
     if (!window.html2canvas) {
       await new Promise((res, rej) => {
         const s = document.createElement('script');
-        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        // Prefer a vendored copy at /vendor/html2canvas.min.js; fallback to CDN if missing
+        s.src = '/vendor/html2canvas.min.js';
         s.crossOrigin = 'anonymous';
         s.onload = res;
-        s.onerror = () => rej(new Error('cdn'));
+        s.onerror = () => {
+          // try CDN as a fallback; set SRI for the CDN resource
+          s.onerror = () => rej(new Error('cdn'));
+          s.integrity = 'sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H';
+          s.crossOrigin = 'anonymous';
+          s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        };
         document.head.appendChild(s);
       });
     }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -96,14 +96,14 @@
 
       <p class="blog-section-label" data-category="food-safety">Food Safety</p>
       <div class="pillar-grid" data-category="food-safety">
-        <a href="/blog/blog/guides/food-allergy-survival-guide.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/guides/food-allergy-survival-guide.html" class="pillar-card" style="text-decoration:none;color:inherit;">
           <div class="pillar-icon">🍜</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Food Safety</span>
           <h3>Thailand Food Allergy Survival Guide</h3>
           <p>Hidden allergens, high-risk dishes, how to communicate with staff, and when to get to a hospital. The main reference.</p>
           <span class="pillar-link">Read guide →</span>
         </a>
-        <a href="/blog/blog/guides/hidden-allergens-thai-food.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/guides/hidden-allergens-thai-food.html" class="pillar-card" style="text-decoration:none;color:inherit;">
           <div class="pillar-icon">⚠️</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Food Safety</span>
           <h3>Hidden Allergens in Thai Food</h3>
@@ -121,7 +121,7 @@
 
       <p class="blog-section-label" data-category="healthcare">Healthcare</p>
       <div class="pillar-grid" data-category="healthcare">
-        <a href="/blog/blog/blog/guides/emergency-healthcare.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/guides/emergency-healthcare.html" class="pillar-card" style="text-decoration:none;color:inherit;">
           <div class="pillar-icon">🏥</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Healthcare</span>
           <h3>Emergency Healthcare in Thailand</h3>
@@ -139,7 +139,7 @@
 
       <p class="blog-section-label" data-category="recommendations">Recommendations</p>
       <div class="pillar-grid" data-category="recommendations">
-        <a href="/blog/blog/recommendations/best-esims-thailand.html" class="pillar-card" style="text-decoration:none;color:inherit;">
+        <a href="/blog/recommendations/best-esims-thailand.html" class="pillar-card" style="text-decoration:none;color:inherit;">
           <div class="pillar-icon">📶</div>
           <span class="eyebrow" style="margin-bottom:0.25rem;">Recommendations</span>
           <h3>Best eSIMs for Thailand</h3>
@@ -179,7 +179,7 @@
   </main>
   
 
-  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <script src="/sw-register.js" defer></script>
 
 <script>
 function filterCat(btn, cat) {

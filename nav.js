@@ -38,7 +38,7 @@
       <div class="nav-links">
         ${buildLinks(false)}
       </div>
-      <button class="nav-hamburger" onclick="APNav.open()" aria-label="Open menu">&#9776;</button>
+      <button class="nav-hamburger" onclick="APNav.open()" aria-label="Open main navigation menu">&#9776;</button>
       <a href="/app.html" class="nav-cta">Build My Card</a>
     </div>
   `;
@@ -49,6 +49,7 @@
   drawer.id = 'mobileDrawer';
   drawer.setAttribute('role', 'dialog');
   drawer.setAttribute('aria-modal', 'true');
+  drawer.setAttribute('aria-hidden', 'true');
   drawer.setAttribute('aria-label', 'Navigation menu');
   drawer.innerHTML = `
     <div class="mobile-drawer__head">
@@ -71,10 +72,16 @@
   document.body.insertAdjacentElement('afterbegin', nav);
   document.body.insertAdjacentElement('afterbegin', skip);
 
+  const hamburger = nav.querySelector('.nav-hamburger');
+  const closeButton = drawer.querySelector('.mobile-drawer__close');
+  let lastDrawerFocus = null;
+
   /* ── DRAWER CONTROLS ── exposed globally so onclick attrs work */
   window.APNav = {
     open() {
+      lastDrawerFocus = document.activeElement;
       drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       let bd = document.getElementById('drawerBackdrop');
       if (!bd) {
@@ -85,15 +92,52 @@
         document.body.appendChild(bd);
       }
       bd.style.display = 'block';
+      closeButton?.focus();
     },
     close() {
       drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       const bd = document.getElementById('drawerBackdrop');
       if (bd) bd.style.display = 'none';
+      if (lastDrawerFocus && typeof lastDrawerFocus.focus === 'function') {
+        lastDrawerFocus.focus();
+      } else {
+        hamburger?.focus();
+      }
     }
   };
 
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') APNav.close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!drawer.classList.contains('open')) {
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      APNav.close();
+      return;
+    }
+
+    if (e.key !== 'Tab') return;
+
+    const focusable = Array.from(drawer.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+      .filter(el => el.offsetParent !== null);
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
 
 })();

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Build Your Allergy Card: AllergyPass" />
   <meta name="twitter:description" content="Free bilingual Thai-English food allergy card builder. Offline-ready, no sign-up required." />
-  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <script src="/sw-register.js" defer></script>
 </head>
 <body>
   <script src="/nav.js"></script>
@@ -222,8 +222,8 @@
             <button class="export-btn export-btn--primary" id="btnSave" onclick="saveCard()">
               <span class="export-btn-icon">📲</span>
               <div class="export-btn-info">
-                <span class="export-btn-name">Save to phone</span>
-                <span class="export-btn-sub">Screenshot or long-press to save image</span>
+                <span class="export-btn-name">Save card image</span>
+                <span class="export-btn-sub">Screenshot or long-press to save to your gallery</span>
               </div>
               <span class="export-btn-arrow">→</span>
             </button>
@@ -231,7 +231,7 @@
 
           <div id="saveConfirm" class="save-confirm" role="status" aria-live="polite">
             <span id="saveConfirm__icon">✅</span>
-            <span id="saveConfirm__text">Saved — works in airplane mode</span>
+            <span id="saveConfirm__text">Card image saved — works in airplane mode</span>
           </div>
 
           <div style="margin-top:1.5rem;text-align:center">
@@ -266,9 +266,9 @@
     <div class="mobile-preview-bar-inner">
       <div>
         <div class="mpb-label" id="mobileBarLabel">No allergens selected yet</div>
-        <div class="mpb-sub">Tap to preview your card</div>
+        <div class="mpb-sub" id="mobileBarSub">Add allergens to see your card preview</div>
       </div>
-      <button class="btn btn--terra" style="padding:0.6rem 1rem;font-size:0.875rem" onclick="openMobilePreview()">Preview card</button>
+      <button class="btn btn--terra" style="padding:0.6rem 1rem;font-size:0.875rem" onclick="openMobilePreview()">View preview</button>
     </div>
   </div>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com;" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -335,7 +335,7 @@
       .cta-block h2 { font-size: 2rem; }
     }
   </style>
-  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}</script>
+  <script src="/sw-register.js" defer></script>
   <link rel="canonical" href="https://allergypass.app/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="AllergyPass | Practical Food Allergy Communication for Travel" />
@@ -472,25 +472,25 @@
           <p>Food safety, healthcare, travel logistics, and living abroad. Written from real experience.</p>
         </div>
         <div class="blog-preview-grid">
-          <a href="/blog/blog/guides/food-allergy-survival-guide.html" class="blog-preview-card">
+          <a href="/blog/guides/food-allergy-survival-guide.html" class="blog-preview-card">
             <p class="blog-preview-card__tag">Food Safety</p>
             <h3>Thailand Food Allergy Survival Guide</h3>
             <p>Hidden allergens, high-risk dishes, how to communicate with staff, and when to get to a hospital. The main reference.</p>
             <span class="blog-preview-card__link">Read guide →</span>
           </a>
-          <a href="/blog/blog/guides/hidden-allergens-thai-food.html" class="blog-preview-card">
+          <a href="/blog/guides/hidden-allergens-thai-food.html" class="blog-preview-card">
             <p class="blog-preview-card__tag">Food Safety</p>
             <h3>Hidden Allergens in Thai Food</h3>
             <p>Fish sauce, shrimp paste, peanut oil, dried shrimp. What they're in, where they hide, and how to avoid them.</p>
             <span class="blog-preview-card__link">Read guide →</span>
           </a>
-          <a href="/blog/blog/blog/guides/emergency-healthcare.html" class="blog-preview-card">
+          <a href="/blog/guides/emergency-healthcare.html" class="blog-preview-card">
             <p class="blog-preview-card__tag">Healthcare</p>
             <h3>Emergency Healthcare in Thailand</h3>
             <p>Emergency numbers, best hospitals by city, what to expect from the system, and travel insurance advice. Written by a healthcare professional.</p>
             <span class="blog-preview-card__link">Read guide →</span>
           </a>
-          <a href="/blog/blog/recommendations/best-esims-thailand.html" class="blog-preview-card">
+          <a href="/blog/recommendations/best-esims-thailand.html" class="blog-preview-card">
             <p class="blog-preview-card__tag">Recommendations</p>
             <h3>Best eSIMs for Thailand</h3>
             <p>Airalo vs Holafly vs local AIS. What works across the country, including islands and rural areas. Updated for 2026.</p>
